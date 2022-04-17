@@ -2,9 +2,7 @@ import { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import walletSVG from "../assets/wallet.svg";
-import { getDetaDB } from "../utils/deta";
-
-const db = getDetaDB("wallet");
+import { getDanMoney } from "../utils/airtable";
 
 const WalletContainer = styled("div")({
   paddingTop: "100px",
@@ -25,14 +23,11 @@ const ItemContainer = styled("div")({
 
 export const Wallet = () => {
   const [danMoney, setDanMoney] = useState("");
-  const getDanMoney = async () => {
-    try {
-      const danMoney = await db.get("944ej0cczecy");
-      setDanMoney(danMoney.money);
-    } catch (error) {}
-  };
+
   useEffect(() => {
-    getDanMoney();
+    (async () => {
+      setDanMoney(await getDanMoney());
+    })();
   }, []);
 
   return (
