@@ -8,6 +8,4 @@ It's a multiple functional app but the main purpose is to write and share diary 
 
 We can write diarys or blogs, post images, make comments.
 
-It also help record our big days.
-
-It's a PWA so that it can be run without internet connection!
+It also helps record our big days.
