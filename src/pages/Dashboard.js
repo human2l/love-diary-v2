@@ -122,19 +122,19 @@ export const Dashboard = () => {
           蛋蛋写了
           {Math.floor((danDiaryCount / (danDiaryCount + kaiDiaryCount)) * 100)}%
           的日记
-          <Typography color="primary" variant="h5">
-            一共
-            {danDiaryCount}篇
-          </Typography>
+        </Typography>
+        <Typography color="primary" variant="h5">
+          一共
+          {danDiaryCount}篇
         </Typography>
         <Typography color="secondary" variant="h5">
           凯凯写了
           {Math.floor((kaiDiaryCount / (danDiaryCount + kaiDiaryCount)) * 100)}%
           的日记
-          <Typography color="secondary" variant="h5">
-            一共
-            {kaiDiaryCount}篇
-          </Typography>
+        </Typography>
+        <Typography color="secondary" variant="h5">
+          一共
+          {kaiDiaryCount}篇
         </Typography>
       </DiaryCounterContainer>
     </DashboardContainer>
