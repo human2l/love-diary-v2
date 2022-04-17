@@ -2,9 +2,7 @@ import { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import loveImage from "../assets/love_icon.png";
-import { getDetaDB } from "../utils/deta";
-
-const db = getDetaDB("diarys");
+import { getDiaryCountByUser } from "../utils/airtable";
 
 const howLong = (time1, time2) => {
   time1 = time1.getTime();
@@ -64,15 +62,6 @@ const Image = styled("img")({
 const RedTypography = styled(Typography)({
   color: "#f44336",
 });
-
-const getDiaryCountByUser = async (user) => {
-  try {
-    const diarys = await db.fetch([{ author: user }]);
-    return diarys.count;
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 export const Dashboard = () => {
   const [kaiDiaryCount, setKaiDiaryCount] = useState(0);
