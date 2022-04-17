@@ -33,3 +33,11 @@ const getDiaryCountByUser = async (username) => {
     .all();
   return response.length;
 };
+
+const getDanMoney = async () => {
+  const response = await walletBase.select({}).all();
+  const danMoney = response[1].fields.Number;
+  return danMoney;
+};
+
+export { getAllDiarys, getDiaryCountByUser, getDanMoney, createNewDiary };
