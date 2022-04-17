@@ -3,15 +3,13 @@ import { Diary } from "../components/Diary";
 import { styled } from "@mui/material/styles";
 import { getTimeString } from "../utils/DateUtils";
 import CircularProgress from "@mui/material/CircularProgress";
-import { getDetaDB } from "../utils/deta";
+import { getAllDiarys } from "../utils/airtable";
 
 const DiarysContainer = styled("div")({
   paddingBottom: 65,
   display: "flex",
   flexDirection: "column",
 });
-
-const db = getDetaDB("diarys");
 
 const setNumOfCachedPhotos = (diarys, n) => {
   let cachePhotoCounter = 0;
@@ -30,10 +28,11 @@ const setNumOfCachedPhotos = (diarys, n) => {
 export const Diarys = () => {
   const [diarys, setDiarys] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
   const fetchAllDiarys = async () => {
     setIsLoading(true);
     try {
-      const { items: allDiarys } = await db.fetch();
+      const allDiarys = await getAllDiarys();
       const orderedDiarys = allDiarys.sort((diaryA, diaryB) =>
         diaryA.time < diaryB.time ? 1 : -1
       );
