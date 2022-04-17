@@ -9,9 +9,9 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardActionArea from "@mui/material/CardActionArea";
 import { getFileExtensionName } from "../utils/fileUtils";
-import { getDetaDB, getDetaDrive } from "../utils/deta";
+import { createNewDiary } from "../utils/airtable";
+import { getDetaDrive } from "../utils/deta";
 
-const db = getDetaDB("diarys");
 const diaryPhotosDB = getDetaDrive("diary_photos");
 
 const NewDiaryContainer = styled("div")({
@@ -185,7 +185,7 @@ export const NewDiary = () => {
           { data: imageData.fileBinary, contentType: imageData.contentType }
         );
       }
-      await db.put({
+      const newDiary = {
         content: newDiaryContent,
         minute,
         hour,
@@ -194,9 +194,11 @@ export const NewDiary = () => {
         year,
         time,
         author,
-        photos,
-        reply: [],
-      });
+        photos: JSON.stringify(photos),
+        reply: JSON.stringify([]),
+      };
+
+      await createNewDiary(newDiary);
       setWarningMessage("已保存");
       localStorage.removeItem("diaryDraft");
 
@@ -305,7 +307,7 @@ export const NewDiary = () => {
             <Button
               size="medium"
               variant="contained"
-              color="default"
+              color="inherit"
               onClick={hideSubmissionAlert}
             >
               取消

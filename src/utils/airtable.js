@@ -24,7 +24,15 @@ const getAllDiarys = async () => {
   return allDiarys;
 };
 
-export { getAllDiarys };
+const createNewDiary = async (newDiary) => {
+  diaryBase.create(newDiary, function (err, record) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+  });
+};
+
 const getDiaryCountByUser = async (username) => {
   const response = await diaryBase
     .select({
