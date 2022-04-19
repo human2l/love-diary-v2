@@ -2,8 +2,11 @@ import { useState } from "react";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-// import { withTheme } from "@mui/material/styles";
 import styled from "styled-components";
+import useSound from "use-sound";
+import popDownSound from "../assets/sounds/pop-down.mp3";
+import popUpOnSound from "../assets/sounds/pop-up-on.mp3";
+import popUpOffSound from "../assets/sounds/pop-up-off.mp3";
 
 //TODO add theme color
 const LoginLabel = styled(Typography)`
@@ -22,11 +25,15 @@ const PasswordPad = styled.div`
   padding-bottom: 50px;
 `;
 
-//TODO add theme color
-const PasswordButtonText = styled.div``;
+const PasswordButtonText = styled(Typography)``;
 
 export const Login = (props) => {
   const [password, setPassword] = useState("");
+
+  const [playActive] = useSound(popDownSound, { volume: 0.25 });
+  const [playOn] = useSound(popUpOnSound, { volume: 0.25 });
+  const [playOff] = useSound(popUpOffSound, { volume: 0.25 });
+
   const login = () => {
     password === "5181226" && props.login();
     setPassword("");
@@ -37,7 +44,12 @@ export const Login = (props) => {
 
   return (
     <LoginContainer>
-      <LoginLabel variant="h4">不输密码不让看🤪</LoginLabel>
+      <LoginLabel
+        sx={{ color: "primary.main", backgroundColor: "text.light" }}
+        variant="h4"
+      >
+        不输密码不让看🤪
+      </LoginLabel>
       <PasswordPad>
         <Grid
           container
@@ -59,8 +71,14 @@ export const Login = (props) => {
                   borderRadius: "20px",
                   width: "100%",
                 }}
+                onMouseDown={playActive}
+                onMouseUp={() => {
+                  playOff();
+                }}
               >
-                <PasswordButtonText variant="h1">1</PasswordButtonText>
+                <PasswordButtonText sx={{ color: "white" }} variant="h1">
+                  1
+                </PasswordButtonText>
               </Button>
             </Grid>
             <Grid item xs={4}>
@@ -74,8 +92,14 @@ export const Login = (props) => {
                   borderRadius: "20px",
                   width: "100%",
                 }}
+                onMouseDown={playActive}
+                onMouseUp={() => {
+                  playOff();
+                }}
               >
-                <PasswordButtonText variant="h1">2</PasswordButtonText>
+                <PasswordButtonText sx={{ color: "white" }} variant="h1">
+                  2
+                </PasswordButtonText>
               </Button>
             </Grid>
             <Grid item xs={4}>
@@ -89,8 +113,14 @@ export const Login = (props) => {
                   borderRadius: "20px",
                   width: "100%",
                 }}
+                onMouseDown={playActive}
+                onMouseUp={() => {
+                  playOff();
+                }}
               >
-                <PasswordButtonText variant="h1">3</PasswordButtonText>
+                <PasswordButtonText sx={{ color: "white" }} variant="h1">
+                  3
+                </PasswordButtonText>
               </Button>
             </Grid>
           </Grid>
@@ -106,8 +136,14 @@ export const Login = (props) => {
                   borderRadius: "20px",
                   width: "100%",
                 }}
+                onMouseDown={playActive}
+                onMouseUp={() => {
+                  playOff();
+                }}
               >
-                <PasswordButtonText variant="h1">4</PasswordButtonText>
+                <PasswordButtonText sx={{ color: "white" }} variant="h1">
+                  4
+                </PasswordButtonText>
               </Button>
             </Grid>
             <Grid item xs={4}>
@@ -121,8 +157,14 @@ export const Login = (props) => {
                   borderRadius: "20px",
                   width: "100%",
                 }}
+                onMouseDown={playActive}
+                onMouseUp={() => {
+                  playOff();
+                }}
               >
-                <PasswordButtonText variant="h1">5</PasswordButtonText>
+                <PasswordButtonText sx={{ color: "white" }} variant="h1">
+                  5
+                </PasswordButtonText>
               </Button>
             </Grid>
             <Grid item xs={4}>
@@ -136,8 +178,14 @@ export const Login = (props) => {
                   borderRadius: "20px",
                   width: "100%",
                 }}
+                onMouseDown={playActive}
+                onMouseUp={() => {
+                  playOff();
+                }}
               >
-                <PasswordButtonText variant="h1">6</PasswordButtonText>
+                <PasswordButtonText sx={{ color: "white" }} variant="h1">
+                  6
+                </PasswordButtonText>
               </Button>
             </Grid>
           </Grid>
@@ -153,8 +201,14 @@ export const Login = (props) => {
                   borderRadius: "20px",
                   width: "100%",
                 }}
+                onMouseDown={playActive}
+                onMouseUp={() => {
+                  playOff();
+                }}
               >
-                <PasswordButtonText variant="h1">7</PasswordButtonText>
+                <PasswordButtonText sx={{ color: "white" }} variant="h1">
+                  7
+                </PasswordButtonText>
               </Button>
             </Grid>
             <Grid item xs={4}>
@@ -168,8 +222,14 @@ export const Login = (props) => {
                   borderRadius: "20px",
                   width: "100%",
                 }}
+                onMouseDown={playActive}
+                onMouseUp={() => {
+                  playOff();
+                }}
               >
-                <PasswordButtonText variant="h1">8</PasswordButtonText>
+                <PasswordButtonText sx={{ color: "white" }} variant="h1">
+                  8
+                </PasswordButtonText>
               </Button>
             </Grid>
             <Grid item xs={4}>
@@ -183,14 +243,29 @@ export const Login = (props) => {
                   borderRadius: "20px",
                   width: "100%",
                 }}
+                onMouseDown={playActive}
+                onMouseUp={() => {
+                  playOff();
+                }}
               >
-                <PasswordButtonText variant="h1">9</PasswordButtonText>
+                <PasswordButtonText sx={{ color: "white" }} variant="h1">
+                  9
+                </PasswordButtonText>
               </Button>
             </Grid>
           </Grid>
         </Grid>
       </PasswordPad>
-      <Button variant="contained" color="primary" size="large" onClick={login}>
+      <Button
+        variant="contained"
+        color="primary"
+        size="large"
+        onClick={login}
+        onMouseDown={playActive}
+        onMouseUp={() => {
+          playOn();
+        }}
+      >
         登录
       </Button>
     </LoginContainer>
