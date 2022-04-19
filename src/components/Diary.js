@@ -8,16 +8,11 @@ import styled from "styled-components";
 import Button from "@mui/material/Button";
 import CardMedia from "@mui/material/CardMedia";
 import CardActionArea from "@mui/material/CardActionArea";
-import CircularProgress from "@mui/material/CircularProgress";
 
-// import { useTheme } from "@mui/material/styles";
-
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { getCurrentDate, getTimeString } from "../utils/DateUtils";
-import { getDetaDB, getDetaDrive } from "../utils/deta";
-
-const db = getDetaDB("diarys");
-const diaryPhotosDB = getDetaDrive("diary_photos");
+import { updateDiaryReply } from "../utils/airtable";
+import { getAuthImgUrl } from "../utils/filestack";
 
 const CardContainer = styled(Card)({
   marginTop: 10,
@@ -52,45 +47,11 @@ export const Diary = (props) => {
     diaryKey,
     diaryReplys,
     diaryPhotos,
-    cachePhoto,
     fetchAllDiarys,
   } = props;
 
   const [reply, setReply] = useState(false);
   const [replyContent, setReplyContent] = useState("");
-  const [photo, setPhoto] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    if (diaryPhotos.length <= 0) return;
-    setIsLoading(true);
-    const fetchPhotos = async () => {
-      try {
-        const storedPhoto = localStorage.getItem(diaryPhotos[0]);
-        //cache & stored => getStored, setPhoto
-        if (cachePhoto && storedPhoto) {
-          setPhoto(storedPhoto);
-        } else {
-          //no cache & no stored => reader, setPhoto
-          const photoBlobData = await diaryPhotosDB.get(diaryPhotos[0]);
-          let reader = new FileReader();
-          reader.readAsDataURL(photoBlobData);
-          reader.onload = () => {
-            setPhoto(reader.result);
-            //cache & no stored => reader, setPhoto, setStored
-            cachePhoto && localStorage.setItem(diaryPhotos[0], reader.result);
-          };
-          //no cache & stored => reader, setPhoto, removeStored
-          storedPhoto && localStorage.removeItem(diaryPhotos[0]);
-        }
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchPhotos();
-  }, [diaryPhotos, cachePhoto]);
-  // const theme = useTheme();
 
   const convertToParagraph = (text) => {
     return text.split("\n").map((line, index) => {
@@ -112,25 +73,20 @@ export const Diary = (props) => {
     if (replyContent === "") return;
     const { minute, hour, day, month, year, time } = getCurrentDate();
     try {
-      await db.update(
+      const reply = [
+        ...diaryReplys,
         {
-          reply: [
-            ...diaryReplys,
-            {
-              author,
-              content: replyContent,
-              minute,
-              hour,
-              day,
-              month,
-              year,
-              time,
-            },
-          ],
+          author,
+          content: replyContent,
+          minute,
+          hour,
+          day,
+          month,
+          year,
+          time,
         },
-        diaryKey
-      );
-
+      ];
+      await updateDiaryReply(diaryKey, reply);
       fetchAllDiarys();
     } catch (error) {
       console.error(error);
@@ -182,6 +138,7 @@ export const Diary = (props) => {
       <TextField
         label="回复："
         multiline
+        variant="standard"
         style={{ width: "100%" }}
         value={replyContent}
         onChange={editReply}
@@ -236,22 +193,18 @@ export const Diary = (props) => {
             {convertToParagraph(diaryContent)}
           </Typography>
           <PhotoContainer>
-            {isLoading ? (
-              <CircularProgress color="secondary" style={{ margin: "auto" }} />
-            ) : (
-              diaryPhotos.length > 0 && (
-                <div>
-                  <Card>
-                    <CardActionArea>
-                      <CardMedia
-                        component="img"
-                        image={photo}
-                        style={{ height: "auto", width: "100%" }}
-                      />
-                    </CardActionArea>
-                  </Card>
-                </div>
-              )
+            {diaryPhotos.length > 0 && (
+              <div>
+                <Card>
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      image={getAuthImgUrl(diaryPhotos[0])}
+                      style={{ height: "auto", width: "100%" }}
+                    />
+                  </CardActionArea>
+                </Card>
+              </div>
             )}
           </PhotoContainer>
 

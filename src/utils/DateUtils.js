@@ -1,4 +1,4 @@
-export const getCurrentDate = () => {
+const getCurrentDate = () => {
   let today = new Date();
   let minute = String(today.getMinutes()).padStart(2, "0");
   let hour = String(today.getHours()).padStart(2, "0");
@@ -10,8 +10,10 @@ export const getCurrentDate = () => {
   return { minute, hour, day, month, year, time };
 };
 
-export const getTimeString = (author, minute, hour, day, month, year) => {
+const getTimeString = (author, minute, hour, day, month, year) => {
   let timeZone = "";
   author === "Dan" ? (timeZone = "中") : (timeZone = "澳");
   return `${timeZone}  ${hour}:${minute}  ${day}/${month}/${year}`;
 };
+
+export { getCurrentDate, getTimeString };
