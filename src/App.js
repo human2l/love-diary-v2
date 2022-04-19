@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { blue, pink, grey, green, yellow } from "@mui/material/colors";
 import { Navbar } from "./components/Navbar";
