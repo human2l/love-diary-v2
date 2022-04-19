@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import useSound from "use-sound";
+import { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -7,8 +8,15 @@ import CreateIcon from "@mui/icons-material/Create";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import StopIcon from "@mui/icons-material/Stop";
+import gaoBaiQiQiuMusic from "../assets/sounds/gaoBaiQiQiu.mp3";
 
 export const Navbar = (props) => {
+  const [value, setValue] = useState(-1);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [play, { stop }] = useSound(gaoBaiQiQiuMusic);
+
   let navigate = useNavigate();
 
   const Navbar = styled(BottomNavigation)({
@@ -19,7 +27,14 @@ export const Navbar = (props) => {
     height: "56px",
   });
 
-  const [value, setValue] = useState(-1);
+  useEffect(() => {
+    play();
+  }, [play]);
+
+  useEffect(() => {
+    isPlaying ? play() : stop();
+  }, [isPlaying, play, stop]);
+
   return (
     <Navbar
       value={value}
@@ -33,9 +48,12 @@ export const Navbar = (props) => {
             navigate("/diarys");
             break;
           case 2:
-            navigate("/wallet");
+            setIsPlaying(!isPlaying);
             break;
           case 3:
+            navigate("/wallet");
+            break;
+          case 4:
             navigate("/");
             break;
           default:
@@ -46,6 +64,16 @@ export const Navbar = (props) => {
     >
       <BottomNavigationAction label="新的心情" icon={<CreateIcon />} />
       <BottomNavigationAction label="恋爱日记" icon={<AssignmentIcon />} />
+      <BottomNavigationAction
+        label=""
+        icon={
+          isPlaying ? (
+            <StopIcon fontSize="large" />
+          ) : (
+            <PlayArrowIcon fontSize="large" />
+          )
+        }
+      />
       <BottomNavigationAction
         label="钱包"
         icon={<AccountBalanceWalletIcon />}
