@@ -11,20 +11,6 @@ const DiarysContainer = styled("div")({
   flexDirection: "column",
 });
 
-const setNumOfCachedPhotos = (diarys, n) => {
-  let cachePhotoCounter = 0;
-  const configuredDiarys = diarys.map((diary) => {
-    if (diary.photos.length === 0 || cachePhotoCounter >= n) {
-      diary.cachePhoto = false;
-    } else {
-      diary.cachePhoto = true;
-      cachePhotoCounter++;
-    }
-    return diary;
-  });
-  return configuredDiarys;
-};
-
 export const Diarys = () => {
   const [diarys, setDiarys] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -36,10 +22,7 @@ export const Diarys = () => {
       const orderedDiarys = allDiarys.sort((diaryA, diaryB) =>
         diaryA.time < diaryB.time ? 1 : -1
       );
-
-      const cachedPhotosDiarys = setNumOfCachedPhotos(orderedDiarys, 3);
-
-      setDiarys(cachedPhotosDiarys);
+      setDiarys(orderedDiarys);
       setIsLoading(false);
     } catch (error) {
       console.error(error);
@@ -58,7 +41,7 @@ export const Diarys = () => {
         const {
           key,
           author,
-          content,
+          content = "",
           minute,
           hour,
           day,
@@ -66,7 +49,6 @@ export const Diarys = () => {
           year,
           reply,
           photos,
-          cachePhoto,
         } = diary;
         const diaryDate = getTimeString(author, minute, hour, day, month, year);
 
@@ -79,7 +61,6 @@ export const Diarys = () => {
             diaryContent={content}
             diaryReplys={reply}
             diaryPhotos={photos}
-            cachePhoto={cachePhoto}
             fetchAllDiarys={fetchAllDiarys}
           />
         );
