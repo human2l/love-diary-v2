@@ -8,7 +8,11 @@ const diaryBase = base("diary");
 const walletBase = base("wallet");
 
 const getAllDiarys = async () => {
-  const response = await diaryBase.select({}).all();
+  const response = await diaryBase
+    .select({
+      sort: [{ field: "time", direction: "desc" }],
+    })
+    .all();
   const allDiarys = response.map(
     ({ fields, fields: { photos, reply }, id }) => {
       const jsonPhotos = JSON.parse(photos);
@@ -24,13 +28,52 @@ const getAllDiarys = async () => {
   return allDiarys;
 };
 
-const createNewDiary = async (newDiary) => {
-  diaryBase.create(newDiary, function (err, record) {
-    if (err) {
-      console.error(err);
-      return;
+const addNewDiary = async (newDiary) => {
+  diaryBase.create(
+    {
+      ...newDiary,
+      photos: JSON.stringify(newDiary.photos),
+      reply: JSON.stringify(newDiary.reply),
+    },
+    function (err, record) {
+      if (err) {
+        console.error(err);
+        return;
+      }
     }
-  });
+  );
+};
+
+const updateDiary = async (diaryId, diary) => {
+  diaryBase.update(
+    diaryId,
+    {
+      ...diary,
+      photos: JSON.stringify(diary.photos),
+      reply: JSON.stringify(diary.reply),
+    },
+    function (err, record) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    }
+  );
+};
+
+const updateDiaryReply = async (diaryId, reply) => {
+  diaryBase.update(
+    diaryId,
+    {
+      reply: JSON.stringify(reply),
+    },
+    function (err, record) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    }
+  );
 };
 
 const getDiaryCountByUser = async (username) => {
@@ -44,8 +87,44 @@ const getDiaryCountByUser = async (username) => {
 
 const getDanMoney = async () => {
   const response = await walletBase.select({}).all();
-  const danMoney = response[1].fields.Number;
+  const danMoney = response[1].fields.number;
   return danMoney;
 };
 
-export { getAllDiarys, getDiaryCountByUser, getDanMoney, createNewDiary };
+const getWalletState = async () => {
+  const response = await walletBase.select({}).all();
+  return response;
+};
+
+const updateDanWalletState = async (
+  walletId,
+  number,
+  lastSignInDate,
+  callback
+) => {
+  walletBase.update(
+    walletId,
+    {
+      number,
+      lastSignInDate,
+    },
+    function (err, record) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      callback();
+    }
+  );
+};
+
+export {
+  getAllDiarys,
+  getDiaryCountByUser,
+  getDanMoney,
+  addNewDiary,
+  updateDiary,
+  updateDiaryReply,
+  getWalletState,
+  updateDanWalletState,
+};
