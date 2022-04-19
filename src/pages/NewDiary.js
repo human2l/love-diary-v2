@@ -8,11 +8,12 @@ import { getCurrentDate } from "../utils/DateUtils";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardActionArea from "@mui/material/CardActionArea";
-import { getFileExtensionName } from "../utils/fileUtils";
-import { createNewDiary } from "../utils/airtable";
-import { getDetaDrive } from "../utils/deta";
-
-const diaryPhotosDB = getDetaDrive("diary_photos");
+import { addNewDiary } from "../utils/airtable";
+import {
+  getAuthImgUrl,
+  getFileMetadata,
+  openFilePicker,
+} from "../utils/filestack";
 
 const NewDiaryContainer = styled("div")({
   paddingTop: 20,
@@ -61,12 +62,7 @@ export const NewDiary = () => {
   const [warningMessage, setWarningMessage] = useState("");
   const [submissionAlertState, setSubmissionAlertState] = useState(false);
   const [author, setAuthor] = useState("");
-  const [imageData, setImageData] = useState({
-    file: null,
-    contentType: "",
-    fileBinary: "",
-    imagePreviewUrl: "",
-  });
+  const [imageUploaded, setImageUploaded] = useState(false);
 
   const handleChange = (event) => {
     localStorage.setItem("diaryDraft", event.target.value);
@@ -81,96 +77,12 @@ export const NewDiary = () => {
     setSubmissionAlertState(false);
   };
 
-  const selectImageFile = (e) => {
+  const selectImageFile = async (e) => {
     e.preventDefault();
-    let reader = new FileReader();
-    let file = e.target.files[0];
-    if (file === undefined) return;
-    const fileExtensionName = getFileExtensionName(file.name);
-    let contentType = "";
-    switch (fileExtensionName) {
-      case "jpeg":
-      case "jpg":
-        contentType = "image/jpeg";
-        break;
-      case "png":
-        contentType = "image/png";
-        break;
-      default:
-        return;
-    }
-
-    reader.readAsBinaryString(file);
-    reader.onloadend = () => {
-      setImageData({
-        ...imageData,
-        file,
-        contentType,
-        fileBinary: reader.result,
-        imagePreviewUrl:
-          "data:" + contentType + ";base64," + btoa(reader.result),
-      });
-    };
-
-    //alternative: code below to convert to small size image
-    // reader.readAsDataURL(file);
-    // reader.onloadend = (event) => {
-    //   var image = new Image();
-
-    //   image.onload = function () {
-    //     var canvas = document.createElement("canvas");
-    //     var context = canvas.getContext("2d");
-    //     canvas.width = image.width / 2;
-    //     canvas.height = image.height / 2;
-    //     context.drawImage(
-    //       image,
-    //       0,
-    //       0,
-    //       image.width,
-    //       image.height,
-    //       0,
-    //       0,
-    //       canvas.width,
-    //       canvas.height
-    //     );
-    //     const canvasDataURL = canvas.toDataURL();
-    //     setImageData({
-    //       file,
-    //       contentType,
-    //       //delete "data:" + contentType + ";base64," then atob
-    //       fileBinary: atob(canvasDataURL.split(",")[1]),
-    //       imagePreviewUrl: canvasDataURL,
-    //     });
-    //   };
-    //   image.src = event.target.result;
-    // };
-  };
-
-  const clearImage = () => {
-    setImageData({
-      file: null,
-      contentType: "",
-      fileBinary: "",
-      imagePreviewUrl: "",
+    await openFilePicker(() => {
+      setImageUploaded(true);
     });
   };
-
-  //for developing purpose
-  // const checkAllImage = async () => {
-  //   let result = await diaryPhotosDB.list();
-  //   let allFiles = result.names;
-  //   console.log(allFiles);
-  // };
-  // checkAllImage();
-
-  //for developing purpose
-  // const deleteImages = async (imageNames) => {
-  //   let result = await diaryPhotosDB.list();
-  //   let allFiles = result.names;
-  //   diaryPhotosDB.deleteMany(imageNames);
-  //   console.log(allFiles);
-  // };
-  // deleteImages(["1631363390250.jpeg"]);
 
   const submitDiary = async () => {
     const { minute, hour, day, month, year, time } = getCurrentDate();
@@ -178,12 +90,11 @@ export const NewDiary = () => {
     setWarningMessage("正在保存...请不要乱动🐶");
     try {
       let photos = [];
-      if (imageData.file !== null) {
-        photos.push(time + "." + getFileExtensionName(imageData.file.name));
-        await diaryPhotosDB.put(
-          time + "." + getFileExtensionName(imageData.file.name),
-          { data: imageData.fileBinary, contentType: imageData.contentType }
-        );
+
+      const fileMetadata = getFileMetadata();
+      const imageType = ["image/jpeg", "image/jpg", "image/png"];
+      if (fileMetadata && imageType.includes(fileMetadata.mimetype)) {
+        photos.push(fileMetadata.handle);
       }
       const newDiary = {
         content: newDiaryContent,
@@ -194,15 +105,13 @@ export const NewDiary = () => {
         year,
         time,
         author,
-        photos: JSON.stringify(photos),
-        reply: JSON.stringify([]),
+        photos,
+        reply: [],
       };
 
-      await createNewDiary(newDiary);
+      await addNewDiary(newDiary);
       setWarningMessage("已保存");
       localStorage.removeItem("diaryDraft");
-
-      clearImage();
     } catch (error) {
       setWarningMessage("保存失败，原因：" + error);
     }
@@ -226,30 +135,21 @@ export const NewDiary = () => {
             size="small"
             variant="contained"
             color="primary"
+            onClick={(e) => {
+              selectImageFile(e);
+            }}
           >
-            <input
-              hidden
-              type="file"
-              onChange={(e) => {
-                selectImageFile(e);
-              }}
-            />
             添加图片
-          </Button>
-          <Button
-            size="small"
-            variant="outlined"
-            color="primary"
-            onClick={clearImage}
-          >
-            清除图片
           </Button>
         </ImageControlContainer>
 
-        {imageData.file !== null && (
+        {imageUploaded && (
           <Card>
             <CardActionArea>
-              <CardMedia component="img" image={imageData.imagePreviewUrl} />
+              <CardMedia
+                component="img"
+                image={getAuthImgUrl(getFileMetadata().handle)}
+              />
             </CardActionArea>
           </Card>
         )}
