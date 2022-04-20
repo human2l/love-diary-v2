@@ -27,9 +27,11 @@ const ItemContainer = styled("div")({
   alignItems: "center",
 });
 
+const twentyHours = 1000 * 60 * 60 * 20;
+
 const canSignIn = (date1, date2) => {
   // return date2 - date1 > 86400000; // 1 day
-  return date2 - date1 > 1000 * 60 * 60 * 20; // 20 hours
+  return date2 - date1 > twentyHours; // 20 hours
 };
 
 export const Wallet = () => {
@@ -57,7 +59,7 @@ export const Wallet = () => {
 
   const nextSignInAllowedTime = () => {
     const nextTime =
-      (lastSignInDate + 86400000 - new Date().getTime()) / (1000 * 60 * 60);
+      (lastSignInDate + twentyHours - new Date().getTime()) / (1000 * 60 * 60);
     if (nextTime < 0) return 0;
     return nextTime.toFixed(2);
   };
