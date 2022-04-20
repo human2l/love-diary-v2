@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
-import loveImage from "../assets/love_icon.png";
+import loveImage from "../assets/images/love_icon.png";
 import { getDiaryCountByUser } from "../utils/airtable";
+import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 
 const howLong = (time1, time2) => {
   time1 = time1.getTime();
@@ -26,10 +27,8 @@ const howLong = (time1, time2) => {
 
 const DashboardContainer = styled("div")({
   height: "100vh",
-  paddingBottom: 65,
   display: "flex",
   flexDirection: "column",
-  //   justifyContent: "center",
   alignItems: "center",
   //   backgroundImage:
   //     "url('https://i.pinimg.com/564x/be/dc/52/bedc522cdab3546780880b53096e4caa.jpg')",
@@ -64,12 +63,15 @@ const RedTypography = styled(Typography)({
 });
 
 export const Dashboard = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [kaiDiaryCount, setKaiDiaryCount] = useState(0);
   const [danDiaryCount, setDanDiaryCount] = useState(0);
   useEffect(() => {
+    setIsLoading(true);
     const updateDiaryCount = async () => {
       setKaiDiaryCount(await getDiaryCountByUser("Kai"));
       setDanDiaryCount(await getDiaryCountByUser("Dan"));
+      setIsLoading(false);
     };
     updateDiaryCount();
   }, []);
@@ -88,44 +90,54 @@ export const Dashboard = () => {
 
   return (
     <DashboardContainer>
-      <Image src={loveImage} />
-      <Typography color="textPrimary" variant="h5">
-        蛋蛋和凯凯
-      </Typography>
-      <Typography color="textPrimary" variant="h5">
-        从2020年2月14日在一起
-      </Typography>
-      <DaysCounterContainer>
-        <Typography color="textPrimary" variant="h5">
-          已经
-        </Typography>
-        <RedTypography color="primary" variant="h3">
-          {res.day}
-        </RedTypography>
-        <Typography color="textPrimary" variant="h5">
-          天了
-        </Typography>
-      </DaysCounterContainer>
-      <DiaryCounterContainer>
-        <Typography color="primary" variant="h5">
-          蛋蛋写了
-          {Math.floor((danDiaryCount / (danDiaryCount + kaiDiaryCount)) * 100)}%
-          的日记
-        </Typography>
-        <Typography color="primary" variant="h5">
-          一共
-          {danDiaryCount}篇
-        </Typography>
-        <Typography color="secondary" variant="h5">
-          凯凯写了
-          {Math.floor((kaiDiaryCount / (danDiaryCount + kaiDiaryCount)) * 100)}%
-          的日记
-        </Typography>
-        <Typography color="secondary" variant="h5">
-          一共
-          {kaiDiaryCount}篇
-        </Typography>
-      </DiaryCounterContainer>
+      {isLoading ? (
+        <img src={loadingHeartsSvg} alt="loading" />
+      ) : (
+        <>
+          <Image src={loveImage} />
+          <Typography color="textPrimary" variant="h5">
+            蛋蛋和凯凯
+          </Typography>
+          <Typography color="textPrimary" variant="h5">
+            从2020年2月14日在一起
+          </Typography>
+          <DaysCounterContainer>
+            <Typography color="textPrimary" variant="h5">
+              已经
+            </Typography>
+            <RedTypography color="primary" variant="h3">
+              {res.day}
+            </RedTypography>
+            <Typography color="textPrimary" variant="h5">
+              天了
+            </Typography>
+          </DaysCounterContainer>
+          <DiaryCounterContainer>
+            <Typography color="primary" variant="h5">
+              蛋蛋写了
+              {Math.floor(
+                (danDiaryCount / (danDiaryCount + kaiDiaryCount)) * 100
+              )}
+              % 的日记
+            </Typography>
+            <Typography color="primary" variant="h5">
+              一共
+              {danDiaryCount}篇
+            </Typography>
+            <Typography color="secondary" variant="h5">
+              凯凯写了
+              {Math.floor(
+                (kaiDiaryCount / (danDiaryCount + kaiDiaryCount)) * 100
+              )}
+              % 的日记
+            </Typography>
+            <Typography color="secondary" variant="h5">
+              一共
+              {kaiDiaryCount}篇
+            </Typography>
+          </DiaryCounterContainer>
+        </>
+      )}
     </DashboardContainer>
   );
 };
