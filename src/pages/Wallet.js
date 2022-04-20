@@ -28,7 +28,8 @@ const ItemContainer = styled("div")({
 });
 
 const canSignIn = (date1, date2) => {
-  return date2 - date1 > 86400000; // 1 day
+  // return date2 - date1 > 86400000; // 1 day
+  return date2 - date1 > 1000 * 60 * 60 * 20; // 20 hours
 };
 
 export const Wallet = () => {
