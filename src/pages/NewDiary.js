@@ -16,6 +16,8 @@ import {
 } from "../utils/filestack";
 
 const NewDiaryContainer = styled("div")({
+  marginLeft: 10,
+  marginRight: 10,
   paddingTop: 20,
   paddingBottom: 65,
 });
