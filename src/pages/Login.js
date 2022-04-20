@@ -15,6 +15,13 @@ const LoginLabel = styled(Typography)`
 `;
 
 const LoginContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const LoginControlContainer = styled.div`
+  max-width: 400px;
   padding-top: 10px;
   display: flex;
   flex-direction: column;
@@ -35,239 +42,88 @@ export const Login = (props) => {
   const [playOff] = useSound(popUpOffSound, { volume: 0.25 });
 
   const login = () => {
-    password === "5181226" && props.login();
+    password === process.env.REACT_APP_LOGIN_PASSWORD && props.login();
     setPassword("");
   };
   const onPasswordButtonClick = (buttonValue) => {
     setPassword(password + buttonValue);
   };
 
+  const padArray = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
+  ];
+
   return (
     <LoginContainer>
-      <LoginLabel
-        sx={{ color: "primary.main", backgroundColor: "text.light" }}
-        variant="h4"
-      >
-        不输密码不让看🤪
-      </LoginLabel>
-      <PasswordPad>
-        <Grid
-          container
-          spacing={1}
-          style={{
-            display: "flex",
-            justifyContent: "center",
+      <LoginControlContainer>
+        <LoginLabel
+          sx={{ color: "primary.main", backgroundColor: "text.light" }}
+          variant="h4"
+        >
+          不输密码不让看🤪
+        </LoginLabel>
+        <PasswordPad>
+          <Grid
+            container
+            spacing={1}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            {padArray.map((row, arrayIndex) => {
+              return (
+                <Grid container item xs={12} spacing={1} key={arrayIndex}>
+                  {row.map((number, numberIndex) => {
+                    return (
+                      <Grid item xs={4} key={numberIndex}>
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          onClick={() => {
+                            onPasswordButtonClick(number);
+                          }}
+                          style={{
+                            borderRadius: "20px",
+                            width: "100%",
+                            maxWidth: "130px",
+                            aspectRatio: "1/1",
+                          }}
+                          onMouseDown={playActive}
+                          onMouseUp={() => {
+                            playOff();
+                          }}
+                        >
+                          <PasswordButtonText
+                            sx={{ color: "white" }}
+                            variant="h1"
+                          >
+                            {number}
+                          </PasswordButtonText>
+                        </Button>
+                      </Grid>
+                    );
+                  })}
+                </Grid>
+              );
+            })}
+          </Grid>
+        </PasswordPad>
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          onClick={login}
+          onMouseDown={playActive}
+          onMouseUp={() => {
+            playOn();
           }}
         >
-          <Grid container item xs={12} spacing={1}>
-            <Grid item xs={4}>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => {
-                  onPasswordButtonClick("1");
-                }}
-                style={{
-                  borderRadius: "20px",
-                  width: "100%",
-                }}
-                onMouseDown={playActive}
-                onMouseUp={() => {
-                  playOff();
-                }}
-              >
-                <PasswordButtonText sx={{ color: "white" }} variant="h1">
-                  1
-                </PasswordButtonText>
-              </Button>
-            </Grid>
-            <Grid item xs={4}>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => {
-                  onPasswordButtonClick("2");
-                }}
-                style={{
-                  borderRadius: "20px",
-                  width: "100%",
-                }}
-                onMouseDown={playActive}
-                onMouseUp={() => {
-                  playOff();
-                }}
-              >
-                <PasswordButtonText sx={{ color: "white" }} variant="h1">
-                  2
-                </PasswordButtonText>
-              </Button>
-            </Grid>
-            <Grid item xs={4}>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => {
-                  onPasswordButtonClick("3");
-                }}
-                style={{
-                  borderRadius: "20px",
-                  width: "100%",
-                }}
-                onMouseDown={playActive}
-                onMouseUp={() => {
-                  playOff();
-                }}
-              >
-                <PasswordButtonText sx={{ color: "white" }} variant="h1">
-                  3
-                </PasswordButtonText>
-              </Button>
-            </Grid>
-          </Grid>
-          <Grid container item xs={12} spacing={1}>
-            <Grid item xs={4}>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => {
-                  onPasswordButtonClick("4");
-                }}
-                style={{
-                  borderRadius: "20px",
-                  width: "100%",
-                }}
-                onMouseDown={playActive}
-                onMouseUp={() => {
-                  playOff();
-                }}
-              >
-                <PasswordButtonText sx={{ color: "white" }} variant="h1">
-                  4
-                </PasswordButtonText>
-              </Button>
-            </Grid>
-            <Grid item xs={4}>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => {
-                  onPasswordButtonClick("5");
-                }}
-                style={{
-                  borderRadius: "20px",
-                  width: "100%",
-                }}
-                onMouseDown={playActive}
-                onMouseUp={() => {
-                  playOff();
-                }}
-              >
-                <PasswordButtonText sx={{ color: "white" }} variant="h1">
-                  5
-                </PasswordButtonText>
-              </Button>
-            </Grid>
-            <Grid item xs={4}>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => {
-                  onPasswordButtonClick("6");
-                }}
-                style={{
-                  borderRadius: "20px",
-                  width: "100%",
-                }}
-                onMouseDown={playActive}
-                onMouseUp={() => {
-                  playOff();
-                }}
-              >
-                <PasswordButtonText sx={{ color: "white" }} variant="h1">
-                  6
-                </PasswordButtonText>
-              </Button>
-            </Grid>
-          </Grid>
-          <Grid container item xs={12} spacing={1}>
-            <Grid item xs={4}>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => {
-                  onPasswordButtonClick("7");
-                }}
-                style={{
-                  borderRadius: "20px",
-                  width: "100%",
-                }}
-                onMouseDown={playActive}
-                onMouseUp={() => {
-                  playOff();
-                }}
-              >
-                <PasswordButtonText sx={{ color: "white" }} variant="h1">
-                  7
-                </PasswordButtonText>
-              </Button>
-            </Grid>
-            <Grid item xs={4}>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => {
-                  onPasswordButtonClick("8");
-                }}
-                style={{
-                  borderRadius: "20px",
-                  width: "100%",
-                }}
-                onMouseDown={playActive}
-                onMouseUp={() => {
-                  playOff();
-                }}
-              >
-                <PasswordButtonText sx={{ color: "white" }} variant="h1">
-                  8
-                </PasswordButtonText>
-              </Button>
-            </Grid>
-            <Grid item xs={4}>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => {
-                  onPasswordButtonClick("9");
-                }}
-                style={{
-                  borderRadius: "20px",
-                  width: "100%",
-                }}
-                onMouseDown={playActive}
-                onMouseUp={() => {
-                  playOff();
-                }}
-              >
-                <PasswordButtonText sx={{ color: "white" }} variant="h1">
-                  9
-                </PasswordButtonText>
-              </Button>
-            </Grid>
-          </Grid>
-        </Grid>
-      </PasswordPad>
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        onClick={login}
-        onMouseDown={playActive}
-        onMouseUp={() => {
-          playOn();
-        }}
-      >
-        登录
-      </Button>
+          登录
+        </Button>
+      </LoginControlContainer>
     </LoginContainer>
   );
 };
