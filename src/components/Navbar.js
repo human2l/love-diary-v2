@@ -8,8 +8,8 @@ import CreateIcon from "@mui/icons-material/Create";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import PlayCircleIcon from "@mui/icons-material/PlayCircle";
-import StopCircleIcon from "@mui/icons-material/StopCircle";
+import MusicNoteIcon from "@mui/icons-material/MusicNote";
+import MusicOffIcon from "@mui/icons-material/MusicOff";
 import gaoBaiQiQiuMusic from "../assets/sounds/gaoBaiQiQiu.mp3";
 
 export const Navbar = (props) => {
@@ -37,6 +37,11 @@ export const Navbar = (props) => {
 
   return (
     <Navbar
+      sx={{
+        boxShadow: "0 5px 40px #f19da2",
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+      }}
       value={value}
       onChange={(event, newValue) => {
         setValue(newValue);
@@ -68,9 +73,9 @@ export const Navbar = (props) => {
         label=""
         icon={
           isPlaying ? (
-            <StopCircleIcon fontSize="large" />
+            <MusicNoteIcon fontSize="large" />
           ) : (
-            <PlayCircleIcon fontSize="large" />
+            <MusicOffIcon fontSize="large" />
           )
         }
       />
