@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import { Diary } from "../components/Diary";
 import { styled } from "@mui/material/styles";
 import { getTimeString } from "../utils/DateUtils";
-import CircularProgress from "@mui/material/CircularProgress";
+import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import { getAllDiarys } from "../utils/airtable";
 
 const DiarysContainer = styled("div")({
+  marginLeft: 10,
+  marginRight: 10,
   paddingBottom: 65,
   display: "flex",
   flexDirection: "column",
@@ -34,9 +36,7 @@ export const Diarys = () => {
   }, []);
   return (
     <DiarysContainer>
-      {isLoading && (
-        <CircularProgress color="secondary" style={{ margin: "auto" }} />
-      )}
+      {isLoading && <img src={loadingHeartsSvg} alt="loading" />}
       {diarys.map((diary) => {
         const {
           key,
