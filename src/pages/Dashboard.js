@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import loveImage from "../assets/images/love_icon.png";
-import { getDiaryCountByUser } from "../utils/airtable";
+import { getDiaryCountByUser } from "../services/airtable";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
+import { getUserInfo } from "../services/userService";
 
 const howLong = (time1, time2) => {
   time1 = time1.getTime();
@@ -77,16 +78,6 @@ export const Dashboard = () => {
   }, []);
 
   let res = howLong(new Date(), new Date("2020-02-14 00:00:00"));
-  // console.log(
-  //   res.day +
-  //     "天 " +
-  //     res.hours +
-  //     "小时 " +
-  //     res.minutes +
-  //     "分钟 " +
-  //     res.seconds +
-  //     "秒"
-  // );
 
   return (
     <DashboardContainer>
@@ -96,7 +87,7 @@ export const Dashboard = () => {
         <>
           <Image src={loveImage} />
           <Typography color="textPrimary" variant="h5">
-            蛋蛋和凯凯
+            {getUserInfo("Dan").chineseName}和{getUserInfo("Kai").chineseName}
           </Typography>
           <Typography color="textPrimary" variant="h5">
             从2020年2月14日在一起
@@ -113,25 +104,25 @@ export const Dashboard = () => {
             </Typography>
           </DaysCounterContainer>
           <DiaryCounterContainer>
-            <Typography color="primary" variant="h5">
-              蛋蛋写了
+            <Typography color={getUserInfo("Dan").color} variant="h5">
+              {getUserInfo("Dan").chineseName}写了
               {Math.floor(
                 (danDiaryCount / (danDiaryCount + kaiDiaryCount)) * 100
               )}
               % 的日记
             </Typography>
-            <Typography color="primary" variant="h5">
+            <Typography color={getUserInfo("Dan").color} variant="h5">
               一共
               {danDiaryCount}篇
             </Typography>
-            <Typography color="secondary" variant="h5">
-              凯凯写了
+            <Typography color={getUserInfo("Kai").color} variant="h5">
+              {getUserInfo("Kai").chineseName}写了
               {Math.floor(
                 (kaiDiaryCount / (danDiaryCount + kaiDiaryCount)) * 100
               )}
               % 的日记
             </Typography>
-            <Typography color="secondary" variant="h5">
+            <Typography color={getUserInfo("Kai").color} variant="h5">
               一共
               {kaiDiaryCount}篇
             </Typography>
