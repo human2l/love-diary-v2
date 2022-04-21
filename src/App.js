@@ -9,7 +9,7 @@ import { Wallet } from "./pages/Wallet";
 import { Login } from "./pages/Login";
 import styled from "styled-components";
 import { useState } from "react";
-import { setUser } from "./services/userService";
+import { setUser } from "./services/user_service";
 
 const theme = createTheme({
   palette: {

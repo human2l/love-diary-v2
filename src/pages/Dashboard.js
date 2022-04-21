@@ -4,7 +4,7 @@ import { styled } from "@mui/material/styles";
 import loveImage from "../assets/images/love_icon.png";
 import { getDiaryCountByUser } from "../services/airtable";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
-import { getUserInfo } from "../services/userService";
+import { getUserInfo } from "../services/user_service";
 
 const howLong = (time1, time2) => {
   time1 = time1.getTime();

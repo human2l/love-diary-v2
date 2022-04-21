@@ -3,8 +3,8 @@ import { Diary } from "../components/Diary";
 import { styled } from "@mui/material/styles";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import { getAllDiarys } from "../services/airtable";
-import { getUserInfo } from "../services/userService";
-import { getCountryDateFromTimestamp } from "../utils/dateUtils";
+import { getUserInfo } from "../services/user_service";
+import { getCountryDateFromTimestamp } from "../utils/date_utils";
 
 const DiarysContainer = styled("div")({
   marginLeft: 10,

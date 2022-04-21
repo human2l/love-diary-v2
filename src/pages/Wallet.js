@@ -10,7 +10,7 @@ import moneySound from "../assets/sounds/multipleCoins.mp3";
 import ahOhSound from "../assets/sounds/ah-oh.mp3";
 import { getWalletState, updateDanWalletState } from "../services/airtable";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
-import { getUserInfo } from "../services/userService";
+import { getUserInfo } from "../services/user_service";
 
 const WalletContainer = styled("div")({
   height: "100vh",

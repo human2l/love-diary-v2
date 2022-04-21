@@ -13,8 +13,8 @@ import {
   getFileMetadata,
   openFilePicker,
 } from "../services/filestack";
-import { getUser, getUserInfo } from "../services/userService";
-import { getCurrentTimestamp } from "../utils/dateUtils";
+import { getUser, getUserInfo } from "../services/user_service";
+import { getCurrentTimestamp } from "../utils/date_utils";
 
 const NewDiaryContainer = styled("div")({
   marginLeft: 10,

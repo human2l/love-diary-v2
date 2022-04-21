@@ -13,11 +13,11 @@ import { useState } from "react";
 
 import { updateDiaryReply } from "../services/airtable";
 import { getAuthImgUrl } from "../services/filestack";
-import { getUser, getUserInfo } from "../services/userService";
+import { getUser, getUserInfo } from "../services/user_service";
 import {
   getCurrentTimestamp,
   getCountryDateFromTimestamp,
-} from "../utils/dateUtils";
+} from "../utils/date_utils";
 
 const CardContainer = styled(Card)({
   marginTop: 10,
