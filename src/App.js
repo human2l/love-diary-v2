@@ -9,6 +9,7 @@ import { Wallet } from "./pages/Wallet";
 import { Login } from "./pages/Login";
 import styled from "styled-components";
 import { useState } from "react";
+import { setUser } from "./services/userService";
 
 const theme = createTheme({
   palette: {
@@ -30,12 +31,16 @@ const theme = createTheme({
 
 const AppContainer = styled("div")({
   height: "100vh",
+  // maxWidth: "700px",
+  // backgroundImage: "url('/assets/images/background.jpeg')",
+  // backgroundSize: "cover",
 });
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
-  const login = () => {
+  const login = (user) => {
     setAuthenticated(true);
+    setUser(user);
   };
   return (
     <ThemeProvider theme={theme}>
