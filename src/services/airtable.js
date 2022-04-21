@@ -6,6 +6,7 @@ const base = new Airtable({
 
 const diaryBase = base("diary");
 const walletBase = base("wallet");
+const settingsBase = base("settings");
 
 const getAllDiarys = async () => {
   const response = await diaryBase
@@ -118,6 +119,32 @@ const updateDanWalletState = async (
   );
 };
 
+const getUserSettings = async () => {
+  const response = await settingsBase.select({}).all();
+  return {
+    Dan: { ...response[0].fields, id: response[0].id },
+    Kai: { ...response[1].fields, id: response[1].id },
+  };
+};
+
+const updateSettingsDB = async (settings) => {
+  const settingsArray = [settings.Dan, settings.Kai];
+  const updateData = settingsArray.map((setting) => {
+    const { id, ...fields } = setting;
+    return {
+      id,
+      fields,
+    };
+  });
+
+  settingsBase.update(updateData, function (err) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+  });
+};
+
 export {
   getAllDiarys,
   getDiaryCountByUser,
@@ -127,4 +154,6 @@ export {
   updateDiaryReply,
   getWalletState,
   updateDanWalletState,
+  getUserSettings,
+  updateSettingsDB,
 };
