@@ -42,7 +42,8 @@ export const Login = (props) => {
   const [playOff] = useSound(popUpOffSound, { volume: 0.25 });
 
   const login = () => {
-    password === process.env.REACT_APP_LOGIN_PASSWORD && props.login();
+    password === process.env.REACT_APP_LOGIN_PASSWORD_DAN && props.login("Dan");
+    password === process.env.REACT_APP_LOGIN_PASSWORD_KAI && props.login("Kai");
     setPassword("");
   };
   const onPasswordButtonClick = (buttonValue) => {
