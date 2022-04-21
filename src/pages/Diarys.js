@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Diary } from "../components/Diary";
 import { styled } from "@mui/material/styles";
-import { getTimeString } from "../utils/DateUtils";
+import { getCountryDateFromTimestamp } from "../utils/dateUtils";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
-import { getAllDiarys } from "../utils/airtable";
+import { getAllDiarys } from "../services/airtable";
+import { getUserInfo } from "../services/userService";
 
 const DiarysContainer = styled("div")({
   marginLeft: 10,
@@ -38,19 +39,12 @@ export const Diarys = () => {
     <DiarysContainer>
       {isLoading && <img src={loadingHeartsSvg} alt="loading" />}
       {diarys.map((diary) => {
-        const {
-          key,
-          author,
-          content = "",
-          minute,
-          hour,
-          day,
-          month,
-          year,
-          reply,
-          photos,
-        } = diary;
-        const diaryDate = getTimeString(author, minute, hour, day, month, year);
+        const { key, author, content = "", time, reply, photos } = diary;
+
+        const diaryDate = getCountryDateFromTimestamp(
+          time,
+          getUserInfo(author)?.country
+        );
 
         return (
           <Diary
