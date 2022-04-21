@@ -10,9 +10,14 @@ import CardMedia from "@mui/material/CardMedia";
 import CardActionArea from "@mui/material/CardActionArea";
 
 import { useState } from "react";
-import { getCurrentDate, getTimeString } from "../utils/DateUtils";
-import { updateDiaryReply } from "../utils/airtable";
-import { getAuthImgUrl } from "../utils/filestack";
+import {
+  getCurrentTimestamp,
+  getCountryDateFromTimestamp,
+} from "../utils/dateUtils";
+
+import { updateDiaryReply } from "../services/airtable";
+import { getAuthImgUrl } from "../services/filestack";
+import { getUser, getUserInfo } from "../services/userService";
 
 const CardContainer = styled(Card)({
   marginTop: 10,
@@ -71,18 +76,13 @@ export const Diary = (props) => {
   const submitReply = async (author) => {
     setReply(false);
     if (replyContent === "") return;
-    const { minute, hour, day, month, year, time } = getCurrentDate();
+    const time = getCurrentTimestamp();
     try {
       const reply = [
         ...diaryReplys,
         {
           author,
           content: replyContent,
-          minute,
-          hour,
-          day,
-          month,
-          year,
           time,
         },
       ];
@@ -103,26 +103,22 @@ export const Diary = (props) => {
         <ContentDivider variant="fullWidth" />
         <TitleContainer>
           <Typography
-            color={diaryReply.author === "Dan" ? "primary" : "secondary"}
+            color={getUserInfo(diaryReply.author)?.color}
             gutterBottom
           >
-            {diaryReply.author === "Dan" ? "蛋蛋：" : "凯凯："}
+            {getUserInfo(diaryReply.author)?.chineseName}
           </Typography>
           <DiaryMetaContainer>
             <Typography color="textSecondary">
-              {getTimeString(
-                diaryReply.author,
-                diaryReply.minute,
-                diaryReply.hour,
-                diaryReply.day,
-                diaryReply.month,
-                diaryReply.year
+              {getCountryDateFromTimestamp(
+                diaryReply.time,
+                getUserInfo(diaryReply.author)?.country
               )}
             </Typography>
           </DiaryMetaContainer>
         </TitleContainer>
         <Typography
-          color={diaryReply.author === "Dan" ? "primary" : "secondary"}
+          color={getUserInfo(diaryReply.author)?.color}
           variant="body2"
           component="p"
           gutterBottom
@@ -145,24 +141,11 @@ export const Diary = (props) => {
       />
       <Button
         variant="contained"
-        color="primary"
-        onClick={() => submitReply("Dan")}
-        style={{ width: "100px", height: "40px", whiteSpace: "nowrap" }}
+        color={getUserInfo(getUser())?.color}
+        onClick={() => submitReply(getUser())}
+        style={{ width: "auto", height: "40px", whiteSpace: "nowrap" }}
       >
-        蛋蛋回复
-      </Button>
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={() => submitReply("Kai")}
-        style={{
-          width: "100px",
-          height: "40px",
-          marginLeft: 5,
-          whiteSpace: "nowrap",
-        }}
-      >
-        凯凯回复
+        {getUserInfo(getUser())?.chineseName}回复
       </Button>
     </ReplyContainer>
   );
@@ -174,10 +157,10 @@ export const Diary = (props) => {
           <TitleContainer>
             <Typography
               variant="h6"
-              color={diaryAuthor === "Dan" ? "primary" : "secondary"}
+              color={getUserInfo(diaryAuthor)?.color}
               gutterBottom
             >
-              {diaryAuthor === "Dan" ? "蛋蛋：" : "凯凯："}
+              {getUserInfo(diaryAuthor)?.chineseName}
             </Typography>
             <DiaryMetaContainer>
               <Typography color="textSecondary">{diaryDate}</Typography>
@@ -185,7 +168,7 @@ export const Diary = (props) => {
             </DiaryMetaContainer>
           </TitleContainer>
           <Typography
-            color={diaryAuthor === "Dan" ? "primary" : "secondary"}
+            color={getUserInfo(diaryAuthor)?.color}
             variant="body2"
             component="p"
             gutterBottom
