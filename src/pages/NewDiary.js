@@ -4,16 +4,17 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
-import { getCurrentDate } from "../utils/DateUtils";
+import { getCurrentTimestamp } from "../utils/dateUtils";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardActionArea from "@mui/material/CardActionArea";
-import { addNewDiary } from "../utils/airtable";
+import { addNewDiary } from "../services/airtable";
 import {
   getAuthImgUrl,
   getFileMetadata,
   openFilePicker,
-} from "../utils/filestack";
+} from "../services/filestack";
+import { getUser, getUserInfo } from "../services/userService";
 
 const NewDiaryContainer = styled("div")({
   marginLeft: 10,
@@ -57,8 +58,8 @@ const ImageControlContainer = styled("div")({
 
 export const NewDiary = () => {
   let defaultDiaryContent = localStorage.getItem("diaryDraft");
-  if (defaultDiaryContent === undefined || defaultDiaryContent === null)
-    defaultDiaryContent = "";
+  if (!defaultDiaryContent) defaultDiaryContent = "";
+
   const [newDiaryContent, setNewDiaryContent] = useState(defaultDiaryContent);
   const [submitted, setSubmitted] = useState(false);
   const [warningMessage, setWarningMessage] = useState("");
@@ -87,7 +88,7 @@ export const NewDiary = () => {
   };
 
   const submitDiary = async () => {
-    const { minute, hour, day, month, year, time } = getCurrentDate();
+    const time = getCurrentTimestamp();
     setSubmitted(true);
     setWarningMessage("正在保存...请不要乱动🐶");
     try {
@@ -100,11 +101,6 @@ export const NewDiary = () => {
       }
       const newDiary = {
         content: newDiaryContent,
-        minute,
-        hour,
-        day,
-        month,
-        year,
         time,
         author,
         photos,
@@ -160,24 +156,13 @@ export const NewDiary = () => {
             <Button
               size="large"
               variant="contained"
-              color="primary"
+              color={getUserInfo(getUser())?.color}
               onClick={() => {
-                setAuthor("Dan");
+                setAuthor(getUser());
                 showSubmissionAlert();
               }}
             >
-              蛋蛋写好了
-            </Button>
-            <Button
-              size="large"
-              variant="contained"
-              color="secondary"
-              onClick={() => {
-                setAuthor("Kai");
-                showSubmissionAlert();
-              }}
-            >
-              凯凯写好了
+              {getUserInfo(getUser())?.chineseName}写好了
             </Button>
           </ControlContainer>
         )}
@@ -190,11 +175,11 @@ export const NewDiary = () => {
       >
         <SubmissionAlertModalContent>
           <Typography
-            color={author === "Dan" ? "textPrimary" : "secondary"}
+            color={getUserInfo(getUser())?.color}
             variant="h5"
             id="simple-modal-title"
           >
-            {author === "Dan" ? "蛋蛋" : "凯凯"}，
+            {getUserInfo(author)?.chineseName}
           </Typography>
           <Typography color="textSecondary" id="simple-modal-description">
             你确定写好了吗？
@@ -217,7 +202,7 @@ export const NewDiary = () => {
             <Button
               size="medium"
               variant="contained"
-              color={author === "Dan" ? "primary" : "secondary"}
+              color={getUserInfo(getUser())?.color}
               onClick={() => {
                 hideSubmissionAlert();
                 submitDiary();
