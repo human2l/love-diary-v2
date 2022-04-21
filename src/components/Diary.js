@@ -10,14 +10,14 @@ import CardMedia from "@mui/material/CardMedia";
 import CardActionArea from "@mui/material/CardActionArea";
 
 import { useState } from "react";
-import {
-  getCurrentTimestamp,
-  getCountryDateFromTimestamp,
-} from "../utils/dateUtils";
 
 import { updateDiaryReply } from "../services/airtable";
 import { getAuthImgUrl } from "../services/filestack";
 import { getUser, getUserInfo } from "../services/userService";
+import {
+  getCurrentTimestamp,
+  getCountryDateFromTimestamp,
+} from "../utils/dateUtils";
 
 const CardContainer = styled(Card)({
   marginTop: 10,

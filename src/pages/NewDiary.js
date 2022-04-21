@@ -4,7 +4,6 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
-import { getCurrentTimestamp } from "../utils/dateUtils";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardActionArea from "@mui/material/CardActionArea";
@@ -15,6 +14,7 @@ import {
   openFilePicker,
 } from "../services/filestack";
 import { getUser, getUserInfo } from "../services/userService";
+import { getCurrentTimestamp } from "../utils/dateUtils";
 
 const NewDiaryContainer = styled("div")({
   marginLeft: 10,

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { Diary } from "../components/Diary";
 import { styled } from "@mui/material/styles";
-import { getCountryDateFromTimestamp } from "../utils/dateUtils";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import { getAllDiarys } from "../services/airtable";
 import { getUserInfo } from "../services/userService";
+import { getCountryDateFromTimestamp } from "../utils/dateUtils";
 
 const DiarysContainer = styled("div")({
   marginLeft: 10,
