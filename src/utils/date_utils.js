@@ -13,7 +13,7 @@ const getCountryDateFromTimestamp = (timestamp, country) => {
   };
   if (!countryMap[country]) return null;
 
-  const formatString = `[${country}] h:ma D/MMM/YYYY`;
+  const formatString = `[${country}] HH:mma D/MMM/YYYY`;
   const date = moment(timestamp).tz(countryMap[country]).format(formatString);
   return date;
 };
