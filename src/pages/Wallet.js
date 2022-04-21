@@ -8,8 +8,9 @@ import walletSVG from "../assets/images/wallet.svg";
 import dollarPng from "../assets/images/dollar.png";
 import moneySound from "../assets/sounds/multipleCoins.mp3";
 import ahOhSound from "../assets/sounds/ah-oh.mp3";
-import { getWalletState, updateDanWalletState } from "../utils/airtable";
+import { getWalletState, updateDanWalletState } from "../services/airtable";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
+import { getUserInfo } from "../services/userService";
 
 const WalletContainer = styled("div")({
   height: "100vh",
@@ -41,8 +42,8 @@ export const Wallet = () => {
   const [lastSignInDate, setLastSignInDate] = useState(Infinity);
   const [warningMessages, setWarningMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [playMoneySound] = useSound(moneySound);
-  const [playAhOhSound] = useSound(ahOhSound);
+  const [playMoneySound] = useSound(moneySound, { volume: 0.5 });
+  const [playAhOhSound] = useSound(ahOhSound, { volume: 0.5 });
 
   const handleSignIn = async () => {
     setIsLoading(true);
@@ -53,7 +54,6 @@ export const Wallet = () => {
   };
 
   const onUpdateFinish = async () => {
-    console.log("updatefinish");
     await refreshStates();
   };
 
@@ -65,7 +65,6 @@ export const Wallet = () => {
   };
 
   const refreshStates = async () => {
-    console.log("refreshing");
     const walletState = await getWalletState();
     setDanWalletId(walletState[1].id);
     setDanMoney(walletState[1].fields.number.toFixed(2));
@@ -96,17 +95,11 @@ export const Wallet = () => {
             />
             <ItemContainer>
               <Typography color="initial" variant="h5">
-                蛋蛋账户余额
+                {getUserInfo("Dan").chineseName}账户余额
               </Typography>
               <Typography color="textPrimary" variant="h5">
                 $ {danMoney}
               </Typography>
-              {/* <Typography color="initial" variant="h5">
-            凯凯账户余额
-            </Typography>
-            <Typography color="secondary" variant="h5">
-            灰常多，老有钱了
-          </Typography> */}
               {canSignIn(lastSignInDate, new Date().getTime()) ? (
                 <Button
                   variant="contained"
