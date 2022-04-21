@@ -1,19 +1,21 @@
-const getCurrentDate = () => {
+import moment from "moment-timezone";
+
+const getCurrentTimestamp = () => {
   let today = new Date();
-  let minute = String(today.getMinutes()).padStart(2, "0");
-  let hour = String(today.getHours()).padStart(2, "0");
-  let day = String(today.getDate()).padStart(2, "0");
-  let month = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-  let year = today.getFullYear();
-  let time = today.getTime();
-
-  return { minute, hour, day, month, year, time };
+  let timestamp = today.getTime();
+  return timestamp;
 };
 
-const getTimeString = (author, minute, hour, day, month, year) => {
-  let timeZone = "";
-  author === "Dan" ? (timeZone = "中") : (timeZone = "澳");
-  return `${timeZone}  ${hour}:${minute}  ${day}/${month}/${year}`;
+const getCountryDateFromTimestamp = (timestamp, country) => {
+  const countryMap = {
+    Sydney: "Australia/Sydney",
+    China: "Asia/Shanghai",
+  };
+  if (!countryMap[country]) return null;
+
+  const formatString = `[${country}] h:ma D/MMM/YYYY`;
+  const date = moment(timestamp).tz(countryMap[country]).format(formatString);
+  return date;
 };
 
-export { getCurrentDate, getTimeString };
+export { getCurrentTimestamp, getCountryDateFromTimestamp };
