@@ -15,7 +15,7 @@ import gaoBaiQiQiuMusic from "../assets/sounds/gaoBaiQiQiu.mp3";
 export const Navbar = (props) => {
   const [value, setValue] = useState(-1);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [play, { stop }] = useSound(gaoBaiQiQiuMusic);
+  const [play, { stop }] = useSound(gaoBaiQiQiuMusic, { volume: 0.5 });
 
   let navigate = useNavigate();
 
@@ -35,6 +35,17 @@ export const Navbar = (props) => {
     isPlaying ? play() : stop();
   }, [isPlaying, play, stop]);
 
+  const navAction = (navValue) => {
+    const actions = [
+      () => navigate("/new_diary"),
+      () => navigate("/diarys"),
+      () => setIsPlaying(!isPlaying),
+      () => navigate("/wallet"),
+      () => navigate("/"),
+    ];
+    return (actions[navValue] || null)();
+  };
+
   return (
     <Navbar
       sx={{
@@ -45,25 +56,7 @@ export const Navbar = (props) => {
       value={value}
       onChange={(event, newValue) => {
         setValue(newValue);
-        switch (newValue) {
-          case 0:
-            navigate("/new_diary");
-            break;
-          case 1:
-            navigate("/diarys");
-            break;
-          case 2:
-            setIsPlaying(!isPlaying);
-            break;
-          case 3:
-            navigate("/wallet");
-            break;
-          case 4:
-            navigate("/");
-            break;
-          default:
-            break;
-        }
+        navAction(newValue);
       }}
       showLabels
     >
