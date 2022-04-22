@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
@@ -10,7 +10,7 @@ import moneySound from "../assets/sounds/multipleCoins.mp3";
 import ahOhSound from "../assets/sounds/ah-oh.mp3";
 import { getWalletState, updateDanWalletState } from "../services/airtable";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
-import { getUserInfo } from "../services/user_service";
+import { settingsContext } from "../App";
 
 const WalletContainer = styled("div")({
   height: "100vh",
@@ -36,6 +36,8 @@ const canSignIn = (date1, date2) => {
 };
 
 export const Wallet = () => {
+  const { settings } = useContext(settingsContext);
+
   const [isPageLoading, setIsPageLoading] = useState(true);
   const [danWalletId, setDanWalletId] = useState(undefined);
   const [danMoney, setDanMoney] = useState("");
@@ -48,9 +50,11 @@ export const Wallet = () => {
   const handleSignIn = async () => {
     setIsLoading(true);
     const now = new Date().getTime();
-    const newDanMoney = Number(danMoney) + 0.1;
+    const addedDanMoney = Number((Math.random() / 2).toFixed(2));
+    const newDanMoney = Number(danMoney) + addedDanMoney;
     await updateDanWalletState(danWalletId, newDanMoney, now, onUpdateFinish);
     playMoneySound();
+    setWarningMessages(`进账$${addedDanMoney}`);
   };
 
   const onUpdateFinish = async () => {
@@ -95,7 +99,7 @@ export const Wallet = () => {
             />
             <ItemContainer>
               <Typography color="initial" variant="h5">
-                {getUserInfo("Dan").chineseName}账户余额
+                {settings.Dan.nickName}账户余额
               </Typography>
               <Typography color="textPrimary" variant="h5">
                 $ {danMoney}
