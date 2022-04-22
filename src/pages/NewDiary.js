@@ -14,6 +14,7 @@ import {
   openFilePicker,
 } from "../services/filestack";
 import { getCurrentTimestamp } from "../utils/date_utils";
+import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../App";
 
 const NewDiaryContainer = styled("div")({
@@ -68,6 +69,7 @@ export const NewDiary = () => {
   const [author, setAuthor] = useState("");
 
   const [imageUploaded, setImageUploaded] = useState(false);
+  let navigate = useNavigate();
 
   const handleChange = (event) => {
     localStorage.setItem("diaryDraft", event.target.value);
@@ -112,6 +114,7 @@ export const NewDiary = () => {
       await addNewDiary(newDiary);
       setWarningMessage("已保存");
       localStorage.removeItem("diaryDraft");
+      navigate("/diarys");
     } catch (error) {
       setWarningMessage("保存失败，原因：" + error);
     }
