@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { blue, pink, grey, green, yellow } from "@mui/material/colors";
+import * as colors from "@mui/material/colors";
 import { Navbar } from "./components/Navbar";
 import { NewDiary } from "./pages/NewDiary";
 import { Diarys } from "./pages/Diarys";
@@ -9,8 +9,6 @@ import { Dashboard } from "./pages/Dashboard";
 import { Wallet } from "./pages/Wallet";
 import { Login } from "./pages/Login";
 import styled from "styled-components";
-import { useState } from "react";
-import { setUser } from "./services/user_service";
 import { useEffect, useState } from "react";
 import { Settings } from "./pages/Settings";
 import { getUserSettings, updateSettingsDB } from "./services/airtable";

@@ -21,6 +21,8 @@ const LoginContainer = styled.div`
 `;
 
 const LoginControlContainer = styled.div`
+  padding-left: 10px;
+  padding-right: 10px;
   max-width: 400px;
   padding-top: 10px;
   display: flex;
