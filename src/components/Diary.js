@@ -157,7 +157,7 @@ export const Diary = (props) => {
         <CardContent>
           <TitleContainer>
             <Typography
-              variant="h6"
+              variant="h5"
               color={settings[diaryAuthor].primaryColor}
               gutterBottom
             >
@@ -170,7 +170,7 @@ export const Diary = (props) => {
           </TitleContainer>
           <Typography
             color={settings[diaryAuthor].primaryColor}
-            variant="body2"
+            variant="body1"
             component="p"
             gutterBottom
           >
