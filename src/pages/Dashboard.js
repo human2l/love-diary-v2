@@ -5,6 +5,7 @@ import loveImage from "../assets/images/love_icon.png";
 import { getDiaryCountByUser } from "../services/airtable";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import { settingsContext } from "../App";
+import FlyingHeart from "../components/FlyingHeart/FlyingHeart";
 
 const howLong = (time1, time2) => {
   time1 = time1.getTime();
@@ -27,6 +28,7 @@ const howLong = (time1, time2) => {
 };
 
 const DashboardContainer = styled("div")({
+  position: "relative",
   height: "100vh",
   display: "flex",
   flexDirection: "column",
@@ -87,6 +89,7 @@ export const Dashboard = () => {
         <img src={loadingHeartsSvg} alt="loading" />
       ) : (
         <>
+          <FlyingHeart />
           <Image src={loveImage} />
           <Typography color="textPrimary" variant="h5">
             {settings.Dan.nickName}和{settings.Kai.nickName}
