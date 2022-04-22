@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -13,8 +13,8 @@ import {
   getFileMetadata,
   openFilePicker,
 } from "../services/filestack";
-import { getUser, getUserInfo } from "../services/user_service";
 import { getCurrentTimestamp } from "../utils/date_utils";
+import { settingsContext } from "../App";
 
 const NewDiaryContainer = styled("div")({
   marginLeft: 10,
@@ -57,14 +57,16 @@ const ImageControlContainer = styled("div")({
 });
 
 export const NewDiary = () => {
+  const { user, settings } = useContext(settingsContext);
+
   let defaultDiaryContent = localStorage.getItem("diaryDraft");
   if (!defaultDiaryContent) defaultDiaryContent = "";
-
   const [newDiaryContent, setNewDiaryContent] = useState(defaultDiaryContent);
   const [submitted, setSubmitted] = useState(false);
   const [warningMessage, setWarningMessage] = useState("");
   const [submissionAlertState, setSubmissionAlertState] = useState(false);
   const [author, setAuthor] = useState("");
+
   const [imageUploaded, setImageUploaded] = useState(false);
 
   const handleChange = (event) => {
@@ -156,13 +158,12 @@ export const NewDiary = () => {
             <Button
               size="large"
               variant="contained"
-              color={getUserInfo(getUser())?.color}
               onClick={() => {
-                setAuthor(getUser());
+                setAuthor(user);
                 showSubmissionAlert();
               }}
             >
-              {getUserInfo(getUser())?.chineseName}写好了
+              {settings[user].nickName}写好了
             </Button>
           </ControlContainer>
         )}
@@ -174,12 +175,8 @@ export const NewDiary = () => {
         aria-describedby="simple-modal-description"
       >
         <SubmissionAlertModalContent>
-          <Typography
-            color={getUserInfo(getUser())?.color}
-            variant="h5"
-            id="simple-modal-title"
-          >
-            {getUserInfo(author)?.chineseName}
+          <Typography color="primary" variant="h5" id="simple-modal-title">
+            {settings[user].nickName}
           </Typography>
           <Typography color="textSecondary" id="simple-modal-description">
             你确定写好了吗？
@@ -202,7 +199,7 @@ export const NewDiary = () => {
             <Button
               size="medium"
               variant="contained"
-              color={getUserInfo(getUser())?.color}
+              color="primary"
               onClick={() => {
                 hideSubmissionAlert();
                 submitDiary();

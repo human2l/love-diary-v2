@@ -9,15 +9,15 @@ import Button from "@mui/material/Button";
 import CardMedia from "@mui/material/CardMedia";
 import CardActionArea from "@mui/material/CardActionArea";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import { updateDiaryReply } from "../services/airtable";
 import { getAuthImgUrl } from "../services/filestack";
-import { getUser, getUserInfo } from "../services/user_service";
 import {
   getCurrentTimestamp,
   getCountryDateFromTimestamp,
 } from "../utils/date_utils";
+import { settingsContext } from "../App";
 
 const CardContainer = styled(Card)({
   marginTop: 10,
@@ -54,6 +54,8 @@ export const Diary = (props) => {
     diaryPhotos,
     fetchAllDiarys,
   } = props;
+
+  const { user, settings } = useContext(settingsContext);
 
   const [reply, setReply] = useState(false);
   const [replyContent, setReplyContent] = useState("");
@@ -103,22 +105,22 @@ export const Diary = (props) => {
         <ContentDivider variant="fullWidth" />
         <TitleContainer>
           <Typography
-            color={getUserInfo(diaryReply.author)?.color}
+            color={settings[diaryReply.author].primaryColor}
             gutterBottom
           >
-            {getUserInfo(diaryReply.author)?.chineseName}
+            {settings[diaryReply.author].nickName}
           </Typography>
           <DiaryMetaContainer>
             <Typography color="textSecondary">
               {getCountryDateFromTimestamp(
                 diaryReply.time,
-                getUserInfo(diaryReply.author)?.country
+                settings[diaryReply.author].country
               )}
             </Typography>
           </DiaryMetaContainer>
         </TitleContainer>
         <Typography
-          color={getUserInfo(diaryReply.author)?.color}
+          color={settings[diaryReply.author].primaryColor}
           variant="body2"
           component="p"
           gutterBottom
@@ -141,11 +143,10 @@ export const Diary = (props) => {
       />
       <Button
         variant="contained"
-        color={getUserInfo(getUser())?.color}
-        onClick={() => submitReply(getUser())}
+        onClick={() => submitReply(user)}
         style={{ width: "auto", height: "40px", whiteSpace: "nowrap" }}
       >
-        {getUserInfo(getUser())?.chineseName}回复
+        {settings[user].nickName}回复
       </Button>
     </ReplyContainer>
   );
@@ -157,10 +158,10 @@ export const Diary = (props) => {
           <TitleContainer>
             <Typography
               variant="h6"
-              color={getUserInfo(diaryAuthor)?.color}
+              color={settings[diaryAuthor].primaryColor}
               gutterBottom
             >
-              {getUserInfo(diaryAuthor)?.chineseName}
+              {settings[diaryAuthor].nickName}
             </Typography>
             <DiaryMetaContainer>
               <Typography color="textSecondary">{diaryDate}</Typography>
@@ -168,7 +169,7 @@ export const Diary = (props) => {
             </DiaryMetaContainer>
           </TitleContainer>
           <Typography
-            color={getUserInfo(diaryAuthor)?.color}
+            color={settings[diaryAuthor].primaryColor}
             variant="body2"
             component="p"
             gutterBottom

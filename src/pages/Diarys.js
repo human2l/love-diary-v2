@@ -1,10 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Diary } from "../components/Diary";
 import { styled } from "@mui/material/styles";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import { getAllDiarys } from "../services/airtable";
-import { getUserInfo } from "../services/user_service";
 import { getCountryDateFromTimestamp } from "../utils/date_utils";
+import Fab from "@mui/material/Fab";
+import EditIcon from "@mui/icons-material/Edit";
+import { useNavigate } from "react-router-dom";
+import { settingsContext } from "../App";
 
 const DiarysContainer = styled("div")({
   marginLeft: 10,
@@ -14,7 +17,15 @@ const DiarysContainer = styled("div")({
   flexDirection: "column",
 });
 
+const AddNewDiaryButton = styled(Fab)({
+  position: "fixed",
+  bottom: 70,
+  right: 15,
+});
+
 export const Diarys = () => {
+  const { settings } = useContext(settingsContext);
+  let navigate = useNavigate();
   const [diarys, setDiarys] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -43,7 +54,7 @@ export const Diarys = () => {
 
         const diaryDate = getCountryDateFromTimestamp(
           time,
-          getUserInfo(author)?.country
+          settings[author].country
         );
 
         return (
