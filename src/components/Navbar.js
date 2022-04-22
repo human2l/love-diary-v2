@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import CreateIcon from "@mui/icons-material/Create";
+import SettingsIcon from "@mui/icons-material/Settings";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -37,11 +37,11 @@ export const Navbar = (props) => {
 
   const navAction = (navValue) => {
     const actions = [
-      () => navigate("/new_diary"),
       () => navigate("/diarys"),
-      () => setIsPlaying(!isPlaying),
       () => navigate("/wallet"),
+      () => setIsPlaying(!isPlaying),
       () => navigate("/"),
+      () => navigate("/settings"),
     ];
     return (actions[navValue] || null)();
   };
@@ -60,8 +60,11 @@ export const Navbar = (props) => {
       }}
       showLabels
     >
-      <BottomNavigationAction label="新的心情" icon={<CreateIcon />} />
       <BottomNavigationAction label="恋爱日记" icon={<AssignmentIcon />} />
+      <BottomNavigationAction
+        label="钱包"
+        icon={<AccountBalanceWalletIcon />}
+      />
       <BottomNavigationAction
         label=""
         icon={
@@ -72,11 +75,8 @@ export const Navbar = (props) => {
           )
         }
       />
-      <BottomNavigationAction
-        label="钱包"
-        icon={<AccountBalanceWalletIcon />}
-      />
       <BottomNavigationAction label="我们" icon={<FavoriteIcon />} />
+      <BottomNavigationAction label="设置" icon={<SettingsIcon />} />
     </Navbar>
   );
 };

@@ -70,6 +70,15 @@ export const Diarys = () => {
           />
         );
       })}
+      <AddNewDiaryButton
+        color="primary"
+        aria-label="edit"
+        onClick={() => {
+          navigate("/new_diary");
+        }}
+      >
+        <EditIcon />
+      </AddNewDiaryButton>
     </DiarysContainer>
   );
 };
