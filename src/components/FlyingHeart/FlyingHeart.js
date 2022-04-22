@@ -1,4 +1,4 @@
-import "./FlyingHeart.scss";
+import "./FlyingHeart.css";
 
 const FlyingHeart = () => {
   return (
