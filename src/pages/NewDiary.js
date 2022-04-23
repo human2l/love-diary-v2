@@ -2,8 +2,6 @@ import { useState, useContext } from "react";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import Modal from "@mui/material/Modal";
-import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardActionArea from "@mui/material/CardActionArea";
@@ -16,6 +14,7 @@ import {
 import { getCurrentTimestamp } from "../utils/date_utils";
 import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../App";
+import ConfirmModal from "../components/ConfirmModal";
 
 const NewDiaryContainer = styled("div")({
   marginLeft: 10,
@@ -38,16 +37,6 @@ const ControlContainer = styled("div")({
   position: "fixed",
   marginLeft: "auto",
   bottom: 60,
-});
-
-const SubmissionAlertModalContent = styled("div")({
-  padding: 20,
-  marginTop: 50,
-  width: "70%",
-  margin: "auto",
-  background: "rgba(255,255,255,0.6)",
-  borderRadius: "10px",
-  border: "1px solid rgba(255,255,255,0.2)",
 });
 
 const ImageControlContainer = styled("div")({
@@ -74,14 +63,6 @@ export const NewDiary = () => {
   const handleChange = (event) => {
     localStorage.setItem("diaryDraft", event.target.value);
     setNewDiaryContent(event.target.value);
-  };
-
-  const showSubmissionAlert = () => {
-    setSubmissionAlertState(true);
-  };
-
-  const hideSubmissionAlert = () => {
-    setSubmissionAlertState(false);
   };
 
   const selectImageFile = async (e) => {
@@ -163,7 +144,7 @@ export const NewDiary = () => {
               variant="contained"
               onClick={() => {
                 setAuthor(user);
-                showSubmissionAlert();
+                setSubmissionAlertState(true);
               }}
             >
               {settings[user].nickName}写好了
@@ -171,48 +152,14 @@ export const NewDiary = () => {
           </ControlContainer>
         )}
       </NewDiaryForm>
-      <Modal
-        open={submissionAlertState}
-        onClose={hideSubmissionAlert}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        <SubmissionAlertModalContent>
-          <Typography color="primary" variant="h5" id="simple-modal-title">
-            {settings[user].nickName}
-          </Typography>
-          <Typography color="textSecondary" id="simple-modal-description">
-            你确定写好了吗？
-          </Typography>
-          <div
-            style={{
-              marginTop: "10px",
-              display: "flex",
-              justifyContent: "space-around",
-            }}
-          >
-            <Button
-              size="medium"
-              variant="contained"
-              color="inherit"
-              onClick={hideSubmissionAlert}
-            >
-              取消
-            </Button>
-            <Button
-              size="medium"
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                hideSubmissionAlert();
-                submitDiary();
-              }}
-            >
-              确定
-            </Button>
-          </div>
-        </SubmissionAlertModalContent>
-      </Modal>
+      {submissionAlertState && (
+        <ConfirmModal
+          confirmTitle={settings[user].nickName}
+          confirmDescription="你确定写好了吗？"
+          cancel={() => setSubmissionAlertState(false)}
+          confirm={submitDiary}
+        />
+      )}
     </NewDiaryContainer>
   );
 };
