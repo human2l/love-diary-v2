@@ -1,9 +1,9 @@
-import * as colors from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import { Button, Typography } from "@mui/material";
 import { useState, useContext } from "react";
 import { settingsContext } from "../App";
+import ColorTiles from "../components/ColorTiles";
 
 const SettingsContainer = styled("div")({
   height: "100vh",
@@ -21,19 +21,6 @@ const ItemContainer = styled("div")({
   alignItems: "center",
 });
 
-const ColorTiles = styled("div")({
-  marginTop: 10,
-  display: "flex",
-  flexWrap: "wrap",
-  width: 160,
-});
-
-const ColorTile = styled("div")({
-  width: 30,
-  height: 30,
-  border: "1px solid white",
-});
-
 export const Settings = () => {
   const { user, settings, updateSettings } = useContext(settingsContext);
   const [primaryColor, setPrimaryColor] = useState(settings[user].primaryColor);
@@ -41,13 +28,6 @@ export const Settings = () => {
     settings[user].secondaryColor
   );
   const [nickName, setNickName] = useState(settings[user].nickName);
-  const pickPrimaryColor = (colorValue) => {
-    setPrimaryColor(colorValue);
-  };
-
-  const pickSecondaryColor = (colorValue) => {
-    setSecondaryColor(colorValue);
-  };
 
   const saveSettings = () => {
     const newSettings = {
@@ -55,28 +35,6 @@ export const Settings = () => {
       [user]: { ...settings[user], nickName, primaryColor, secondaryColor },
     };
     updateSettings(newSettings);
-  };
-
-  const colorMap = {
-    amber: colors.amber[500],
-    blue: colors.blue[500],
-    blueGrey: colors.blueGrey[500],
-    brown: colors.brown[500],
-    cyan: colors.cyan[500],
-    deepOrange: colors.deepOrange[500],
-    deepPurple: colors.deepPurple[500],
-    green: colors.green[500],
-    grey: colors.grey[500],
-    indigo: colors.indigo[500],
-    lightBlue: colors.lightBlue[500],
-    lightGreen: colors.lightGreen[500],
-    lime: colors.lime[500],
-    orange: colors.orange[500],
-    pink: colors.pink[500],
-    purple: colors.purple[500],
-    red: colors.red[500],
-    teal: colors.teal[500],
-    yellow: colors.yellow[500],
   };
 
   return (
@@ -98,18 +56,7 @@ export const Settings = () => {
           >
             主色调
           </Typography>
-          <ColorTiles>
-            {Object.keys(colorMap).map((colorName) => {
-              const colorValue = colorMap[colorName];
-              return (
-                <ColorTile
-                  key={colorName}
-                  sx={{ backgroundColor: colorValue }}
-                  onClick={() => pickPrimaryColor(colorValue)}
-                />
-              );
-            })}
-          </ColorTiles>
+          <ColorTiles pickColor={setPrimaryColor} />
           <Typography
             variant="h6"
             color={secondaryColor}
@@ -117,18 +64,7 @@ export const Settings = () => {
           >
             副色调
           </Typography>
-          <ColorTiles>
-            {Object.keys(colorMap).map((colorName) => {
-              const colorValue = colorMap[colorName];
-              return (
-                <ColorTile
-                  key={colorName}
-                  sx={{ backgroundColor: colorValue }}
-                  onClick={() => pickSecondaryColor(colorValue)}
-                />
-              );
-            })}
-          </ColorTiles>
+          <ColorTiles pickColor={setSecondaryColor} />
           <Button
             size="large"
             variant="contained"
