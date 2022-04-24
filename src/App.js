@@ -72,6 +72,7 @@ function App() {
           pink: colors.pink[400],
           blue: colors.blue[400],
           white: colors.grey[50],
+          black: colors.grey[800],
         },
         typography: {
           fontFamily: ["Ma Shan Zheng"].join(","),
@@ -82,7 +83,7 @@ function App() {
   }, [settings, user]);
 
   return (
-    <>
+    <AppContainer>
       {isLoading ? (
         <LoadingImgWrapper>
           <img src={loadingHeartsSvg} alt="loading" />
@@ -90,27 +91,25 @@ function App() {
       ) : (
         <settingsContext.Provider value={{ user, settings, updateSettings }}>
           <ThemeProvider theme={theme}>
-            <AppContainer>
-              <Router>
-                <Routes>
-                  {authenticated && (
-                    <>
-                      <Route exact path="/" element={<Dashboard />} />
-                      <Route path="/new_diary" element={<NewDiary />} />
-                      <Route path="/diarys" element={<Diarys />} />
-                      <Route path="/wallet" element={<Wallet />} />
-                      <Route path="/settings" element={<Settings />} />
-                    </>
-                  )}
-                  <Route path="*" element={<Login login={login} />} />
-                </Routes>
-                {authenticated && <Navbar />}
-              </Router>
-            </AppContainer>
+            <Router>
+              <Routes>
+                {authenticated && (
+                  <>
+                    <Route exact path="/" element={<Dashboard />} />
+                    <Route path="/new_diary" element={<NewDiary />} />
+                    <Route path="/diarys" element={<Diarys />} />
+                    <Route path="/wallet" element={<Wallet />} />
+                    <Route path="/settings" element={<Settings />} />
+                  </>
+                )}
+                <Route path="*" element={<Login login={login} />} />
+              </Routes>
+              {authenticated && <Navbar />}
+            </Router>
           </ThemeProvider>
         </settingsContext.Provider>
       )}
-    </>
+    </AppContainer>
   );
 }
 
