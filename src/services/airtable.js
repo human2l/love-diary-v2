@@ -62,7 +62,7 @@ const updateDiary = async (diaryId, diary) => {
   );
 };
 
-const updateDiaryReply = async (diaryId, reply) => {
+const updateDiaryReply = async (diaryId, reply, callback) => {
   diaryBase.update(
     diaryId,
     {
@@ -73,6 +73,16 @@ const updateDiaryReply = async (diaryId, reply) => {
         console.error(err);
         return;
       }
+      const { author, content, photos, reply, time } = record.fields;
+      const updatedDiary = {
+        author,
+        content,
+        photos: JSON.parse(photos),
+        reply: JSON.parse(reply),
+        time,
+        key: record.id,
+      };
+      return callback(updatedDiary);
     }
   );
 };

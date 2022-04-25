@@ -3,7 +3,6 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import MessageIcon from "@mui/icons-material/Message";
 import TextField from "@mui/material/TextField";
-import Divider from "@mui/material/Divider";
 import styled from "styled-components";
 import Button from "@mui/material/Button";
 import CardMedia from "@mui/material/CardMedia";
@@ -13,11 +12,9 @@ import { useState, useContext } from "react";
 
 import { updateDiaryReply } from "../services/airtable";
 import { getAuthImgUrl } from "../services/filestack";
-import {
-  getCurrentTimestamp,
-  getCountryDateFromTimestamp,
-} from "../utils/date_utils";
+import { getCurrentTimestamp } from "../utils/date_utils";
 import { settingsContext } from "../App";
+import DiaryReply from "./DiaryReply";
 
 const CardContainer = styled(Card)({
   marginTop: 10,
@@ -36,8 +33,6 @@ const ReplyContainer = styled("div")({
   display: "flex",
 });
 
-const ContentDivider = styled(Divider)({});
-
 const PhotoContainer = styled("div")({
   display: "flex",
   flexDirection: "column",
@@ -50,9 +45,9 @@ export const Diary = (props) => {
     diaryContent,
     diaryDate,
     diaryKey,
-    diaryReplys,
+    diaryReplies,
     diaryPhotos,
-    fetchAllDiarys,
+    onUpdateDiary,
   } = props;
 
   const { user, settings } = useContext(settingsContext);
@@ -81,15 +76,14 @@ export const Diary = (props) => {
     const time = getCurrentTimestamp();
     try {
       const reply = [
-        ...diaryReplys,
+        ...diaryReplies,
         {
           author,
           content: replyContent,
           time,
         },
       ];
-      await updateDiaryReply(diaryKey, reply);
-      fetchAllDiarys();
+      await updateDiaryReply(diaryKey, reply, onUpdateDiary);
     } catch (error) {
       console.error(error);
     }
@@ -99,34 +93,17 @@ export const Diary = (props) => {
     setReply(!reply);
   };
 
-  const diaryReplysView = diaryReplys.map((diaryReply, index) => {
+  const diaryRepliesView = diaryReplies.map((diaryReply, index) => {
     return (
       <div key={index} style={{ paddingLeft: 10 }}>
-        <ContentDivider variant="fullWidth" />
-        <TitleContainer>
-          <Typography
-            color={settings[diaryReply.author].primaryColor}
-            gutterBottom
-          >
-            {settings[diaryReply.author].nickName}
-          </Typography>
-          <DiaryMetaContainer>
-            <Typography color="textSecondary">
-              {getCountryDateFromTimestamp(
-                diaryReply.time,
-                settings[diaryReply.author].country
-              )}
-            </Typography>
-          </DiaryMetaContainer>
-        </TitleContainer>
-        <Typography
+        <DiaryReply
           color={settings[diaryReply.author].primaryColor}
-          variant="body2"
-          component="p"
-          gutterBottom
-        >
-          {convertToParagraph(diaryReply.content)}
-        </Typography>
+          nickName={settings[diaryReply.author].nickName}
+          time={diaryReply.time}
+          country={settings[diaryReply.author].country}
+          content={diaryReply.content}
+          convertToParagraph={convertToParagraph}
+        />
       </div>
     );
   });
@@ -192,7 +169,7 @@ export const Diary = (props) => {
             )}
           </PhotoContainer>
 
-          {diaryReplysView}
+          {diaryRepliesView}
 
           {reply && replyControlsView}
         </CardContent>

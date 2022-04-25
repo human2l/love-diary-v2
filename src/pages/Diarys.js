@@ -29,6 +29,16 @@ export const Diarys = () => {
   const [diarys, setDiarys] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const onUpdateDiary = (editedDiary) => {
+    const updatedDiarys = diarys.map((diary) => {
+      if (diary.key === editedDiary.key) {
+        return editedDiary;
+      }
+      return diary;
+    });
+    setDiarys(updatedDiarys);
+  };
+
   const fetchAllDiarys = async () => {
     setIsLoading(true);
     try {
@@ -43,9 +53,11 @@ export const Diarys = () => {
       setIsLoading(false);
     }
   };
+
   useEffect(() => {
     fetchAllDiarys();
   }, []);
+
   return (
     <DiarysContainer>
       {isLoading && <img src={loadingHeartsSvg} alt="loading" />}
@@ -64,9 +76,9 @@ export const Diarys = () => {
             diaryAuthor={author}
             diaryDate={diaryDate}
             diaryContent={content}
-            diaryReplys={reply}
+            diaryReplies={reply}
             diaryPhotos={photos}
-            fetchAllDiarys={fetchAllDiarys}
+            onUpdateDiary={onUpdateDiary}
           />
         );
       })}
