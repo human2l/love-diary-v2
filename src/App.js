@@ -47,10 +47,13 @@ function App() {
     setUser(user);
   };
 
+  const fetchSettings = async () => {
+    setSettings(await getUserSettings());
+  };
+
   useEffect(() => {
     (async () => {
-      const fetchedSettings = await getUserSettings();
-      setSettings(fetchedSettings);
+      fetchSettings();
       setIsLoading(false);
     })();
   }, []);
@@ -104,7 +107,7 @@ function App() {
                 )}
                 <Route path="*" element={<Login login={login} />} />
               </Routes>
-              {authenticated && <Navbar />}
+              {authenticated && <Navbar fetchSettings={fetchSettings} />}
             </Router>
           </ThemeProvider>
         </settingsContext.Provider>
