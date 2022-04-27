@@ -147,7 +147,7 @@ export const NewDiary = () => {
                 setSubmissionAlertState(true);
               }}
             >
-              {settings[user].nickName}写好了
+              写好了
             </Button>
           </ControlContainer>
         )}
