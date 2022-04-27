@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { Settings } from "./pages/Settings";
 import { getUserSettings, updateSettingsDB } from "./services/airtable";
 import loadingHeartsSvg from "./assets/images/loadingHearts.svg";
+import "./services/i18next";
 
 export const settingsContext = React.createContext({
   user: "",

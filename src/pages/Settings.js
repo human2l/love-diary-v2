@@ -4,6 +4,8 @@ import { Button, Typography } from "@mui/material";
 import { useState, useContext } from "react";
 import { settingsContext } from "../App";
 import ColorTiles from "../components/ColorTiles";
+import LanguageSelector from "../components/LanguageSelector";
+import { useTranslation } from "react-i18next";
 
 const SettingsContainer = styled("div")({
   height: "100vh",
@@ -22,6 +24,7 @@ const ItemContainer = styled("div")({
 });
 
 export const Settings = () => {
+  const { t, i18n } = useTranslation();
   const { user, settings, updateSettings } = useContext(settingsContext);
   const [primaryColor, setPrimaryColor] = useState(settings[user].primaryColor);
   const [secondaryColor, setSecondaryColor] = useState(
@@ -41,6 +44,8 @@ export const Settings = () => {
     <>
       <SettingsContainer>
         <ItemContainer>
+          {t("hello.label")}
+          <LanguageSelector />
           <TextField
             id="outlined-basic"
             label="昵称"
