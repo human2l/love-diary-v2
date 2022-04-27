@@ -57,6 +57,7 @@ export const Navbar = (props) => {
       onChange={(event, newValue) => {
         setValue(newValue);
         navAction(newValue);
+        // fetch settings whenever user click on one tab
         props.fetchSettings();
       }}
       showLabels

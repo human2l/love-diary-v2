@@ -110,14 +110,14 @@ const getWalletState = async () => {
 const updateDanWalletState = async (
   walletId,
   number,
-  lastSignInDate,
+  lastCheckInDate,
   callback
 ) => {
   walletBase.update(
     walletId,
     {
       number,
-      lastSignInDate,
+      lastCheckInDate,
     },
     function (err, record) {
       if (err) {

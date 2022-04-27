@@ -8,7 +8,6 @@ import popDownSound from "../assets/sounds/pop-down.mp3";
 import popUpOnSound from "../assets/sounds/pop-up-on.mp3";
 import popUpOffSound from "../assets/sounds/pop-up-off.mp3";
 
-//TODO add theme color
 const LoginLabel = styled(Typography)`
   border-radius: 50px;
   text-align: center;

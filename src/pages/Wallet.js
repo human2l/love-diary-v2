@@ -30,7 +30,7 @@ const ItemContainer = styled("div")({
 
 const twentyHours = 1000 * 60 * 60 * 20;
 
-const canSignIn = (date1, date2) => {
+const canCheckIn = (date1, date2) => {
   // return date2 - date1 > 86400000; // 1 day
   return date2 - date1 > twentyHours; // 20 hours
 };
@@ -41,13 +41,13 @@ export const Wallet = () => {
   const [isPageLoading, setIsPageLoading] = useState(true);
   const [danWalletId, setDanWalletId] = useState(undefined);
   const [danMoney, setDanMoney] = useState("");
-  const [lastSignInDate, setLastSignInDate] = useState(Infinity);
+  const [lastCheckInDate, setLastCheckInDate] = useState(Infinity);
   const [warningMessages, setWarningMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [playMoneySound] = useSound(moneySound, { volume: 0.5 });
   const [playAhOhSound] = useSound(ahOhSound, { volume: 0.5 });
 
-  const handleSignIn = async () => {
+  const handleCheckIn = async () => {
     setIsLoading(true);
     const now = new Date().getTime();
     const addedDanMoney = Number((Math.random() / 2).toFixed(2));
@@ -61,9 +61,9 @@ export const Wallet = () => {
     await refreshStates();
   };
 
-  const nextSignInAllowedTime = () => {
+  const nextCheckInAllowedTime = () => {
     const nextTime =
-      (lastSignInDate + twentyHours - new Date().getTime()) / (1000 * 60 * 60);
+      (lastCheckInDate + twentyHours - new Date().getTime()) / (1000 * 60 * 60);
     if (nextTime < 0) return 0;
     return nextTime.toFixed(2);
   };
@@ -72,7 +72,7 @@ export const Wallet = () => {
     const walletState = await getWalletState();
     setDanWalletId(walletState[1].id);
     setDanMoney(walletState[1].fields.number.toFixed(2));
-    setLastSignInDate(walletState[1].fields.lastSignInDate);
+    setLastCheckInDate(walletState[1].fields.lastCheckInDate);
     setIsLoading(false);
     setIsPageLoading(false);
   };
@@ -104,12 +104,12 @@ export const Wallet = () => {
               <Typography color="textPrimary" variant="h5">
                 $ {danMoney}
               </Typography>
-              {canSignIn(lastSignInDate, new Date().getTime()) ? (
+              {canCheckIn(lastCheckInDate, new Date().getTime()) ? (
                 <Button
                   variant="contained"
                   color="primary"
                   startIcon={<Avatar src={dollarPng} />}
-                  onClick={handleSignIn}
+                  onClick={handleCheckIn}
                 >
                   <Typography sx={{ color: "white" }} variant="h5">
                     {isLoading ? "正在签到" : "签到"}
@@ -134,7 +134,7 @@ export const Wallet = () => {
                 </Button>
               )}
               <Typography color="secondary" variant="h6">
-                距离下次签到时间：{nextSignInAllowedTime()}小时
+                距离下次签到时间：{nextCheckInAllowedTime()}小时
               </Typography>
               {warningMessages.map((warningMessage, index) => {
                 return (
