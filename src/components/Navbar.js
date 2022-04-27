@@ -11,8 +11,10 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import MusicOffIcon from "@mui/icons-material/MusicOff";
 import gaoBaiQiQiuMusic from "../assets/sounds/gaoBaiQiQiu.mp3";
+import { useTranslation } from "react-i18next";
 
 export const Navbar = (props) => {
+  const { t } = useTranslation();
   const [value, setValue] = useState(-1);
   const [isPlaying, setIsPlaying] = useState(true);
   const [play, { stop }] = useSound(gaoBaiQiQiuMusic, { volume: 0.5 });
@@ -62,9 +64,12 @@ export const Navbar = (props) => {
       }}
       showLabels
     >
-      <BottomNavigationAction label="恋爱日记" icon={<AssignmentIcon />} />
       <BottomNavigationAction
-        label="钱包"
+        label={t("love_diary.label")}
+        icon={<AssignmentIcon />}
+      />
+      <BottomNavigationAction
+        label={t("wallet.label")}
         icon={<AccountBalanceWalletIcon />}
       />
       <BottomNavigationAction
@@ -77,8 +82,11 @@ export const Navbar = (props) => {
           )
         }
       />
-      <BottomNavigationAction label="我们" icon={<FavoriteIcon />} />
-      <BottomNavigationAction label="设置" icon={<SettingsIcon />} />
+      <BottomNavigationAction label={t("we.label")} icon={<FavoriteIcon />} />
+      <BottomNavigationAction
+        label={t("settings.label")}
+        icon={<SettingsIcon />}
+      />
     </Navbar>
   );
 };

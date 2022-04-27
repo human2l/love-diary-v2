@@ -2,6 +2,7 @@ import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
+import { useTranslation } from "react-i18next";
 
 const ModalContent = styled("div")({
   padding: 20,
@@ -13,6 +14,7 @@ const ModalContent = styled("div")({
 });
 
 const ConfirmModal = (props) => {
+  const { t } = useTranslation();
   return (
     <Modal
       open
@@ -42,7 +44,7 @@ const ConfirmModal = (props) => {
             color="inherit"
             onClick={props.cancel}
           >
-            取消
+            {t("cancel.label")}
           </Button>
           <Button
             size="medium"
@@ -50,7 +52,7 @@ const ConfirmModal = (props) => {
             color="primary"
             onClick={props.confirm}
           >
-            确定
+            {t("confirm.label")}
           </Button>
         </div>
       </ModalContent>

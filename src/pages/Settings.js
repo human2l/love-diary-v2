@@ -24,7 +24,8 @@ const ItemContainer = styled("div")({
 });
 
 export const Settings = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+
   const { user, settings, updateSettings } = useContext(settingsContext);
   const [primaryColor, setPrimaryColor] = useState(settings[user].primaryColor);
   const [secondaryColor, setSecondaryColor] = useState(
@@ -44,11 +45,10 @@ export const Settings = () => {
     <>
       <SettingsContainer>
         <ItemContainer>
-          {t("hello.label")}
           <LanguageSelector />
           <TextField
             id="outlined-basic"
-            label="昵称"
+            label={t("nickname.label")}
             variant="outlined"
             size="small"
             defaultValue={nickName}
@@ -59,7 +59,7 @@ export const Settings = () => {
             color={primaryColor}
             sx={{ marginTop: "10px" }}
           >
-            主色调
+            {t("primary_color.label")}
           </Typography>
           <ColorTiles pickColor={setPrimaryColor} />
           <Typography
@@ -67,7 +67,7 @@ export const Settings = () => {
             color={secondaryColor}
             sx={{ marginTop: "10px" }}
           >
-            副色调
+            {t("secondary_color.label")}
           </Typography>
           <ColorTiles pickColor={setSecondaryColor} />
           <Button
@@ -76,7 +76,7 @@ export const Settings = () => {
             sx={{ marginTop: "20px" }}
             onClick={saveSettings}
           >
-            保存
+            {t("save.label")}
           </Button>
         </ItemContainer>
       </SettingsContainer>

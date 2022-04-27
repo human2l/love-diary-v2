@@ -15,6 +15,7 @@ import { getCurrentTimestamp } from "../utils/date_utils";
 import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../App";
 import ConfirmModal from "../components/ConfirmModal";
+import { useTranslation } from "react-i18next";
 
 const NewDiaryContainer = styled("div")({
   marginLeft: 10,
@@ -47,6 +48,8 @@ const ImageControlContainer = styled("div")({
 });
 
 export const NewDiary = () => {
+  const { t } = useTranslation();
+
   const { user, settings } = useContext(settingsContext);
 
   let defaultDiaryContent = localStorage.getItem("diaryDraft");
@@ -75,7 +78,7 @@ export const NewDiary = () => {
   const submitDiary = async () => {
     const time = getCurrentTimestamp();
     setSubmitted(true);
-    setWarningMessage("正在保存...请不要乱动🐶");
+    setWarningMessage(t("saving.label"));
     try {
       let photos = [];
 
@@ -93,11 +96,11 @@ export const NewDiary = () => {
       };
 
       await addNewDiary(newDiary);
-      setWarningMessage("已保存");
+      setWarningMessage(t("saved.label"));
       localStorage.removeItem("diaryDraft");
       navigate("/diarys");
     } catch (error) {
-      setWarningMessage("保存失败，原因：" + error);
+      setWarningMessage(t("save_failed.label") + error);
     }
   };
   return (
@@ -105,8 +108,8 @@ export const NewDiary = () => {
       <NewDiaryForm noValidate autoComplete="off">
         <DiaryTextField
           onChange={handleChange}
-          label="新的心情"
-          placeholder="写点什么好呢"
+          label={t("new_diary.label")}
+          placeholder={t("new_diary_placeholder.label")}
           multiline
           variant="outlined"
           maxRows={(window.innerHeight - 56) / 23}
@@ -123,7 +126,7 @@ export const NewDiary = () => {
               selectImageFile(e);
             }}
           >
-            添加图片
+            {t("add_photo.label")}
           </Button>
         </ImageControlContainer>
 
@@ -147,7 +150,7 @@ export const NewDiary = () => {
                 setSubmissionAlertState(true);
               }}
             >
-              写好了
+              {t("submit.label")}
             </Button>
           </ControlContainer>
         )}
@@ -155,7 +158,7 @@ export const NewDiary = () => {
       {submissionAlertState && (
         <ConfirmModal
           confirmTitle={settings[user].nickName}
-          confirmDescription="你确定写好了吗？"
+          confirmDescription={t("submit_confirm.label")}
           cancel={() => setSubmissionAlertState(false)}
           confirm={submitDiary}
         />

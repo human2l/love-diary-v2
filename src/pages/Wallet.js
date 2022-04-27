@@ -11,6 +11,7 @@ import ahOhSound from "../assets/sounds/ah-oh.mp3";
 import { getWalletState, updateDanWalletState } from "../services/airtable";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import { settingsContext } from "../App";
+import { useTranslation } from "react-i18next";
 
 const WalletContainer = styled("div")({
   height: "100vh",
@@ -36,6 +37,8 @@ const canCheckIn = (date1, date2) => {
 };
 
 export const Wallet = () => {
+  const { t } = useTranslation();
+
   const { settings } = useContext(settingsContext);
 
   const [isPageLoading, setIsPageLoading] = useState(true);
@@ -54,7 +57,7 @@ export const Wallet = () => {
     const newDanMoney = Number(danMoney) + addedDanMoney;
     await updateDanWalletState(danWalletId, newDanMoney, now, onUpdateFinish);
     playMoneySound();
-    setWarningMessages(`进账$${addedDanMoney}`);
+    setWarningMessages(`${t("get_money.label")}$${addedDanMoney}`);
   };
 
   const onUpdateFinish = async () => {
@@ -99,7 +102,8 @@ export const Wallet = () => {
             />
             <ItemContainer>
               <Typography color="initial" variant="h5">
-                {settings.Dan.nickName}账户余额
+                {settings.Dan.nickName}
+                {t("account_balance.label")}
               </Typography>
               <Typography color="textPrimary" variant="h5">
                 $ {danMoney}
@@ -112,7 +116,7 @@ export const Wallet = () => {
                   onClick={handleCheckIn}
                 >
                   <Typography sx={{ color: "white" }} variant="h5">
-                    {isLoading ? "正在签到" : "签到"}
+                    {isLoading ? t("checking_in.label") : t("check_in.label")}
                   </Typography>
                 </Button>
               ) : (
@@ -123,18 +127,20 @@ export const Wallet = () => {
                   onClick={() => {
                     setWarningMessages([
                       ...warningMessages,
-                      "别点啦，已经给过钱钱啦！",
+                      t("already_checked_in_warning.label"),
                     ]);
                     playAhOhSound();
                   }}
                 >
                   <Typography sx={{ color: "white" }} variant="h5">
-                    已签到
+                    {t("checked_in.label")}
                   </Typography>
                 </Button>
               )}
               <Typography color="secondary" variant="h6">
-                距离下次签到时间：{nextCheckInAllowedTime()}小时
+                {t("time_before_next_check_in.label")}
+                {nextCheckInAllowedTime()}
+                {t("hours.label")}
               </Typography>
               {warningMessages.map((warningMessage, index) => {
                 return (

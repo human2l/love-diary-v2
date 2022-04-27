@@ -15,6 +15,7 @@ import { getAuthImgUrl } from "../services/filestack";
 import { getCurrentTimestamp } from "../utils/date_utils";
 import { settingsContext } from "../App";
 import DiaryReply from "./DiaryReply";
+import { useTranslation } from "react-i18next";
 
 const CardContainer = styled(Card)({
   marginTop: 10,
@@ -40,6 +41,8 @@ const PhotoContainer = styled("div")({
 });
 
 export const Diary = (props) => {
+  const { t } = useTranslation();
+
   const {
     diaryAuthor,
     diaryContent,
@@ -111,7 +114,7 @@ export const Diary = (props) => {
   const replyControlsView = (
     <ReplyContainer>
       <TextField
-        label="回复："
+        label={t("reply_with_colon.label")}
         multiline
         variant="standard"
         style={{ width: "100%" }}
@@ -123,7 +126,7 @@ export const Diary = (props) => {
         onClick={() => submitReply(user)}
         style={{ width: "auto", height: "40px", whiteSpace: "nowrap" }}
       >
-        {settings[user].nickName}回复
+        {t("reply.label")}
       </Button>
     </ReplyContainer>
   );

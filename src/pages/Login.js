@@ -7,6 +7,7 @@ import useSound from "use-sound";
 import popDownSound from "../assets/sounds/pop-down.mp3";
 import popUpOnSound from "../assets/sounds/pop-up-on.mp3";
 import popUpOffSound from "../assets/sounds/pop-up-off.mp3";
+import { useTranslation } from "react-i18next";
 
 const LoginLabel = styled(Typography)`
   border-radius: 50px;
@@ -36,6 +37,8 @@ const PasswordPad = styled.div`
 const PasswordButtonText = styled(Typography)``;
 
 export const Login = (props) => {
+  const { t } = useTranslation();
+
   const [password, setPassword] = useState("");
 
   const [playActive] = useSound(popDownSound, { volume: 0.25 });
@@ -64,7 +67,7 @@ export const Login = (props) => {
           sx={{ color: "primary.main", backgroundColor: "text.light" }}
           variant="h4"
         >
-          不输密码不让看🤪
+          {t("password_required.label")}🤪
         </LoginLabel>
         <PasswordPad>
           <Grid
@@ -123,7 +126,7 @@ export const Login = (props) => {
             playOn();
           }}
         >
-          登录
+          {t("login.label")}
         </Button>
       </LoginControlContainer>
     </LoginContainer>

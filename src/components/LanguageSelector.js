@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 const LanguageSelector = () => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
 
   const changeLanguage = (event) => {
     i18n.changeLanguage(event.target.value);

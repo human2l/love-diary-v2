@@ -6,6 +6,7 @@ import { getDiaryCountByUser } from "../services/airtable";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import { settingsContext } from "../App";
 import FlyingHeart from "../components/FlyingHeart/FlyingHeart";
+import { useTranslation } from "react-i18next";
 
 const howLong = (time1, time2) => {
   time1 = time1.getTime();
@@ -69,6 +70,8 @@ const RedTypography = styled(Typography)({
 });
 
 export const Dashboard = () => {
+  const { t } = useTranslation();
+
   const { settings } = useContext(settingsContext);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -95,14 +98,16 @@ export const Dashboard = () => {
           <FlyingHeart />
           <Image src={loveImage} />
           <Typography color="textPrimary" variant="h5">
-            {settings.Dan.nickName}和{settings.Kai.nickName}
+            {settings.Dan.nickName}
+            {t("and.label")}
+            {settings.Kai.nickName}
           </Typography>
           {/* <Typography color="textPrimary" variant="h5">
             从2020年2月14日在一起
           </Typography> */}
           <DaysCounterContainer>
             <Typography color="textPrimary" variant="h5">
-              已经在一起
+              {t("have_been_together_for.label")}
             </Typography>
             <DaysWrapper>
               <RedTypography color="primary" variant="h3">
@@ -110,31 +115,35 @@ export const Dashboard = () => {
               </RedTypography>
             </DaysWrapper>
             <Typography color="textPrimary" variant="h5">
-              天了
+              {t("days.label")}
             </Typography>
           </DaysCounterContainer>
           <DiaryCounterContainer>
             <Typography color={settings.Dan.primaryColor} variant="h5">
-              {settings.Dan.nickName}写了
+              {settings.Dan.nickName}
+              {t("wrote.label")}
               {Math.floor(
                 (danDiaryCount / (danDiaryCount + kaiDiaryCount)) * 100
               )}
-              % 的日记
+              % {t("of_diaries.label")}
             </Typography>
             <Typography color={settings.Dan.primaryColor} variant="h5">
-              一共
-              {danDiaryCount}篇
+              {t("total.label.omit")}
+              {danDiaryCount}
+              {t("total.label")}
             </Typography>
             <Typography color={settings.Kai.primaryColor} variant="h5">
-              {settings.Kai.nickName}写了
+              {settings.Kai.nickName}
+              {t("wrote.label")}
               {Math.floor(
                 (kaiDiaryCount / (danDiaryCount + kaiDiaryCount)) * 100
               )}
-              % 的日记
+              % {t("of_diaries.label")}
             </Typography>
             <Typography color={settings.Kai.primaryColor} variant="h5">
-              一共
-              {kaiDiaryCount}篇
+              {t("total.label.omit")}
+              {kaiDiaryCount}
+              {t("total.label")}
             </Typography>
           </DiaryCounterContainer>
         </>
