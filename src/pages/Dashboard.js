@@ -40,8 +40,9 @@ const DashboardContainer = styled("div")({
 
 const DaysCounterContainer = styled("div")({
   display: "flex",
+  flexDirection: "column",
   justifyContent: "center",
-  alignItems: "flex-end",
+  alignItems: "center",
   marginBottom: 20,
 });
 
@@ -60,6 +61,8 @@ const Image = styled("img")({
   maxWidth: 100,
   maxHeight: 100,
 });
+
+const DaysWrapper = styled("div")({});
 
 const RedTypography = styled(Typography)({
   color: "#f44336",
@@ -94,16 +97,18 @@ export const Dashboard = () => {
           <Typography color="textPrimary" variant="h5">
             {settings.Dan.nickName}和{settings.Kai.nickName}
           </Typography>
-          <Typography color="textPrimary" variant="h5">
+          {/* <Typography color="textPrimary" variant="h5">
             从2020年2月14日在一起
-          </Typography>
+          </Typography> */}
           <DaysCounterContainer>
             <Typography color="textPrimary" variant="h5">
-              已经
+              已经在一起
             </Typography>
-            <RedTypography color="primary" variant="h3">
-              {res.day}
-            </RedTypography>
+            <DaysWrapper>
+              <RedTypography color="primary" variant="h3">
+                {res.day}
+              </RedTypography>
+            </DaysWrapper>
             <Typography color="textPrimary" variant="h5">
               天了
             </Typography>
