@@ -102,7 +102,7 @@ export const Wallet = () => {
             />
             <ItemContainer>
               <Typography color="initial" variant="h5">
-                {settings.Dan.nickName}
+                {settings.Dan.nickname}
                 {t("account_balance.label")}
               </Typography>
               <Typography color="textPrimary" variant="h5">

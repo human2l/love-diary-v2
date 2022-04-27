@@ -98,9 +98,9 @@ export const Dashboard = () => {
           <FlyingHeart />
           <Image src={loveImage} />
           <Typography color="textPrimary" variant="h5">
-            {settings.Dan.nickName}
+            {settings.Dan.nickname}
             {t("and.label")}
-            {settings.Kai.nickName}
+            {settings.Kai.nickname}
           </Typography>
           {/* <Typography color="textPrimary" variant="h5">
             从2020年2月14日在一起
@@ -120,7 +120,7 @@ export const Dashboard = () => {
           </DaysCounterContainer>
           <DiaryCounterContainer>
             <Typography color={settings.Dan.primaryColor} variant="h5">
-              {settings.Dan.nickName}
+              {settings.Dan.nickname}
               {t("wrote.label")}
               {Math.floor(
                 (danDiaryCount / (danDiaryCount + kaiDiaryCount)) * 100
@@ -133,7 +133,7 @@ export const Dashboard = () => {
               {t("total.label")}
             </Typography>
             <Typography color={settings.Kai.primaryColor} variant="h5">
-              {settings.Kai.nickName}
+              {settings.Kai.nickname}
               {t("wrote.label")}
               {Math.floor(
                 (kaiDiaryCount / (danDiaryCount + kaiDiaryCount)) * 100

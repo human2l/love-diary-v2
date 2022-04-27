@@ -39,14 +39,14 @@ export const Settings = () => {
   const [secondaryColor, setSecondaryColor] = useState(
     settings[user].secondaryColor
   );
-  const [nickName, setNickName] = useState(settings[user].nickName);
+  const [nickname, setnickname] = useState(settings[user].nickname);
 
   const saveSettings = () => {
     const newSettings = {
       ...settings,
       [user]: {
         ...settings[user],
-        nickName,
+        nickname,
         primaryColor,
         secondaryColor,
         language,
@@ -74,8 +74,8 @@ export const Settings = () => {
             label={t("nickname.label")}
             variant="outlined"
             size="small"
-            defaultValue={nickName}
-            onChange={(e) => setNickName(e.target.value)}
+            defaultValue={nickname}
+            onChange={(e) => setnickname(e.target.value)}
             sx={{ marginTop: "20px" }}
           />
           <Typography

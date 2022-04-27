@@ -157,7 +157,7 @@ export const NewDiary = () => {
       </NewDiaryForm>
       {submissionAlertState && (
         <ConfirmModal
-          confirmTitle={settings[user].nickName}
+          confirmTitle={settings[user].nickname}
           confirmDescription={t("submit_confirm.label")}
           cancel={() => setSubmissionAlertState(false)}
           confirm={submitDiary}

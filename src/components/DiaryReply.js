@@ -18,7 +18,7 @@ const DiaryReply = (props) => {
       <ContentDivider variant="fullWidth" />
       <TitleContainer>
         <Typography color={props.color} gutterBottom>
-          {props.nickName}
+          {props.nickname}
         </Typography>
         <DiaryMetaContainer>
           <Typography color="textSecondary">

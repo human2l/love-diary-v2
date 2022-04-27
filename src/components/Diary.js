@@ -101,7 +101,7 @@ export const Diary = (props) => {
       <div key={index} style={{ paddingLeft: 10 }}>
         <DiaryReply
           color={settings[diaryReply.author].primaryColor}
-          nickName={settings[diaryReply.author].nickName}
+          nickname={settings[diaryReply.author].nickname}
           time={diaryReply.time}
           country={settings[diaryReply.author].country}
           content={diaryReply.content}
@@ -141,7 +141,7 @@ export const Diary = (props) => {
               color={settings[diaryAuthor].primaryColor}
               gutterBottom
             >
-              {settings[diaryAuthor].nickName}
+              {settings[diaryAuthor].nickname}
             </Typography>
             <DiaryMetaContainer>
               <Typography color="textSecondary">{diaryDate}</Typography>
