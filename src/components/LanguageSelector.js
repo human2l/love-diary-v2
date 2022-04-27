@@ -1,17 +1,22 @@
-import { useTranslation } from "react-i18next";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
-const LanguageSelector = () => {
-  const { i18n } = useTranslation();
-
-  const changeLanguage = (event) => {
-    i18n.changeLanguage(event.target.value);
+const LanguageSelector = (props) => {
+  const { language, setLanguage } = props;
+  const handleChange = (e, language) => {
+    setLanguage(language);
   };
 
   return (
-    <div onChange={changeLanguage}>
-      <input type="radio" value="en" name="language" defaultChecked /> English
-      <input type="radio" value="zh-cn" name="language" /> Traditional Chinese
-    </div>
+    <ToggleButtonGroup
+      color="primary"
+      value={language}
+      exclusive
+      onChange={handleChange}
+    >
+      <ToggleButton value="en">English</ToggleButton>
+      <ToggleButton value="zh-cn">中文</ToggleButton>
+    </ToggleButtonGroup>
   );
 };
 

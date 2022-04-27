@@ -8,17 +8,24 @@ import LanguageSelector from "../components/LanguageSelector";
 import { useTranslation } from "react-i18next";
 
 const SettingsContainer = styled("div")({
-  height: "100vh",
+  height: "100%",
+  marginBottom: 56,
   display: "flex",
   flexDirection: "column",
+  justifyContent: "center",
   alignItems: "center",
 });
 
 const ItemContainer = styled("div")({
-  marginTop: 50,
-  paddingTop: 20,
   display: "flex",
   flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+});
+
+const LanguageSelectorContainer = styled("div")({
+  width: "100%",
+  display: "flex",
   justifyContent: "center",
   alignItems: "center",
 });
@@ -27,6 +34,7 @@ export const Settings = () => {
   const { t } = useTranslation();
 
   const { user, settings, updateSettings } = useContext(settingsContext);
+  const [language, setLanguage] = useState(settings[user].language);
   const [primaryColor, setPrimaryColor] = useState(settings[user].primaryColor);
   const [secondaryColor, setSecondaryColor] = useState(
     settings[user].secondaryColor
@@ -36,7 +44,13 @@ export const Settings = () => {
   const saveSettings = () => {
     const newSettings = {
       ...settings,
-      [user]: { ...settings[user], nickName, primaryColor, secondaryColor },
+      [user]: {
+        ...settings[user],
+        nickName,
+        primaryColor,
+        secondaryColor,
+        language,
+      },
     };
     updateSettings(newSettings);
   };
@@ -45,7 +59,16 @@ export const Settings = () => {
     <>
       <SettingsContainer>
         <ItemContainer>
-          <LanguageSelector />
+          <LanguageSelectorContainer>
+            <Typography
+              variant="h6"
+              color={primaryColor}
+              sx={{ marginRight: "20px" }}
+            >
+              {t("language.label")}
+            </Typography>
+            <LanguageSelector language={language} setLanguage={setLanguage} />
+          </LanguageSelectorContainer>
           <TextField
             id="outlined-basic"
             label={t("nickname.label")}
@@ -53,6 +76,7 @@ export const Settings = () => {
             size="small"
             defaultValue={nickName}
             onChange={(e) => setNickName(e.target.value)}
+            sx={{ marginTop: "20px" }}
           />
           <Typography
             variant="h6"

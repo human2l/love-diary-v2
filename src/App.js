@@ -14,6 +14,7 @@ import { Settings } from "./pages/Settings";
 import { getUserSettings, updateSettingsDB } from "./services/airtable";
 import loadingHeartsSvg from "./assets/images/loadingHearts.svg";
 import "./services/i18next";
+import { useTranslation } from "react-i18next";
 
 export const settingsContext = React.createContext({
   user: "",
@@ -32,6 +33,7 @@ const LoadingImgWrapper = styled("div")({
 });
 
 function App() {
+  const { i18n } = useTranslation();
   const [authenticated, setAuthenticated] = useState(false);
   const [settings, setSettings] = useState({});
   const [user, setUser] = useState("");
@@ -85,6 +87,10 @@ function App() {
       setTheme(newTheme);
     })();
   }, [settings, user]);
+
+  useEffect(() => {
+    i18n.changeLanguage(settings[user]?.language);
+  }, [i18n, settings, user]);
 
   return (
     <AppContainer>
