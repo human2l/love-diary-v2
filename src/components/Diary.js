@@ -10,7 +10,7 @@ import CardActionArea from "@mui/material/CardActionArea";
 
 import { useState, useContext } from "react";
 
-import useAirtable from "../hooks/useAirtable";
+import { updateDiaryReply } from "../services/airtable";
 import useFilestack from "../hooks/useFilestack";
 import { getCurrentTimestamp } from "../utils/date_utils";
 import { settingsContext } from "../App";
@@ -54,7 +54,7 @@ export const Diary = (props) => {
   } = props;
 
   const { user, settings } = useContext(settingsContext);
-  const { updateDiaryReply } = useAirtable();
+
   const [reply, setReply] = useState(false);
   const [replyContent, setReplyContent] = useState("");
   const { getAuthImgUrl } = useFilestack();

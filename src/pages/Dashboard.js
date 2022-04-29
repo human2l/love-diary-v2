@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import loveImage from "../assets/images/love_icon.png";
-import useAirtalbe from "../hooks/useAirtable";
+import { getDiaryCountByUser } from "../services/airtable";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import { settingsContext } from "../App";
 import FlyingHeart from "../components/FlyingHeart/FlyingHeart";
@@ -73,7 +73,7 @@ export const Dashboard = () => {
   const { t } = useTranslation();
 
   const { settings } = useContext(settingsContext);
-  const { getDiaryCountByUser } = useAirtalbe();
+
   const [isLoading, setIsLoading] = useState(true);
   const [kaiDiaryCount, setKaiDiaryCount] = useState(0);
   const [danDiaryCount, setDanDiaryCount] = useState(0);
@@ -85,7 +85,7 @@ export const Dashboard = () => {
       setIsLoading(false);
     };
     updateDiaryCount();
-  }, [getDiaryCountByUser]);
+  }, []);
 
   let res = howLong(new Date(), new Date("2020-02-14 00:00:00"));
 

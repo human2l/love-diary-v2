@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { Diary } from "../components/Diary";
 import { styled } from "@mui/material/styles";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
-import useAirtable from "../hooks/useAirtable";
+import { getAllDiarys } from "../services/airtable";
 import { getCountryDateFromTimestamp } from "../utils/date_utils";
 import Fab from "@mui/material/Fab";
 import EditIcon from "@mui/icons-material/Edit";
@@ -24,7 +24,6 @@ const AddNewDiaryButton = styled(Fab)({
 });
 
 export const Diarys = () => {
-  const { getAllDiarys } = useAirtable();
   const { settings } = useContext(settingsContext);
   let navigate = useNavigate();
   const [diarys, setDiarys] = useState([]);
@@ -40,22 +39,24 @@ export const Diarys = () => {
     setDiarys(updatedDiarys);
   };
 
+  const fetchAllDiarys = async () => {
+    setIsLoading(true);
+    try {
+      const allDiarys = await getAllDiarys();
+      const orderedDiarys = allDiarys.sort((diaryA, diaryB) =>
+        diaryA.time < diaryB.time ? 1 : -1
+      );
+      setDiarys(orderedDiarys);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      try {
-        const allDiarys = await getAllDiarys();
-        const orderedDiarys = allDiarys.sort((diaryA, diaryB) =>
-          diaryA.time < diaryB.time ? 1 : -1
-        );
-        setDiarys(orderedDiarys);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-        setIsLoading(false);
-      }
-    })();
-  }, [getAllDiarys]);
+    fetchAllDiarys();
+  }, []);
 
   return (
     <DiarysContainer>
