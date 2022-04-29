@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardActionArea from "@mui/material/CardActionArea";
-import { addNewDiary } from "../services/airtable";
+import useAirtable from "../hooks/useAirtable";
 import useFilestack from "../hooks/useFilestack";
 import { getCurrentTimestamp } from "../utils/date_utils";
 import { useNavigate } from "react-router-dom";
@@ -45,7 +45,7 @@ const ImageControlContainer = styled("div")({
 
 export const NewDiary = () => {
   const { t } = useTranslation();
-
+  const { addNewDiary } = useAirtable();
   const { user, settings } = useContext(settingsContext);
   const { fileMetadata, openFilePicker, getAuthImgUrl } = useFilestack();
 

@@ -9,9 +9,9 @@ import { Dashboard } from "./pages/Dashboard";
 import { Wallet } from "./pages/Wallet";
 import { Login } from "./pages/Login";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Settings } from "./pages/Settings";
-import { getUserSettings, updateSettingsDB } from "./services/airtable";
+import useAirtable from "./hooks/useAirtable";
 import loadingHeartsSvg from "./assets/images/loadingHearts.svg";
 import "./services/i18next";
 import { useTranslation } from "react-i18next";
@@ -34,6 +34,7 @@ const LoadingImgWrapper = styled("div")({
 
 function App() {
   const { i18n } = useTranslation();
+  const { getUserSettings, updateSettingsDB } = useAirtable();
   const [authenticated, setAuthenticated] = useState(false);
   const [settings, setSettings] = useState({});
   const [user, setUser] = useState("");
@@ -50,16 +51,16 @@ function App() {
     setUser(user);
   };
 
-  const fetchSettings = async () => {
+  const fetchSettings = useCallback(async () => {
     setSettings(await getUserSettings());
-  };
+  }, [getUserSettings]);
 
   useEffect(() => {
     (async () => {
       fetchSettings();
       setIsLoading(false);
     })();
-  }, []);
+  }, [fetchSettings]);
 
   useEffect(() => {
     (async () => {

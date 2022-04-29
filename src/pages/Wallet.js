@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
@@ -8,7 +8,7 @@ import walletSVG from "../assets/images/wallet.svg";
 import dollarPng from "../assets/images/dollar.png";
 import moneySound from "../assets/sounds/multipleCoins.mp3";
 import ahOhSound from "../assets/sounds/ah-oh.mp3";
-import { getWalletState, updateDanWalletState } from "../services/airtable";
+import useAirtable from "../hooks/useAirtable";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import { settingsContext } from "../App";
 import { useTranslation } from "react-i18next";
@@ -38,7 +38,7 @@ const canCheckIn = (date1, date2) => {
 
 export const Wallet = () => {
   const { t } = useTranslation();
-
+  const { getWalletState, updateDanWalletState } = useAirtable();
   const { settings } = useContext(settingsContext);
 
   const [isPageLoading, setIsPageLoading] = useState(true);
@@ -71,20 +71,20 @@ export const Wallet = () => {
     return nextTime.toFixed(2);
   };
 
-  const refreshStates = async () => {
+  const refreshStates = useCallback(async () => {
     const walletState = await getWalletState();
     setDanWalletId(walletState[1].id);
     setDanMoney(walletState[1].fields.number.toFixed(2));
     setLastCheckInDate(walletState[1].fields.lastCheckInDate);
     setIsLoading(false);
     setIsPageLoading(false);
-  };
+  }, [getWalletState]);
 
   useEffect(() => {
     (async () => {
       await refreshStates();
     })();
-  }, []);
+  }, [refreshStates]);
 
   return (
     <>
