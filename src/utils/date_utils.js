@@ -18,4 +18,24 @@ const getCountryDateFromTimestamp = (timestamp, country) => {
   return date;
 };
 
-export { getCurrentTimestamp, getCountryDateFromTimestamp };
+const timeDiff = (time1, time2) => {
+  time1 = time1.getTime();
+  time2 = time2.getTime();
+  let cha = time1 > time2 ? time1 - time2 : time2 - time1;
+  let day = Math.floor(cha / (24 * 3600 * 1000));
+  let hours = Math.floor((cha % (24 * 3600 * 1000)) / (3600 * 1000));
+  let minutes = Math.floor(
+    ((cha % (24 * 3600 * 1000)) % (3600 * 1000)) / (60 * 1000)
+  );
+  let seconds = Math.floor(
+    (((cha % (24 * 3600 * 1000)) % (3600 * 1000)) % (60 * 1000)) / 1000
+  );
+  return {
+    day: day,
+    hours: hours,
+    minutes: minutes,
+    seconds: seconds,
+  };
+};
+
+export { getCurrentTimestamp, getCountryDateFromTimestamp, timeDiff };

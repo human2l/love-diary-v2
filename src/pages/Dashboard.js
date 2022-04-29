@@ -7,26 +7,7 @@ import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import { settingsContext } from "../App";
 import FlyingHeart from "../components/FlyingHeart/FlyingHeart";
 import { useTranslation } from "react-i18next";
-
-const howLong = (time1, time2) => {
-  time1 = time1.getTime();
-  time2 = time2.getTime();
-  let cha = time1 > time2 ? time1 - time2 : time2 - time1;
-  let day = Math.floor(cha / (24 * 3600 * 1000));
-  let hours = Math.floor((cha % (24 * 3600 * 1000)) / (3600 * 1000));
-  let minutes = Math.floor(
-    ((cha % (24 * 3600 * 1000)) % (3600 * 1000)) / (60 * 1000)
-  );
-  let seconds = Math.floor(
-    (((cha % (24 * 3600 * 1000)) % (3600 * 1000)) % (60 * 1000)) / 1000
-  );
-  return {
-    day: day,
-    hours: hours,
-    minutes: minutes,
-    seconds: seconds,
-  };
-};
+import { timeDiff } from "../utils/date_utils";
 
 const DashboardContainer = styled("div")({
   position: "relative",
@@ -87,7 +68,7 @@ export const Dashboard = () => {
     updateDiaryCount();
   }, []);
 
-  let res = howLong(new Date(), new Date("2020-02-14 00:00:00"));
+  let res = timeDiff(new Date(), new Date("2020-02-14 00:00:00"));
 
   return (
     <DashboardContainer>
