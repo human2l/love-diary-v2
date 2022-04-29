@@ -11,7 +11,7 @@ import CardActionArea from "@mui/material/CardActionArea";
 import { useState, useContext } from "react";
 
 import { updateDiaryReply } from "../services/airtable";
-import { getAuthImgUrl } from "../services/filestack";
+import useFilestack from "../hooks/useFilestack";
 import { getCurrentTimestamp } from "../utils/date_utils";
 import { settingsContext } from "../App";
 import DiaryReply from "./DiaryReply";
@@ -57,6 +57,7 @@ export const Diary = (props) => {
 
   const [reply, setReply] = useState(false);
   const [replyContent, setReplyContent] = useState("");
+  const { getAuthImgUrl } = useFilestack();
 
   const convertToParagraph = (text) => {
     return text.split("\n").map((line, index) => {

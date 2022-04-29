@@ -6,11 +6,7 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardActionArea from "@mui/material/CardActionArea";
 import { addNewDiary } from "../services/airtable";
-import {
-  getAuthImgUrl,
-  getFileMetadata,
-  openFilePicker,
-} from "../services/filestack";
+import useFilestack from "../hooks/useFilestack";
 import { getCurrentTimestamp } from "../utils/date_utils";
 import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../App";
@@ -51,6 +47,7 @@ export const NewDiary = () => {
   const { t } = useTranslation();
 
   const { user, settings } = useContext(settingsContext);
+  const { fileMetadata, openFilePicker, getAuthImgUrl } = useFilestack();
 
   let defaultDiaryContent = localStorage.getItem("diaryDraft");
   if (!defaultDiaryContent) defaultDiaryContent = "";
@@ -82,7 +79,7 @@ export const NewDiary = () => {
     try {
       let photos = [];
 
-      const fileMetadata = getFileMetadata();
+      // const fileMetadata = getFileMetadata();
       const imageType = ["image/jpeg", "image/jpg", "image/png"];
       if (fileMetadata && imageType.includes(fileMetadata.mimetype)) {
         photos.push(fileMetadata.handle);
@@ -135,7 +132,7 @@ export const NewDiary = () => {
             <CardActionArea>
               <CardMedia
                 component="img"
-                image={getAuthImgUrl(getFileMetadata().handle)}
+                image={getAuthImgUrl(fileMetadata.handle)}
               />
             </CardActionArea>
           </Card>
