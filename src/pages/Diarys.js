@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import { Diary } from "../components/Diary";
 import { styled } from "@mui/material/styles";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
@@ -8,14 +8,20 @@ import Fab from "@mui/material/Fab";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../App";
+import { QueryClient, useQuery } from "react-query";
+import LoadingCard from "../components/LoadingCard";
 
-const DiarysContainer = styled("div")({
+const queryClient = new QueryClient();
+
+const LoveDiaryContainer = styled("div")({
   marginLeft: 10,
   marginRight: 10,
   paddingBottom: 65,
   display: "flex",
   flexDirection: "column",
 });
+
+const DiarysContainer = styled("div")({});
 
 const AddNewDiaryButton = styled(Fab)({
   position: "fixed",
@@ -26,62 +32,59 @@ const AddNewDiaryButton = styled(Fab)({
 export const Diarys = () => {
   const { settings } = useContext(settingsContext);
   let navigate = useNavigate();
-  const [diarys, setDiarys] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const onUpdateDiary = (editedDiary) => {
-    const updatedDiarys = diarys.map((diary) => {
-      if (diary.key === editedDiary.key) {
-        return editedDiary;
-      }
-      return diary;
-    });
-    setDiarys(updatedDiarys);
-  };
 
   const fetchAllDiarys = async () => {
-    setIsLoading(true);
-    try {
-      const allDiarys = await getAllDiarys();
-      const orderedDiarys = allDiarys.sort((diaryA, diaryB) =>
-        diaryA.time < diaryB.time ? 1 : -1
-      );
-      setDiarys(orderedDiarys);
-      setIsLoading(false);
-    } catch (error) {
-      console.error(error);
-      setIsLoading(false);
-    }
+    const allDiarys = await getAllDiarys();
+    const orderedDiarys = allDiarys.sort((diaryA, diaryB) =>
+      diaryA.time < diaryB.time ? 1 : -1
+    );
+    return orderedDiarys;
   };
 
-  useEffect(() => {
-    fetchAllDiarys();
-  }, []);
+  const {
+    isLoading,
+    isFetching,
+    data: diarys,
+    isError,
+    error,
+  } = useQuery("fetchAllDiarys", () => fetchAllDiarys());
+
+  if (isError) console.error(error);
+
+  const onUpdateDiary = (editedDiary) => {
+    queryClient.invalidateQueries("fetchAllDiarys");
+  };
 
   return (
-    <DiarysContainer>
-      {isLoading && <img src={loadingHeartsSvg} alt="loading" />}
-      {diarys.map((diary) => {
-        const { key, author, content = "", time, reply, photos } = diary;
+    <LoveDiaryContainer>
+      {isLoading ? (
+        <img src={loadingHeartsSvg} alt="loading" />
+      ) : (
+        <DiarysContainer>
+          {isFetching && <LoadingCard />}
+          {diarys.map((diary) => {
+            const { key, author, content = "", time, reply, photos } = diary;
 
-        const diaryDate = getCountryDateFromTimestamp(
-          time,
-          settings[author].country
-        );
+            const diaryDate = getCountryDateFromTimestamp(
+              time,
+              settings[author].country
+            );
 
-        return (
-          <Diary
-            key={key}
-            diaryKey={key}
-            diaryAuthor={author}
-            diaryDate={diaryDate}
-            diaryContent={content}
-            diaryReplies={reply}
-            diaryPhotos={photos}
-            onUpdateDiary={onUpdateDiary}
-          />
-        );
-      })}
+            return (
+              <Diary
+                key={key}
+                diaryKey={key}
+                diaryAuthor={author}
+                diaryDate={diaryDate}
+                diaryContent={content}
+                diaryReplies={reply}
+                diaryPhotos={photos}
+                onUpdateDiary={onUpdateDiary}
+              />
+            );
+          })}
+        </DiarysContainer>
+      )}
       <AddNewDiaryButton
         color="primary"
         aria-label="edit"
@@ -91,6 +94,6 @@ export const Diarys = () => {
       >
         <EditIcon />
       </AddNewDiaryButton>
-    </DiarysContainer>
+    </LoveDiaryContainer>
   );
 };

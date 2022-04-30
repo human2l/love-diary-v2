@@ -134,7 +134,7 @@ export const Diary = (props) => {
 
   return (
     <CardContainer>
-      <Card sx={{ backgroundColor: "white" }}>
+      <Card>
         <CardContent>
           <TitleContainer>
             <Typography
