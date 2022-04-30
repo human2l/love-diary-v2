@@ -47,11 +47,11 @@ export const Diarys = () => {
     data: diarys,
     isError,
     error,
-  } = useQuery("fetchAllDiarys", () => fetchAllDiarys());
+  } = useQuery("fetchAllDiarys", fetchAllDiarys);
 
   if (isError) console.error(error);
 
-  const onUpdateDiary = (editedDiary) => {
+  const onUpdateDiary = () => {
     queryClient.invalidateQueries("fetchAllDiarys");
   };
 

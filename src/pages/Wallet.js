@@ -12,6 +12,9 @@ import { getWalletState, updateDanWalletState } from "../services/airtable";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import { settingsContext } from "../App";
 import { useTranslation } from "react-i18next";
+import { QueryClient, useQuery } from "react-query";
+
+const queryClient = new QueryClient();
 
 const WalletContainer = styled("div")({
   height: "100vh",
@@ -40,18 +43,21 @@ export const Wallet = () => {
   const { t } = useTranslation();
 
   const { settings } = useContext(settingsContext);
+  const {
+    isLoading: isPageLoading,
+    isFetching: isLoading,
+    data,
+  } = useQuery("getWalletState", getWalletState);
+  const danWalletId = data[1]?.id;
+  const danMoney = data[1]?.fields.number.toFixed(2);
+  const lastCheckInDate = data[1]?.fields.lastCheckInDate;
 
-  const [isPageLoading, setIsPageLoading] = useState(true);
-  const [danWalletId, setDanWalletId] = useState(undefined);
-  const [danMoney, setDanMoney] = useState("");
-  const [lastCheckInDate, setLastCheckInDate] = useState(Infinity);
   const [warningMessages, setWarningMessages] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+
   const [playMoneySound] = useSound(moneySound, { volume: 0.5 });
-  const [playAhOhSound] = useSound(ahOhSound, { volume: 0.5 });
+  const [playAhOhSound] = useSound(ahOhSound, { volume: 0.1 });
 
   const handleCheckIn = async () => {
-    setIsLoading(true);
     const now = new Date().getTime();
     const addedDanMoney = Number((Math.random() / 2).toFixed(2));
     const newDanMoney = Number(danMoney) + addedDanMoney;
@@ -61,7 +67,7 @@ export const Wallet = () => {
   };
 
   const onUpdateFinish = async () => {
-    await refreshStates();
+    queryClient.invalidateQueries("getWalletState");
   };
 
   const nextCheckInAllowedTime = () => {
@@ -70,21 +76,6 @@ export const Wallet = () => {
     if (nextTime < 0) return 0;
     return nextTime.toFixed(2);
   };
-
-  const refreshStates = async () => {
-    const walletState = await getWalletState();
-    setDanWalletId(walletState[1].id);
-    setDanMoney(walletState[1].fields.number.toFixed(2));
-    setLastCheckInDate(walletState[1].fields.lastCheckInDate);
-    setIsLoading(false);
-    setIsPageLoading(false);
-  };
-
-  useEffect(() => {
-    (async () => {
-      await refreshStates();
-    })();
-  }, []);
 
   return (
     <>

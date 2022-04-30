@@ -73,16 +73,17 @@ const updateDiaryReply = async (diaryId, reply, callback) => {
         console.error(err);
         return;
       }
-      const { author, content, photos, reply, time } = record.fields;
-      const updatedDiary = {
-        author,
-        content,
-        photos: JSON.parse(photos),
-        reply: JSON.parse(reply),
-        time,
-        key: record.id,
-      };
-      return callback(updatedDiary);
+      // const { author, content, photos, reply, time } = record.fields;
+      // const updatedDiary = {
+      //   author,
+      //   content,
+      //   photos: JSON.parse(photos),
+      //   reply: JSON.parse(reply),
+      //   time,
+      //   key: record.id,
+      // };
+      // return callback(updatedDiary);
+      callback();
     }
   );
 };
