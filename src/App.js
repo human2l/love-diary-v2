@@ -15,6 +15,9 @@ import { getUserSettings, updateSettingsDB } from "./services/airtable";
 import loadingHeartsSvg from "./assets/images/loadingHearts.svg";
 import "./services/i18next";
 import { useTranslation } from "react-i18next";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 export const settingsContext = React.createContext({
   user: "",
@@ -99,25 +102,27 @@ function App() {
           <img src={loadingHeartsSvg} alt="loading" />
         </LoadingImgWrapper>
       ) : (
-        <settingsContext.Provider value={{ user, settings, updateSettings }}>
-          <ThemeProvider theme={theme}>
-            <Router>
-              <Routes>
-                {authenticated && (
-                  <>
-                    <Route exact path="/" element={<Dashboard />} />
-                    <Route path="/new_diary" element={<NewDiary />} />
-                    <Route path="/diarys" element={<Diarys />} />
-                    <Route path="/wallet" element={<Wallet />} />
-                    <Route path="/settings" element={<Settings />} />
-                  </>
-                )}
-                <Route path="*" element={<Login login={login} />} />
-              </Routes>
-              {authenticated && <Navbar fetchSettings={fetchSettings} />}
-            </Router>
-          </ThemeProvider>
-        </settingsContext.Provider>
+        <QueryClientProvider client={queryClient}>
+          <settingsContext.Provider value={{ user, settings, updateSettings }}>
+            <ThemeProvider theme={theme}>
+              <Router>
+                <Routes>
+                  {authenticated && (
+                    <>
+                      <Route exact path="/" element={<Dashboard />} />
+                      <Route path="/new_diary" element={<NewDiary />} />
+                      <Route path="/diarys" element={<Diarys />} />
+                      <Route path="/wallet" element={<Wallet />} />
+                      <Route path="/settings" element={<Settings />} />
+                    </>
+                  )}
+                  <Route path="*" element={<Login login={login} />} />
+                </Routes>
+                {authenticated && <Navbar fetchSettings={fetchSettings} />}
+              </Router>
+            </ThemeProvider>
+          </settingsContext.Provider>
+        </QueryClientProvider>
       )}
     </AppContainer>
   );
