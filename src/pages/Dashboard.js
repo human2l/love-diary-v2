@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import loveImage from "../assets/images/love_icon.png";
@@ -8,6 +8,7 @@ import { settingsContext } from "../App";
 import FlyingHeart from "../components/FlyingHeart/FlyingHeart";
 import { useTranslation } from "react-i18next";
 import { timeDiff } from "../utils/date_utils";
+import { useQuery } from "react-query";
 
 const DashboardContainer = styled("div")({
   position: "relative",
@@ -52,27 +53,21 @@ const RedTypography = styled(Typography)({
 
 export const Dashboard = () => {
   const { t } = useTranslation();
-
   const { settings } = useContext(settingsContext);
-
-  const [isLoading, setIsLoading] = useState(true);
-  const [kaiDiaryCount, setKaiDiaryCount] = useState(0);
-  const [danDiaryCount, setDanDiaryCount] = useState(0);
-  useEffect(() => {
-    setIsLoading(true);
-    const updateDiaryCount = async () => {
-      setKaiDiaryCount(await getDiaryCountByUser("Kai"));
-      setDanDiaryCount(await getDiaryCountByUser("Dan"));
-      setIsLoading(false);
-    };
-    updateDiaryCount();
-  }, []);
+  const { isLoading: isLoadingKaiDiaryCount, data: kaiDiaryCount } = useQuery(
+    "updateKaiDiaryCount",
+    () => getDiaryCountByUser("Kai")
+  );
+  const { isLoading: isLoadingDanDiaryCount, data: danDiaryCount } = useQuery(
+    "updateDanDiaryCount",
+    () => getDiaryCountByUser("Dan")
+  );
 
   let res = timeDiff(new Date(), new Date("2020-02-14 00:00:00"));
 
   return (
     <DashboardContainer>
-      {isLoading ? (
+      {isLoadingKaiDiaryCount || isLoadingDanDiaryCount ? (
         <img src={loadingHeartsSvg} alt="loading" />
       ) : (
         <>
