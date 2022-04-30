@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
@@ -44,13 +44,18 @@ export const Wallet = () => {
 
   const { settings } = useContext(settingsContext);
   const {
+    isSuccess,
     isLoading: isPageLoading,
     isFetching: isLoading,
     data,
   } = useQuery("getWalletState", getWalletState);
-  const danWalletId = data[1]?.id;
-  const danMoney = data[1]?.fields.number.toFixed(2);
-  const lastCheckInDate = data[1]?.fields.lastCheckInDate;
+
+  let danWalletId, danMoney, lastCheckInDate;
+  if (isSuccess) {
+    danWalletId = data[1].id;
+    danMoney = data[1].fields.number.toFixed(2);
+    lastCheckInDate = data[1].fields.lastCheckInDate;
+  }
 
   const [warningMessages, setWarningMessages] = useState([]);
 
