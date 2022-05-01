@@ -2,11 +2,17 @@ import Snackbar from "@mui/material/Snackbar";
 import Slide from "@mui/material/Slide";
 import Alert from "@mui/material/Alert";
 import PublishedWithChangesIcon from "@mui/icons-material/PublishedWithChanges";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useSound from "use-sound";
+import loadingSound from "../assets/sounds/rising-pops.mp3";
 
 const TopSnackbar = (props) => {
   const { message } = props;
   const [open, setOpen] = useState(true);
+  const [playLoadingSound] = useSound(loadingSound, { volume: 0.5 });
+  useEffect(() => {
+    playLoadingSound();
+  }, [playLoadingSound]);
 
   return (
     <div>
