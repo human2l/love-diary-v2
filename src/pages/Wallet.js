@@ -12,9 +12,7 @@ import { getWalletState, updateDanWalletState } from "../services/airtable";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import { settingsContext } from "../App";
 import { useTranslation } from "react-i18next";
-import { QueryClient, useQuery } from "react-query";
-
-const queryClient = new QueryClient();
+import { useQuery, useQueryClient } from "react-query";
 
 const WalletContainer = styled("div")({
   height: "100vh",
@@ -40,6 +38,8 @@ const canCheckIn = (date1, date2) => {
 };
 
 export const Wallet = () => {
+  const queryClient = useQueryClient();
+
   const { t } = useTranslation();
 
   const { settings } = useContext(settingsContext);

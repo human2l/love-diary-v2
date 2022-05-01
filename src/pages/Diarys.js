@@ -8,10 +8,8 @@ import Fab from "@mui/material/Fab";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../App";
-import { QueryClient, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import LoadingCard from "../components/LoadingCard";
-
-const queryClient = new QueryClient();
 
 const LoveDiaryContainer = styled("div")({
   marginLeft: 10,
@@ -51,10 +49,6 @@ export const Diarys = () => {
 
   if (isError) console.error(error);
 
-  const onUpdateDiary = () => {
-    queryClient.invalidateQueries("fetchAllDiarys");
-  };
-
   return (
     <LoveDiaryContainer>
       {isLoading ? (
@@ -79,7 +73,6 @@ export const Diarys = () => {
                 diaryContent={content}
                 diaryReplies={reply}
                 diaryPhotos={photos}
-                onUpdateDiary={onUpdateDiary}
               />
             );
           })}

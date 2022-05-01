@@ -16,6 +16,7 @@ import { getCurrentTimestamp } from "../utils/date_utils";
 import { settingsContext } from "../App";
 import DiaryReply from "./DiaryReply";
 import { useTranslation } from "react-i18next";
+import { useMutation, useQueryClient } from "react-query";
 
 const CardContainer = styled(Card)({
   marginTop: 10,
@@ -41,6 +42,8 @@ const PhotoContainer = styled("div")({
 });
 
 export const Diary = (props) => {
+  const queryClient = useQueryClient();
+
   const { t } = useTranslation();
 
   const {
@@ -50,7 +53,6 @@ export const Diary = (props) => {
     diaryKey,
     diaryReplies,
     diaryPhotos,
-    onUpdateDiary,
   } = props;
 
   const { user, settings } = useContext(settingsContext);
@@ -74,24 +76,24 @@ export const Diary = (props) => {
     setReplyContent(event.target.value);
   };
 
-  const submitReply = async (author) => {
+  const submitReply = useMutation(() => {
     setReply(false);
     if (replyContent === "") return;
     const time = getCurrentTimestamp();
-    try {
-      const reply = [
-        ...diaryReplies,
-        {
-          author,
-          content: replyContent,
-          time,
-        },
-      ];
-      await updateDiaryReply(diaryKey, reply, onUpdateDiary);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    const reply = [
+      ...diaryReplies,
+      {
+        author: user,
+        content: replyContent,
+        time,
+      },
+    ];
+
+    updateDiaryReply(diaryKey, reply, () => {
+      queryClient.invalidateQueries("fetchAllDiarys");
+      setReplyContent("");
+    });
+  });
 
   const toggleReplyPanel = () => {
     setReply(!reply);
@@ -124,7 +126,7 @@ export const Diary = (props) => {
       />
       <Button
         variant="contained"
-        onClick={() => submitReply(user)}
+        onClick={submitReply.mutate}
         style={{ width: "auto", height: "40px", whiteSpace: "nowrap" }}
       >
         {t("reply.label")}
