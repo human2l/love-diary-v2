@@ -9,18 +9,19 @@ import { useTranslation } from "react-i18next";
 
 const SettingsContainer = styled("div")({
   height: "100%",
-  marginBottom: 56,
+  width: "100%",
+  paddingBottom: 56,
   display: "flex",
   flexDirection: "column",
-  justifyContent: "center",
+
   alignItems: "center",
 });
 
 const ItemContainer = styled("div")({
+  paddingTop: "10%",
+  width: "90%",
   display: "flex",
   flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
 });
 
 const LanguageSelectorContainer = styled("div")({
@@ -28,6 +29,16 @@ const LanguageSelectorContainer = styled("div")({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+});
+
+const ColorSelectorGroupContainer = styled("div")({
+  display: "flex",
+
+  width: "100%",
+});
+
+const ColorSelectorContainer = styled("div")({
+  width: "50%",
 });
 
 export const Settings = () => {
@@ -78,22 +89,28 @@ export const Settings = () => {
             onChange={(e) => setnickname(e.target.value)}
             sx={{ marginTop: "20px" }}
           />
-          <Typography
-            variant="h6"
-            color={primaryColor}
-            sx={{ marginTop: "10px" }}
-          >
-            {t("primary_color.label")}
-          </Typography>
-          <ColorTiles pickColor={setPrimaryColor} />
-          <Typography
-            variant="h6"
-            color={secondaryColor}
-            sx={{ marginTop: "10px" }}
-          >
-            {t("secondary_color.label")}
-          </Typography>
-          <ColorTiles pickColor={setSecondaryColor} />
+          <ColorSelectorGroupContainer>
+            <ColorSelectorContainer>
+              <Typography
+                variant="h6"
+                color={primaryColor}
+                sx={{ marginTop: "10px" }}
+              >
+                {t("primary_color.label")}
+              </Typography>
+              <ColorTiles pickColor={setPrimaryColor} />
+            </ColorSelectorContainer>
+            <ColorSelectorContainer>
+              <Typography
+                variant="h6"
+                color={secondaryColor}
+                sx={{ marginTop: "10px" }}
+              >
+                {t("secondary_color.label")}
+              </Typography>
+              <ColorTiles pickColor={setSecondaryColor} />
+            </ColorSelectorContainer>
+          </ColorSelectorGroupContainer>
           <Button
             size="large"
             variant="contained"

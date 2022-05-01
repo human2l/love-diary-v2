@@ -6,11 +6,11 @@ const ColorTiles = (props) => {
     marginTop: 10,
     display: "flex",
     flexWrap: "wrap",
-    width: 160,
   });
   const ColorTile = styled("div")({
-    width: 30,
-    height: 30,
+    width: "20%",
+
+    aspectRatio: "1/1",
     border: "1px solid white",
   });
 
