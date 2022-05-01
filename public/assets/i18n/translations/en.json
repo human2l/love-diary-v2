@@ -36,5 +36,6 @@
   "already_checked_in_warning.label": "You've already checked in today!",
   "checked_in.label": "Checked in",
   "time_before_next_check_in.label": "Time before next check in: ",
-  "hours.label": " hours"
+  "hours.label": " hours",
+  "updating_new_diary.label": "Loading the latest diaries..."
 }

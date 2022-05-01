@@ -9,7 +9,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../App";
 import { useQuery } from "react-query";
-import LoadingCard from "../components/LoadingCard";
+import TopSnackbar from "../components/TopSnackbar";
+import { t } from "i18next";
 
 const LoveDiaryContainer = styled("div")({
   marginLeft: 10,
@@ -55,7 +56,9 @@ export const Diarys = () => {
         <img src={loadingHeartsSvg} alt="loading" />
       ) : (
         <DiarysContainer>
-          {isFetching && <LoadingCard />}
+          {isFetching && (
+            <TopSnackbar message={t("updating_new_diary.label")} />
+          )}
           {diarys.map((diary) => {
             const { key, author, content = "", time, reply, photos } = diary;
 

@@ -23,6 +23,8 @@ export const settingsContext = React.createContext({
   user: "",
   settings: {},
   updateSettings: () => {},
+  snackbarStatus: false,
+  snackbarMessage: "",
 });
 
 const AppContainer = styled("div")({
@@ -103,7 +105,13 @@ function App() {
         </LoadingImgWrapper>
       ) : (
         <QueryClientProvider client={queryClient}>
-          <settingsContext.Provider value={{ user, settings, updateSettings }}>
+          <settingsContext.Provider
+            value={{
+              user,
+              settings,
+              updateSettings,
+            }}
+          >
             <ThemeProvider theme={theme}>
               <Router>
                 <Routes>

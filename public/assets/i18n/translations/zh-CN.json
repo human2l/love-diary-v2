@@ -36,5 +36,6 @@
   "already_checked_in_warning.label": "别点啦，已经给过钱钱啦！",
   "checked_in.label": "已签到",
   "time_before_next_check_in.label": "距离下次签到时间：",
-  "hours.label": "小时"
+  "hours.label": "小时",
+  "updating_new_diary.label": "正在加载最新日记..."
 }
