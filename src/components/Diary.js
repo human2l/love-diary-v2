@@ -1,7 +1,8 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import MessageIcon from "@mui/icons-material/Message";
+
+import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components";
 import Button from "@mui/material/Button";
@@ -148,7 +149,7 @@ export const Diary = (props) => {
             </Typography>
             <DiaryMetaContainer>
               <Typography color="textSecondary">{diaryDate}</Typography>
-              <MessageIcon color="secondary" onClick={toggleReplyPanel} />
+              <ChatOutlinedIcon color="secondary" onClick={toggleReplyPanel} />
             </DiaryMetaContainer>
           </TitleContainer>
           <Typography
