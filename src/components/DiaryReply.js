@@ -1,6 +1,6 @@
+import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import styled from "styled-components";
-import Divider from "@mui/material/Divider";
 import { getCountryDateFromTimestamp } from "../utils/date_utils";
 
 const ContentDivider = styled(Divider)({});

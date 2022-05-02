@@ -1,5 +1,6 @@
 import { styled } from "@mui/material";
-import Music from "./MagicBoxItems/Music";
+import MusicItem from "./MagicBoxItems/MusicItem";
+import TodoListItem from "./MagicBoxItems/TodoListItem";
 
 const ItemsContainer = styled("div")({
   display: "flex",
@@ -10,10 +11,11 @@ const ItemsContainer = styled("div")({
   height: "100%",
 });
 
-const MagicBox = () => {
+const MagicBox = (props) => {
   return (
     <ItemsContainer>
-      <Music />
+      <MusicItem />
+      <TodoListItem onClose={props.onClose} />
     </ItemsContainer>
   );
 };

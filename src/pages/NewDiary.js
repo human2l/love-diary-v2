@@ -1,17 +1,17 @@
-import { useState, useContext } from "react";
-import { styled } from "@mui/material/styles";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
 import CardActionArea from "@mui/material/CardActionArea";
-import { addNewDiary } from "../services/airtable";
-import useFilestack from "../hooks/useFilestack";
-import { getCurrentTimestamp } from "../utils/date_utils";
+import CardMedia from "@mui/material/CardMedia";
+import { styled } from "@mui/material/styles";
+import TextField from "@mui/material/TextField";
+import { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../App";
 import ConfirmModal from "../components/ConfirmModal";
-import { useTranslation } from "react-i18next";
+import useFilestack from "../hooks/useFilestack";
+import { addNewDiary } from "../services/airtable";
+import { getCurrentTimestamp } from "../utils/date_utils";
 
 const NewDiaryContainer = styled("div")({
   marginLeft: 10,
@@ -43,7 +43,7 @@ const ImageControlContainer = styled("div")({
   paddingBottom: "10px",
 });
 
-export const NewDiary = () => {
+const NewDiary = () => {
   const { t } = useTranslation();
 
   const { user, settings } = useContext(settingsContext);
@@ -163,3 +163,5 @@ export const NewDiary = () => {
     </NewDiaryContainer>
   );
 };
+
+export default NewDiary;

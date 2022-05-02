@@ -1,18 +1,18 @@
-import { useState, useContext } from "react";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
-import useSound from "use-sound";
+import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
-import walletSVG from "../assets/images/wallet.svg";
-import dollarPng from "../assets/images/dollar.png";
-import moneySound from "../assets/sounds/multipleCoins.mp3";
-import ahOhSound from "../assets/sounds/ah-oh.mp3";
-import { getWalletState, updateDanWalletState } from "../services/airtable";
-import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
-import { settingsContext } from "../App";
+import Typography from "@mui/material/Typography";
+import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "react-query";
+import useSound from "use-sound";
+import { settingsContext } from "../App";
+import dollarPng from "../assets/images/dollar.png";
+import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
+import walletSVG from "../assets/images/wallet.svg";
+import ahOhSound from "../assets/sounds/ah-oh.mp3";
+import moneySound from "../assets/sounds/multipleCoins.mp3";
+import { getWalletState, updateDanWalletState } from "../services/airtable";
 
 const WalletContainer = styled("div")({
   height: "100vh",
@@ -37,7 +37,7 @@ const canCheckIn = (date1, date2) => {
   return date2 - date1 > twentyHours; // 20 hours
 };
 
-export const Wallet = () => {
+const Wallet = () => {
   const queryClient = useQueryClient();
 
   const { t } = useTranslation();
@@ -155,3 +155,5 @@ export const Wallet = () => {
     </>
   );
 };
+
+export default Wallet;

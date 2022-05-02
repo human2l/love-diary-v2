@@ -1,14 +1,14 @@
-import { useContext } from "react";
-import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
-import loveImage from "../assets/images/love_icon.png";
-import { getDiaryCountByUser } from "../services/airtable";
-import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
-import { settingsContext } from "../App";
-import FlyingHeart from "../components/FlyingHeart/FlyingHeart";
+import Typography from "@mui/material/Typography";
+import { useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { timeDiff } from "../utils/date_utils";
 import { useQuery } from "react-query";
+import { settingsContext } from "../App";
+import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
+import loveImage from "../assets/images/love_icon.png";
+import FlyingHeart from "../components/FlyingHeart/FlyingHeart";
+import { getDiaryCountByUser } from "../services/airtable";
+import { timeDiff } from "../utils/date_utils";
 
 const DashboardContainer = styled("div")({
   position: "relative",
@@ -16,9 +16,6 @@ const DashboardContainer = styled("div")({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  //   backgroundImage:
-  //     "url('https://i.pinimg.com/564x/be/dc/52/bedc522cdab3546780880b53096e4caa.jpg')",
-  //   backgroundSize: "cover",
 });
 
 const DaysCounterContainer = styled("div")({
@@ -51,7 +48,7 @@ const RedTypography = styled(Typography)({
   color: "#f44336",
 });
 
-export const Dashboard = () => {
+const Dashboard = () => {
   const { t } = useTranslation();
   const { settings } = useContext(settingsContext);
   const { isLoading: isLoadingKaiDiaryCount, data: kaiDiaryCount } = useQuery(
@@ -127,3 +124,5 @@ export const Dashboard = () => {
     </DashboardContainer>
   );
 };
+
+export default Dashboard;

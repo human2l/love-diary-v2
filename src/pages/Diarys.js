@@ -1,16 +1,16 @@
-import { useContext } from "react";
-import { Diary } from "../components/Diary";
-import { styled } from "@mui/material/styles";
-import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
-import { getAllDiarys } from "../services/airtable";
-import { getCountryDateFromTimestamp } from "../utils/date_utils";
-import Fab from "@mui/material/Fab";
 import EditIcon from "@mui/icons-material/Edit";
+import Fab from "@mui/material/Fab";
+import { styled } from "@mui/material/styles";
+import { t } from "i18next";
+import { useContext } from "react";
+import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../App";
-import { useQuery } from "react-query";
+import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
+import { Diary } from "../components/Diary";
 import TopSnackbar from "../components/TopSnackbar";
-import { t } from "i18next";
+import { getAllDiarys } from "../services/airtable";
+import { getCountryDateFromTimestamp } from "../utils/date_utils";
 
 const LoveDiaryContainer = styled("div")({
   marginLeft: 10,
@@ -28,7 +28,7 @@ const AddNewDiaryButton = styled(Fab)({
   right: 15,
 });
 
-export const Diarys = () => {
+const Diarys = () => {
   const { settings } = useContext(settingsContext);
   let navigate = useNavigate();
 
@@ -93,3 +93,5 @@ export const Diarys = () => {
     </LoveDiaryContainer>
   );
 };
+
+export default Diarys;

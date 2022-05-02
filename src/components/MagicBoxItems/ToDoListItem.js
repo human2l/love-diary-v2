@@ -14,7 +14,7 @@ const ItemContainer = styled("div")({
   margin: 20,
 });
 
-const ToDoListItem = (props) => {
+const TodoListItem = (props) => {
   const { t } = useTranslation();
   let navigate = useNavigate();
   const handleOnClick = () => {
@@ -30,4 +30,4 @@ const ToDoListItem = (props) => {
     </ItemContainer>
   );
 };
-export default ToDoListItem;
+export default TodoListItem;

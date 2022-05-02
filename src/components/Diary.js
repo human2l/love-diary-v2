@@ -1,23 +1,20 @@
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
-import TextField from "@mui/material/TextField";
-import styled from "styled-components";
 import Button from "@mui/material/Button";
-import CardMedia from "@mui/material/CardMedia";
+import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
-
-import { useState, useContext } from "react";
-
-import { updateDiaryReply } from "../services/airtable";
-import useFilestack from "../hooks/useFilestack";
-import { getCurrentTimestamp } from "../utils/date_utils";
-import { settingsContext } from "../App";
-import DiaryReply from "./DiaryReply";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "react-query";
+import styled from "styled-components";
+import { settingsContext } from "../App";
+import useFilestack from "../hooks/useFilestack";
+import { updateDiaryReply } from "../services/airtable";
+import { getCurrentTimestamp } from "../utils/date_utils";
+import DiaryReply from "./DiaryReply";
 
 const CardContainer = styled(Card)({
   marginTop: 10,

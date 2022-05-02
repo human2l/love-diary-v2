@@ -1,7 +1,7 @@
-import Modal from "@mui/material/Modal";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
 import { styled } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
 import { useTranslation } from "react-i18next";
 
 const ModalContent = styled("div")({

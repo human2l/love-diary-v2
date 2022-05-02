@@ -1,19 +1,19 @@
+import { Button, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
-import { Button, Typography } from "@mui/material";
-import { useState, useContext } from "react";
+import { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { settingsContext } from "../App";
 import ColorTiles from "../components/ColorTiles";
 import LanguageSelector from "../components/LanguageSelector";
-import { useTranslation } from "react-i18next";
 
 const SettingsContainer = styled("div")({
+  boxSizing: "border-box",
   height: "100%",
   width: "100%",
   paddingBottom: 56,
   display: "flex",
   flexDirection: "column",
-
   alignItems: "center",
 });
 
@@ -41,7 +41,7 @@ const ColorSelectorContainer = styled("div")({
   width: "50%",
 });
 
-export const Settings = () => {
+const Settings = () => {
   const { t } = useTranslation();
 
   const { user, settings, updateSettings } = useContext(settingsContext);
@@ -124,3 +124,5 @@ export const Settings = () => {
     </>
   );
 };
+
+export default Settings;

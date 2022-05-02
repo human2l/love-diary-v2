@@ -1,20 +1,18 @@
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { styled } from "@mui/material/styles";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import InventoryIcon from "@mui/icons-material/Inventory";
+import SettingsIcon from "@mui/icons-material/Settings";
+import Backdrop from "@mui/material/Backdrop";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import SettingsIcon from "@mui/icons-material/Settings";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-
-import InventoryIcon from "@mui/icons-material/Inventory";
-import { useTranslation } from "react-i18next";
-import MagicBox from "./MagicBox";
-
-import Backdrop from "@mui/material/Backdrop";
 import Modal from "@mui/material/Modal";
 import Slide from "@mui/material/Slide";
+import { styled } from "@mui/material/styles";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import MagicBox from "./MagicBox";
 
 const ModalContainer = styled("div")({});
 
@@ -29,7 +27,7 @@ const MagicBoxContainer = styled("div")({
   borderRadius: "10px",
 });
 
-export const Navbar = (props) => {
+const Navbar = (props) => {
   const { t } = useTranslation();
   const [value, setValue] = useState(-1);
 
@@ -107,7 +105,7 @@ export const Navbar = (props) => {
         >
           <Slide in={open} direction="up">
             <MagicBoxContainer>
-              <MagicBox />
+              <MagicBox onClose={handleCloseMagicBox} />
             </MagicBoxContainer>
           </Slide>
         </Modal>
@@ -115,3 +113,5 @@ export const Navbar = (props) => {
     </>
   );
 };
+
+export default Navbar;

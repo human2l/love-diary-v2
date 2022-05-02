@@ -1,15 +1,13 @@
-import React, { useMemo } from "react";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import * as colors from "@mui/material/colors";
-
-import styled from "styled-components";
-import { useEffect, useState } from "react";
-import { getUserSettings, updateSettingsDB } from "./services/airtable";
-import loadingHeartsSvg from "./assets/images/loadingHearts.svg";
-import "./services/i18next";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { QueryClient, QueryClientProvider } from "react-query";
+import styled from "styled-components";
+import loadingHeartsSvg from "./assets/images/loadingHearts.svg";
 import Router from "./Router";
+import { getUserSettings, updateSettingsDB } from "./services/airtable";
+import "./services/i18next";
 
 const queryClient = new QueryClient();
 

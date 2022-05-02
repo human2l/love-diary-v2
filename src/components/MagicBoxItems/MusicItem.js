@@ -1,21 +1,22 @@
-import Avatar from "@mui/material/Avatar";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import MusicOffIcon from "@mui/icons-material/MusicOff";
-import gaoBaiQiQiuMusic from "../../assets/sounds/gaoBaiQiQiu.mp3";
 import { styled, Typography } from "@mui/material";
-import useSound from "use-sound";
-import { useSelector, useDispatch } from "react-redux";
-import { togglePlaying } from "../../features/music/musicSlice";
+import Avatar from "@mui/material/Avatar";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import useSound from "use-sound";
+import gaoBaiQiQiuMusic from "../../assets/sounds/gaoBaiQiQiu.mp3";
+import { togglePlaying } from "../../features/music/musicSlice";
 
 const ItemContainer = styled("div")({
+  cursor: "pointer",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  margin: 10,
+  margin: 20,
 });
-const Music = () => {
+const MusicItem = () => {
   const { t } = useTranslation();
   const isPlaying = useSelector((state) => state.music.isPlaying);
   const dispatch = useDispatch();
@@ -40,4 +41,4 @@ const Music = () => {
     </ItemContainer>
   );
 };
-export default Music;
+export default MusicItem;
