@@ -38,5 +38,7 @@
   "time_before_next_check_in.label": "距离下次签到时间：",
   "hours.label": "小时",
   "updating_new_diary.label": "正在加载最新日记...",
-  "magic_box.label": "藏宝箱"
+  "magic_box.label": "藏宝箱",
+  "music_on.label": "音乐：开",
+  "music_off.label": "音乐：关"
 }

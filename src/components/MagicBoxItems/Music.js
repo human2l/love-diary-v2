@@ -6,6 +6,7 @@ import { styled, Typography } from "@mui/material";
 import useSound from "use-sound";
 import { useSelector, useDispatch } from "react-redux";
 import { togglePlaying } from "../../features/music/musicSlice";
+import { useTranslation } from "react-i18next";
 
 const ItemContainer = styled("div")({
   display: "flex",
@@ -15,6 +16,7 @@ const ItemContainer = styled("div")({
   margin: 10,
 });
 const Music = () => {
+  const { t } = useTranslation();
   const isPlaying = useSelector((state) => state.music.isPlaying);
   const dispatch = useDispatch();
 
@@ -32,7 +34,9 @@ const Music = () => {
       <Avatar sx={{ bgcolor: "primary.main" }}>
         {isPlaying ? <MusicNoteIcon /> : <MusicOffIcon />}
       </Avatar>
-      <Typography>{isPlaying ? "Music On" : "Music Off"}</Typography>
+      <Typography>
+        {isPlaying ? t("music_on.label") : t("music_off.label")}
+      </Typography>
     </ItemContainer>
   );
 };
