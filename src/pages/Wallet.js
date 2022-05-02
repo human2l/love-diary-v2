@@ -97,7 +97,7 @@ export const Wallet = () => {
               style={{ marginTop: "100px" }}
             />
             <ItemContainer>
-              <Typography color="initial" variant="h5">
+              <Typography color={settings["Dan"].primaryColor} variant="h5">
                 {settings.Dan.nickname}
                 {t("account_balance.label")}
               </Typography>
