@@ -61,8 +61,6 @@ export const Navbar = (props) => {
 
   return (
     <>
-      <MagicBox />
-
       <Navbar
         sx={{
           boxShadow: "0 5px 40px #f19da2",
