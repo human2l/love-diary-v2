@@ -40,5 +40,6 @@
   "updating_new_diary.label": "Loading the latest diaries...",
   "magic_box.label": "Magic Box",
   "music_on.label": "Music On",
-  "music_off.label": "Music Off"
+  "music_off.label": "Music Off",
+  "todo_list.label": "ToDo List"
 }
