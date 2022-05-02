@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import useSound from "use-sound";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -8,16 +7,35 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import MusicNoteIcon from "@mui/icons-material/MusicNote";
-import MusicOffIcon from "@mui/icons-material/MusicOff";
-import gaoBaiQiQiuMusic from "../assets/sounds/gaoBaiQiQiu.mp3";
+
+import InventoryIcon from "@mui/icons-material/Inventory";
 import { useTranslation } from "react-i18next";
+import MagicBox from "./MagicBox";
+
+import Backdrop from "@mui/material/Backdrop";
+import Modal from "@mui/material/Modal";
+import Slide from "@mui/material/Slide";
+
+const ModalContainer = styled("div")({});
+
+const MagicBoxContainer = styled("div")({
+  position: "absolute",
+  //!!!Remember: both vertical and horizontal margin/padding percentage are ONLY base on parent element's WIDTH, not width and height
+  bottom: "65px",
+  left: "5%",
+  width: "90%",
+
+  backgroundColor: "#fff",
+  borderRadius: "10px",
+});
 
 export const Navbar = (props) => {
   const { t } = useTranslation();
   const [value, setValue] = useState(-1);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [play, { stop }] = useSound(gaoBaiQiQiuMusic, { volume: 0.5 });
+
+  const [open, setOpen] = useState(false);
+  const handleOpenMagicBox = () => setOpen(true);
+  const handleCloseMagicBox = () => setOpen(false);
 
   let navigate = useNavigate();
 
@@ -29,19 +47,12 @@ export const Navbar = (props) => {
     height: "56px",
   });
 
-  useEffect(() => {
-    play();
-  }, [play]);
-
-  useEffect(() => {
-    isPlaying ? play() : stop();
-  }, [isPlaying, play, stop]);
-
   const navAction = (navValue) => {
     const actions = [
       () => navigate("/diarys"),
       () => navigate("/wallet"),
-      () => setIsPlaying(!isPlaying),
+
+      () => handleOpenMagicBox(),
       () => navigate("/"),
       () => navigate("/settings"),
     ];
@@ -49,44 +60,61 @@ export const Navbar = (props) => {
   };
 
   return (
-    <Navbar
-      sx={{
-        boxShadow: "0 5px 40px #f19da2",
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-      }}
-      value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-        navAction(newValue);
-        // fetch settings whenever user click on one tab
-        props.fetchSettings();
-      }}
-      showLabels
-    >
-      <BottomNavigationAction
-        label={t("love_diary.label")}
-        icon={<AssignmentIcon />}
-      />
-      <BottomNavigationAction
-        label={t("wallet.label")}
-        icon={<AccountBalanceWalletIcon />}
-      />
-      <BottomNavigationAction
-        label=""
-        icon={
-          isPlaying ? (
-            <MusicNoteIcon fontSize="large" />
-          ) : (
-            <MusicOffIcon fontSize="large" />
-          )
-        }
-      />
-      <BottomNavigationAction label={t("we.label")} icon={<FavoriteIcon />} />
-      <BottomNavigationAction
-        label={t("settings.label")}
-        icon={<SettingsIcon />}
-      />
-    </Navbar>
+    <>
+      <MagicBox />
+
+      <Navbar
+        sx={{
+          boxShadow: "0 5px 40px #f19da2",
+          borderTopLeftRadius: 10,
+          borderTopRightRadius: 10,
+        }}
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+          navAction(newValue);
+          // fetch settings whenever user click on one tab
+          props.fetchSettings();
+        }}
+        showLabels
+      >
+        <BottomNavigationAction
+          label={t("love_diary.label")}
+          icon={<AssignmentIcon />}
+        />
+        <BottomNavigationAction
+          label={t("wallet.label")}
+          icon={<AccountBalanceWalletIcon />}
+        />
+        <BottomNavigationAction
+          label={t("magic_box.label")}
+          icon={<InventoryIcon fontSize="large" />}
+        />
+        <BottomNavigationAction label={t("we.label")} icon={<FavoriteIcon />} />
+        <BottomNavigationAction
+          label={t("settings.label")}
+          icon={<SettingsIcon />}
+        />
+      </Navbar>
+      <ModalContainer>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          open={open}
+          onClose={handleCloseMagicBox}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Slide in={open} direction="up">
+            <MagicBoxContainer>
+              <MagicBox />
+            </MagicBoxContainer>
+          </Slide>
+        </Modal>
+      </ModalContainer>
+    </>
   );
 };
