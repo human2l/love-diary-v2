@@ -98,12 +98,11 @@ export const Navbar = (props) => {
       </Navbar>
       <ModalContainer>
         <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
           open={open}
           onClose={handleCloseMagicBox}
           closeAfterTransition
           BackdropComponent={Backdrop}
+          keepMounted
           BackdropProps={{
             timeout: 500,
           }}
