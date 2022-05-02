@@ -37,5 +37,6 @@
   "checked_in.label": "Checked in",
   "time_before_next_check_in.label": "Time before next check in: ",
   "hours.label": " hours",
-  "updating_new_diary.label": "Loading the latest diaries..."
+  "updating_new_diary.label": "Loading the latest diaries...",
+  "magic_box.label": "Magic Box"
 }
