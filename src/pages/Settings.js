@@ -3,9 +3,9 @@ import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { settingsContext } from "../App";
-import ColorTiles from "../components/ColorTiles";
-import LanguageSelector from "../components/LanguageSelector";
+import { settingsContext } from "../app";
+import ColorTiles from "../components/colorTiles";
+import LanguageSelector from "../components/languageSelector";
 
 const SettingsContainer = styled("div")({
   boxSizing: "border-box",

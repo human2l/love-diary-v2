@@ -1,6 +1,6 @@
 import { styled } from "@mui/material";
-import MusicItem from "./MagicBoxItems/MusicItem";
-import TodoListItem from "./MagicBoxItems/TodoListItem";
+import MusicItem from "./MagicBoxItems/musicItem";
+import TodoListItem from "./MagicBoxItems/todoListItem";
 
 const ItemsContainer = styled("div")({
   display: "flex",

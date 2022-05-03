@@ -2,9 +2,9 @@ import { Button, styled, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { useContext, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { settingsContext } from "../App";
+import { settingsContext } from "../app";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
-import TodoListPaper from "../components/TodoListPaper";
+import TodoListPaper from "../components/todoListPaper";
 import { addTodo, getAllTodos, updateTodo } from "../services/airtable";
 
 const TodoListContainer = styled("div")({
@@ -84,7 +84,7 @@ const TodoList = () => {
               handleCheck={handleCheck.mutate}
             />
 
-            <Typography>未完成的Flag</Typography>
+            <Typography>已完成的Flag</Typography>
             <TodoListPaper todoArray={todoArray} doneStatus={true} />
           </>
         )}

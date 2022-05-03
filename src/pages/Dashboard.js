@@ -3,10 +3,10 @@ import Typography from "@mui/material/Typography";
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
-import { settingsContext } from "../App";
+import { settingsContext } from "../app";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import loveImage from "../assets/images/love_icon.png";
-import FlyingHeart from "../components/FlyingHeart/FlyingHeart";
+import FlyingHeart from "../components/FlyingHeart/flyingHeart";
 import { getDiaryCountByUser } from "../services/airtable";
 import { timeDiff } from "../utils/date_utils";
 

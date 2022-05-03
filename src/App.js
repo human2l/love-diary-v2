@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { QueryClient, QueryClientProvider } from "react-query";
 import styled from "styled-components";
 import loadingHeartsSvg from "./assets/images/loadingHearts.svg";
-import Router from "./Router";
+import Router from "./routes";
 import { getUserSettings, updateSettingsDB } from "./services/airtable";
 import "./services/i18next";
 

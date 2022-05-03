@@ -5,10 +5,10 @@ import { t } from "i18next";
 import { useContext } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { settingsContext } from "../App";
+import { settingsContext } from "../app";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
-import { Diary } from "../components/Diary";
-import TopSnackbar from "../components/TopSnackbar";
+import { Diary } from "../components/diary";
+import TopSnackbar from "../components/topSnackbar";
 import { getAllDiarys } from "../services/airtable";
 import { getCountryDateFromTimestamp } from "../utils/date_utils";
 

@@ -10,11 +10,11 @@ import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
-import { settingsContext } from "../App";
+import { settingsContext } from "../app";
 import useFilestack from "../hooks/useFilestack";
 import { updateDiaryReply } from "../services/airtable";
 import { getCurrentTimestamp } from "../utils/date_utils";
-import DiaryReply from "./DiaryReply";
+import DiaryReply from "./diaryReply";
 
 const CardContainer = styled(Card)({
   marginTop: 10,

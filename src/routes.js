@@ -1,12 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Dashboard from "./pages/Dashboard";
-import Diarys from "./pages/Diarys";
-import Login from "./pages/Login";
-import NewDiary from "./pages/NewDiary";
-import Settings from "./pages/Settings";
-import TodoList from "./pages/TodoList";
-import Wallet from "./pages/Wallet";
+import Navbar from "./components/navbar";
+import Dashboard from "./pages/dashboard";
+import Diarys from "./pages/diarys";
+import Login from "./pages/login";
+import NewDiary from "./pages/newDiary";
+import Settings from "./pages/settings";
+import TodoList from "./pages/todoList";
+import Wallet from "./pages/wallet";
 
 const Router = (props) => {
   const { authenticated, loginMethod, fetchSettings } = props;
