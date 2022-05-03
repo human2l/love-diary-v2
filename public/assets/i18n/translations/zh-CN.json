@@ -48,5 +48,7 @@
   "finished_todos.label": "已完成的Flag",
   "archive.label": "归档",
   "warning.label": "警告",
-  "archive_warning_content.label": "此操作将会清空你当前的所有flag并归档，继续？"
+  "archive_warning_content.label": "此操作将会清空你当前的所有flag并归档，继续？",
+  "show_history.label": "显示历史归档",
+  "empty.label": "（空）"
 }

@@ -48,5 +48,7 @@
   "finished_todos.label": "Finished Todos",
   "archive.label": "Archive",
   "warning.label": "Warning",
-  "archive_warning_content.label": "Continue to clear all your todos and archive them?"
+  "archive_warning_content.label": "Continue to clear all your todos and archive them?",
+  "show_history.label": "Show History",
+  "empty.label": "...Empty..."
 }

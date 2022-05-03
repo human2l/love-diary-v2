@@ -4,6 +4,7 @@ import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { settingsContext } from "../app";
 
 const ChipContainer = styled("div")({
@@ -19,10 +20,10 @@ const Label = styled("div")({
 
 const TodoListPaper = ({ todosArray, doneStatus, handleCheck }) => {
   const { user } = useContext(settingsContext);
-
+  const { t } = useTranslation();
   const checkedChips = () => {
     const checkedArray = todosArray.filter((todo) => todo.done === doneStatus);
-    if (!checkedArray.length) return <div>（空）</div>;
+    if (!checkedArray.length) return <div>{t("empty.label")}</div>;
     return checkedArray.map((todo) => {
       return (
         <ChipContainer key={`checked-todo-${todo.id}`}>
