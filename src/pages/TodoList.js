@@ -1,10 +1,11 @@
 import { Button, styled, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { settingsContext } from "../App";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import TodoListPaper from "../components/TodoListPaper";
-import { getAllTodos, updateTodo } from "../services/airtable";
+import { addTodo, getAllTodos, updateTodo } from "../services/airtable";
 
 const TodoListContainer = styled("div")({
   boxSizing: "border-box",
@@ -27,6 +28,8 @@ const AddNewTodoContainer = styled("div")({
 });
 
 const TodoList = () => {
+  const { user } = useContext(settingsContext);
+
   const [todo, setTodo] = useState("");
   const queryClient = useQueryClient();
   const fetchAllTodos = getAllTodos;
@@ -35,10 +38,15 @@ const TodoList = () => {
     fetchAllTodos
   );
 
-  // const handleAdd = useMutation(() => {});
-  const handleAdd = () => {
-    console.log(todo);
-  };
+  const handleAdd = useMutation(() => {
+    const newTodo = {
+      name: todo,
+      user,
+    };
+    addTodo(newTodo, () => {
+      queryClient.invalidateQueries("fetchAllTodos");
+    });
+  });
 
   const handleCheck = useMutation((todo) => {
     todo.done = true;
@@ -65,7 +73,7 @@ const TodoList = () => {
                   setTodo(e.target.value);
                 }}
               />
-              <Button variant="contained" onClick={handleAdd}>
+              <Button variant="contained" onClick={handleAdd.mutate}>
                 添加
               </Button>
             </AddNewTodoContainer>

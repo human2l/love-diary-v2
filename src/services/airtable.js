@@ -181,10 +181,19 @@ const updateTodo = async (todo, callback) => {
         console.error(err);
         return;
       }
-      console.log(record);
       callback();
     }
   );
+};
+
+const addTodo = async (todo, callback) => {
+  todosBase.create(todo, function (err, record) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    callback();
+  });
 };
 
 export {
@@ -200,4 +209,5 @@ export {
   updateSettingsDB,
   getAllTodos,
   updateTodo,
+  addTodo,
 };
