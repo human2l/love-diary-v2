@@ -43,12 +43,18 @@ const Wallet = () => {
   const { t } = useTranslation();
 
   const { settings } = useContext(settingsContext);
+  const [warningMessages, setWarningMessages] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
+  const [playMoneySound] = useSound(moneySound, { volume: 0.5 });
+  const [playAhOhSound] = useSound(ahOhSound, { volume: 0.1 });
   const {
     isSuccess,
-    isLoading: isPageLoading,
-    isFetching: isLoading,
+    isLoading,
+
     data,
-  } = useQuery("getWalletState", getWalletState);
+  } = useQuery("getWalletState", getWalletState, {
+    refetchOnWindowFocus: false,
+  });
 
   let danWalletId, danMoney, lastCheckInDate;
   if (isSuccess) {
@@ -57,22 +63,18 @@ const Wallet = () => {
     lastCheckInDate = data[1].fields.lastCheckInDate;
   }
 
-  const [warningMessages, setWarningMessages] = useState([]);
-
-  const [playMoneySound] = useSound(moneySound, { volume: 0.5 });
-  const [playAhOhSound] = useSound(ahOhSound, { volume: 0.1 });
-
   const handleCheckIn = async () => {
+    setIsFetching(true);
     const now = new Date().getTime();
     const addedDanMoney = Number((Math.random() / 2).toFixed(2));
     const newDanMoney = Number(danMoney) + addedDanMoney;
     await updateDanWalletState(danWalletId, newDanMoney, now, onUpdateFinish);
     playMoneySound();
-    setWarningMessages(`${t("get_money.label")}$${addedDanMoney}`);
+    setWarningMessages([`${t("get_money.label")}$${addedDanMoney}`]);
   };
 
   const onUpdateFinish = async () => {
-    queryClient.invalidateQueries("getWalletState");
+    queryClient.invalidateQueries("getWalletState").then(setIsFetching(false));
   };
 
   const nextCheckInAllowedTime = () => {
@@ -85,7 +87,7 @@ const Wallet = () => {
   return (
     <>
       <WalletContainer>
-        {isPageLoading ? (
+        {isLoading ? (
           <img src={loadingHeartsSvg} alt="loading" />
         ) : (
           <>
@@ -112,7 +114,7 @@ const Wallet = () => {
                   onClick={handleCheckIn}
                 >
                   <Typography sx={{ color: "white" }} variant="h5">
-                    {isLoading ? t("checking_in.label") : t("check_in.label")}
+                    {isFetching ? t("checking_in.label") : t("check_in.label")}
                   </Typography>
                 </Button>
               ) : (
