@@ -3,6 +3,8 @@ import { styled } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
+import { useContext } from "react";
+import { settingsContext } from "../App";
 
 const ChipContainer = styled("div")({
   maxWidth: "100%",
@@ -16,6 +18,8 @@ const Label = styled("div")({
 });
 
 const TodoListPaper = ({ todoArray, doneStatus, handleCheck }) => {
+  const { user } = useContext(settingsContext);
+
   const checkedChips = () => {
     const checkedArray = todoArray.filter((todo) => todo.done === doneStatus);
     if (!checkedArray.length) return <div>empty</div>;
@@ -27,6 +31,7 @@ const TodoListPaper = ({ todoArray, doneStatus, handleCheck }) => {
             label={<Label>{todo.name}</Label>}
             deleteIcon={!doneStatus ? <CheckCircleIcon /> : null}
             onDelete={!doneStatus ? () => handleCheck(todo) : null}
+            color={todo.user === user ? "primary" : "secondary"}
             style={{
               maxWidth: "100%",
             }}
