@@ -28,7 +28,10 @@ const getAllDiarys = async () => {
       };
     }
   );
-  return allDiarys;
+  const orderedDiarys = allDiarys.sort((diaryA, diaryB) =>
+    diaryA.time < diaryB.time ? 1 : -1
+  );
+  return orderedDiarys;
 };
 
 const addNewDiary = async (newDiary) => {

@@ -36,10 +36,8 @@ const Diarys = () => {
 
   const fetchAllDiarys = async () => {
     const allDiarys = await getAllDiarys();
-    const orderedDiarys = allDiarys.sort((diaryA, diaryB) =>
-      diaryA.time < diaryB.time ? 1 : -1
-    );
-    return orderedDiarys;
+
+    return allDiarys;
   };
 
   const {
