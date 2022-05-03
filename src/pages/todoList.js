@@ -64,6 +64,7 @@ const TodoList = () => {
   );
 
   const handleAdd = useMutation(() => {
+    if (!todo.length) return;
     const newTodo = {
       name: todo,
       user,
@@ -80,6 +81,11 @@ const TodoList = () => {
       queryClient.invalidateQueries("fetchAllTodos");
     });
   });
+
+  const onClickArchiveButton = () => {
+    if (!todosArray.length) return;
+    setArchiveAlertState(true);
+  };
 
   const handleArchive = useMutation(() => {
     setArchiveAlertState(false);
@@ -142,7 +148,7 @@ const TodoList = () => {
               <Button
                 color="error"
                 variant="contained"
-                onClick={() => setArchiveAlertState(true)}
+                onClick={onClickArchiveButton}
                 size="large"
                 startIcon={<ArchiveIcon />}
               >
