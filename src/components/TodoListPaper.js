@@ -22,15 +22,19 @@ const TodoListPaper = ({ todoArray, doneStatus, handleCheck }) => {
 
   const checkedChips = () => {
     const checkedArray = todoArray.filter((todo) => todo.done === doneStatus);
-    if (!checkedArray.length) return <div>empty</div>;
+    if (!checkedArray.length) return <div>（空）</div>;
     return checkedArray.map((todo) => {
       return (
         <ChipContainer key={`checked-todo-${todo.id}`}>
           <Chip
-            size="small"
+            size="medium"
             label={<Label>{todo.name}</Label>}
-            deleteIcon={!doneStatus ? <CheckCircleIcon /> : null}
-            onDelete={!doneStatus ? () => handleCheck(todo) : null}
+            deleteIcon={
+              !doneStatus && user === todo.user ? <CheckCircleIcon /> : null
+            }
+            onDelete={
+              !doneStatus && user === todo.user ? () => handleCheck(todo) : null
+            }
             color={todo.user === user ? "primary" : "secondary"}
             style={{
               maxWidth: "100%",
@@ -47,16 +51,22 @@ const TodoListPaper = ({ todoArray, doneStatus, handleCheck }) => {
         width: "100%",
         display: "flex",
         justifyContent: "center",
+        alignItems: "center",
         flexWrap: "wrap",
         listStyle: "none",
         p: 0.5,
-        m: 0,
+        m: 1,
       }}
     >
       <Stack
         direction="row"
         spacing={0}
-        sx={{ flexWrap: "wrap", width: "100%" }}
+        sx={{
+          flexWrap: "wrap",
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+        }}
       >
         {checkedChips()}
       </Stack>
