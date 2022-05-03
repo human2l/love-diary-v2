@@ -41,5 +41,12 @@
   "magic_box.label": "Magic Box",
   "music_on.label": "Music On",
   "music_off.label": "Music Off",
-  "todo_list.label": "ToDo List"
+  "todo_list.label": "ToDo List",
+  "new_todo.label": "New Todo",
+  "add.label": "Add",
+  "added_todos.label": "Added Todos",
+  "finished_todos.label": "Finished Todos",
+  "archive.label": "Archive",
+  "warning.label": "Warning",
+  "archive_warning_content.label": "Continue to clear all your todos and archive them?"
 }

@@ -41,5 +41,12 @@
   "magic_box.label": "百宝箱",
   "music_on.label": "音乐：开",
   "music_off.label": "音乐：关",
-  "todo_list.label": "立Flag"
+  "todo_list.label": "立Flag",
+  "new_todo.label": "新的Flag",
+  "add.label": "添加",
+  "added_todos.label": "立下的Flag",
+  "finished_todos.label": "已完成的Flag",
+  "archive.label": "归档",
+  "warning.label": "警告",
+  "archive_warning_content.label": "此操作将会清空你当前的所有flag并归档，继续？"
 }

@@ -3,6 +3,7 @@ import ArchiveIcon from "@mui/icons-material/Archive";
 import { Button, styled, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { settingsContext } from "../app";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
@@ -43,7 +44,7 @@ const BottomControlContainer = styled("div")({
 
 const TodoList = () => {
   const { user } = useContext(settingsContext);
-
+  const { t } = useTranslation();
   const [todo, setTodo] = useState("");
   const [archiveAlertState, setArchiveAlertState] = useState(false);
 
@@ -61,6 +62,7 @@ const TodoList = () => {
     };
     addTodo(newTodo, () => {
       queryClient.invalidateQueries("fetchAllTodos");
+      setTodo("");
     });
   });
 
@@ -100,7 +102,8 @@ const TodoList = () => {
           <>
             <AddNewTodoContainer>
               <TextField
-                label="新的Flag"
+                value={todo}
+                label={t("todo_list.label")}
                 variant="outlined"
                 size="small"
                 sx={{ flex: 1, mr: 3 }}
@@ -114,17 +117,17 @@ const TodoList = () => {
                 onClick={handleAdd.mutate}
                 startIcon={<AddBoxOutlinedIcon />}
               >
-                添加
+                {t("add.label")}
               </Button>
             </AddNewTodoContainer>
-            <Typography>立下的Flag</Typography>
+            <Typography>{t("added_todos.label")}</Typography>
             <TodoListPaper
               todosArray={todosArray}
               doneStatus={false}
               handleCheck={handleCheck.mutate}
             />
 
-            <Typography>已完成的Flag</Typography>
+            <Typography>{t("finished_todos.label")}</Typography>
             <TodoListPaper todosArray={todosArray} doneStatus={true} />
             <BottomControlContainer>
               <Button
@@ -134,15 +137,15 @@ const TodoList = () => {
                 size="large"
                 startIcon={<ArchiveIcon />}
               >
-                归档
+                {t("archive.label")}
               </Button>
             </BottomControlContainer>
           </>
         )}
         {archiveAlertState && (
           <ConfirmModal
-            confirmTitle="警告"
-            confirmDescription="此操作将会删除你的所有flag并归档，继续？"
+            confirmTitle={t("warning.label")}
+            confirmDescription={t("archive_warning_content.label")}
             cancel={() => setArchiveAlertState(false)}
             confirm={handleArchive.mutate}
           />
