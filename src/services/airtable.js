@@ -7,6 +7,7 @@ const base = new Airtable({
 const diaryBase = base("diary");
 const walletBase = base("wallet");
 const settingsBase = base("settings");
+const todosBase = base("todos");
 
 const getAllDiarys = async () => {
   const response = await diaryBase
@@ -156,6 +157,36 @@ const updateSettingsDB = async (settings) => {
   });
 };
 
+const getAllTodos = async () => {
+  const response = await todosBase.select({}).all();
+  const allTodos = response.map((todo) => {
+    return {
+      id: todo.id,
+      user: todo.fields.user,
+      name: todo.fields.name,
+      done: !!todo.fields.done,
+    };
+  });
+  return allTodos;
+};
+
+const updateTodo = async (todo, callback) => {
+  todosBase.update(
+    todo.id,
+    {
+      done: todo.done,
+    },
+    function (err, record) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log(record);
+      callback();
+    }
+  );
+};
+
 export {
   getAllDiarys,
   getDiaryCountByUser,
@@ -167,4 +198,6 @@ export {
   updateDanWalletState,
   getUserSettings,
   updateSettingsDB,
+  getAllTodos,
+  updateTodo,
 };
