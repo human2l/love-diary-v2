@@ -1,16 +1,12 @@
-import { styled, Typography } from "@mui/material";
-import Checkbox from "@mui/material/Checkbox";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+import { Button, styled, Typography } from "@mui/material";
 import { useState } from "react";
-
+import TodoListPaper from "../components/TodoListPaper";
 const TodoListContainer = styled("div")({
   boxSizing: "border-box",
   height: "100%",
-  width: "100%",
+  width: "90%",
+  marginLeft: "auto",
+  marginRight: "auto",
   paddingBottom: 56,
   display: "flex",
   flexDirection: "column",
@@ -18,61 +14,54 @@ const TodoListContainer = styled("div")({
 });
 
 const dummyListData = [
-  { id: "11", name: "desc1", done: false },
-  { id: "22", name: "desc2", done: false },
-  { id: "33", name: "desc3", done: false },
-  { id: "44", name: "desc4", done: false },
-  { id: "55", name: "desc5", done: false },
-  { id: "66", name: "desc6", done: false },
-  { id: "77", name: "desc7", done: false },
-  { id: "88", name: "desc8", done: false },
+  {
+    id: "1",
+    name: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi totam accusantium aspernatur aliquam unde consequuntur velit dignissimos ab delectus earum?",
+    done: false,
+  },
+  { id: "a2", name: "desc2", done: false },
+  { id: "a3", name: "desc3", done: false },
+  { id: "a4", name: "desc4", done: false },
+  { id: "a5", name: "desc5", done: false },
+  { id: "a6", name: "desc6", done: false },
+  { id: "a7", name: "desc7", done: false },
+  { id: "a8", name: "desc8", done: false },
+  { id: "a9", name: "desc8", done: false },
+  { id: "a10", name: "desc8", done: false },
+  { id: "a11", name: "desc8", done: false },
+  { id: "a12", name: "desc8", done: false },
+  { id: "a13", name: "desc8", done: false },
+  { id: "a14", name: "desc8", done: false },
+  { id: "a15", name: "desc8", done: false },
+  { id: "a16", name: "desc8", done: false },
+  { id: "a17", name: "desc17", done: false },
+  { id: "a18", name: "desc18", done: false },
+  { id: "a19", name: "desc19", done: false },
+  { id: "a20", name: "desc20", done: false },
 ];
 
 const TodoList = () => {
-  const [checkList, setCheckList] = useState(dummyListData);
+  const [todoArray, setTodoArray] = useState(dummyListData);
 
-  const handleToggle = (id) => {
-    const currentTodoIndex = checkList.findIndex((todo) => {
-      return todo.id === id;
-    });
-    const newCheckList = [...checkList];
-    newCheckList[currentTodoIndex].done = !newCheckList[currentTodoIndex].done;
-    console.log(newCheckList);
-    setCheckList(newCheckList);
+  const handleCheck = (checkedTodo) => {
+    const newTodoArray = [...todoArray];
+    newTodoArray.filter((todo) => todo.id === checkedTodo.id)[0].done = true;
+    setTodoArray(newTodoArray);
   };
 
   return (
     <TodoListContainer>
       <Typography>asdfasdf</Typography>
-      <List
-        dense
-        sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-      >
-        {checkList.map(({ id, name, done }) => {
-          const labelId = `checkbox-list-label-${id}`;
+      <Button>add new todo</Button>
+      <TodoListPaper
+        todoArray={todoArray}
+        doneStatus={false}
+        handleCheck={handleCheck}
+      />
 
-          return (
-            <ListItem key={id} disablePadding>
-              <ListItemButton
-                role={undefined}
-                onClick={() => handleToggle(id)}
-                dense
-              >
-                <ListItemIcon>
-                  <Checkbox
-                    edge="start"
-                    checked={done}
-                    tabIndex={-1}
-                    disableRipple
-                    inputProps={{ "aria-labelledby": labelId }}
-                  />
-                </ListItemIcon>
-                <ListItemText id={labelId} primary={name} />
-              </ListItemButton>
-            </ListItem>
-          );
-        })}
-      </List>
+      <Typography>asdfasdf</Typography>
+
+      <TodoListPaper todoArray={todoArray} doneStatus={true} />
     </TodoListContainer>
   );
 };
