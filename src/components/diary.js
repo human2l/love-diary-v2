@@ -70,10 +70,6 @@ export const Diary = (props) => {
     });
   };
 
-  const editReply = (event) => {
-    setReplyContent(event.target.value);
-  };
-
   const submitReply = useMutation(() => {
     setReply(false);
     if (replyContent === "") return;
@@ -116,11 +112,10 @@ export const Diary = (props) => {
     <ReplyContainer>
       <TextField
         label={t("reply_with_colon.label")}
-        multiline
         variant="standard"
         style={{ width: "100%" }}
         value={replyContent}
-        onChange={editReply}
+        onInput={(e) => setReplyContent(e.target.value)}
       />
       <Button
         variant="contained"
