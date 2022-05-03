@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import App from "./app";
 import store from "./app/store";
-import "./assets/fonts/MaShanZheng-Regular.ttf";
+import "./assets/fonts/maShanZheng-Regular.ttf";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 

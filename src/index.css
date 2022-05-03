@@ -17,7 +17,7 @@ code {
 @font-face {
   font-family: "Ma Shan Zheng";
   src: local("MaShanZheng-Regular"),
-    url("./assets/fonts/MaShanZheng-Regular.ttf") format("truetype");
+    url("./assets/fonts/maShanZheng-Regular.ttf") format("truetype");
   font-weight: 400;
 }
 
