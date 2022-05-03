@@ -6,6 +6,7 @@ import Login from "./pages/login";
 import NewDiary from "./pages/newDiary";
 import Settings from "./pages/settings";
 import TodoList from "./pages/todoList";
+import TodoListHistory from "./pages/todoListHistory.js";
 import Wallet from "./pages/wallet";
 
 const Router = (props) => {
@@ -22,6 +23,7 @@ const Router = (props) => {
             <Route path="/wallet" element={<Wallet />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/toDoList" element={<TodoList />} />
+            <Route path="/toDoListHistory" element={<TodoListHistory />} />
           </>
         )}
         <Route path="*" element={<Login login={loginMethod} />} />

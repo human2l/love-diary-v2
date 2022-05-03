@@ -1,10 +1,12 @@
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import ArchiveIcon from "@mui/icons-material/Archive";
+import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import { Button, styled, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../app";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import ConfirmModal from "../components/confirmModal";
@@ -38,11 +40,16 @@ const AddNewTodoContainer = styled("div")({
 });
 
 const BottomControlContainer = styled("div")({
+  width: "100%",
+  display: "flex",
+  justifyContent: "space-between",
   marginBottom: 10,
   marginTop: "auto",
 });
 
 const TodoList = () => {
+  let navigate = useNavigate();
+
   const { user } = useContext(settingsContext);
   const { t } = useTranslation();
   const [todo, setTodo] = useState("");
@@ -138,6 +145,17 @@ const TodoList = () => {
                 startIcon={<ArchiveIcon />}
               >
                 {t("archive.label")}
+              </Button>
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={() => {
+                  navigate("/todoListHistory");
+                }}
+                size="large"
+                startIcon={<HistoryOutlinedIcon />}
+              >
+                {t("show_history.label")}
               </Button>
             </BottomControlContainer>
           </>
