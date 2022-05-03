@@ -1,9 +1,12 @@
+import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
+import ArchiveIcon from "@mui/icons-material/Archive";
 import { Button, styled, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { useContext, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { settingsContext } from "../app";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
+import ConfirmModal from "../components/confirmModal";
 import TodoListPaper from "../components/todoListPaper";
 import {
   addTodo,
@@ -42,6 +45,8 @@ const TodoList = () => {
   const { user } = useContext(settingsContext);
 
   const [todo, setTodo] = useState("");
+  const [archiveAlertState, setArchiveAlertState] = useState(false);
+
   const queryClient = useQueryClient();
   const fetchAllTodos = getAllTodos;
   const { isLoading, data: todosArray } = useQuery(
@@ -67,6 +72,7 @@ const TodoList = () => {
   });
 
   const handleArchive = useMutation(() => {
+    setArchiveAlertState(false);
     const deleteTodosArray = todosArray.filter((todo) => {
       return todo.user === user;
     });
@@ -103,7 +109,11 @@ const TodoList = () => {
                   setTodo(e.target.value);
                 }}
               />
-              <Button variant="contained" onClick={handleAdd.mutate}>
+              <Button
+                variant="contained"
+                onClick={handleAdd.mutate}
+                startIcon={<AddBoxOutlinedIcon />}
+              >
                 添加
               </Button>
             </AddNewTodoContainer>
@@ -120,12 +130,22 @@ const TodoList = () => {
               <Button
                 color="error"
                 variant="contained"
-                onClick={handleArchive.mutate}
+                onClick={() => setArchiveAlertState(true)}
+                size="large"
+                startIcon={<ArchiveIcon />}
               >
                 归档
               </Button>
             </BottomControlContainer>
           </>
+        )}
+        {archiveAlertState && (
+          <ConfirmModal
+            confirmTitle="警告"
+            confirmDescription="此操作将会删除你的所有flag并归档，继续？"
+            cancel={() => setArchiveAlertState(false)}
+            confirm={handleArchive.mutate}
+          />
         )}
       </TodoListContainer>
     </>

@@ -13,7 +13,12 @@ const ModalContent = styled("div")({
   border: "1px solid rgba(255,255,255,0.2)",
 });
 
-const ConfirmModal = (props) => {
+const ConfirmModal = ({
+  confirmTitle,
+  confirmDescription,
+  cancel,
+  confirm,
+}) => {
   const { t } = useTranslation();
   return (
     <Modal
@@ -26,10 +31,10 @@ const ConfirmModal = (props) => {
     >
       <ModalContent>
         <Typography color="primary" variant="h5" id="simple-modal-title">
-          {props.confirmTitle}
+          {confirmTitle}
         </Typography>
         <Typography color="textSecondary" id="simple-modal-description">
-          {props.confirmDescription}
+          {confirmDescription}
         </Typography>
         <div
           style={{
@@ -42,7 +47,7 @@ const ConfirmModal = (props) => {
             size="medium"
             variant="contained"
             color="inherit"
-            onClick={props.cancel}
+            onClick={cancel}
           >
             {t("cancel.label")}
           </Button>
@@ -50,7 +55,7 @@ const ConfirmModal = (props) => {
             size="medium"
             variant="contained"
             color="primary"
-            onClick={props.confirm}
+            onClick={confirm}
           >
             {t("confirm.label")}
           </Button>
