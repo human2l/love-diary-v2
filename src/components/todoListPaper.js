@@ -17,11 +17,11 @@ const Label = styled("div")({
   textOverflow: "ellipsis",
 });
 
-const TodoListPaper = ({ todoArray, doneStatus, handleCheck }) => {
+const TodoListPaper = ({ todosArray, doneStatus, handleCheck }) => {
   const { user } = useContext(settingsContext);
 
   const checkedChips = () => {
-    const checkedArray = todoArray.filter((todo) => todo.done === doneStatus);
+    const checkedArray = todosArray.filter((todo) => todo.done === doneStatus);
     if (!checkedArray.length) return <div>（空）</div>;
     return checkedArray.map((todo) => {
       return (
@@ -56,6 +56,7 @@ const TodoListPaper = ({ todoArray, doneStatus, handleCheck }) => {
         listStyle: "none",
         p: 0.5,
         m: 1,
+        backgroundColor: "rgba(255,255,255, 0.5)",
       }}
     >
       <Stack

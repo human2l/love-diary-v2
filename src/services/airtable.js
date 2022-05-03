@@ -8,6 +8,7 @@ const diaryBase = base("diary");
 const walletBase = base("wallet");
 const settingsBase = base("settings");
 const todosBase = base("todos");
+const todosHistoryBase = base("todosHistory");
 
 const getAllDiarys = async () => {
   const response = await diaryBase
@@ -196,6 +197,27 @@ const addTodo = async (todo, callback) => {
   });
 };
 
+const deleteTodos = async (todosIdArray, callback) => {
+  todosBase.destroy(todosIdArray, function (err, deletedRecords) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    callback();
+    console.log("Deleted", deletedRecords.length, "records");
+  });
+};
+
+const addTodosHistory = async (todosHistory, callback) => {
+  todosHistoryBase.create(todosHistory, function (err, record) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    callback();
+  });
+};
+
 export {
   getAllDiarys,
   getDiaryCountByUser,
@@ -210,4 +232,6 @@ export {
   getAllTodos,
   updateTodo,
   addTodo,
+  addTodosHistory,
+  deleteTodos,
 };

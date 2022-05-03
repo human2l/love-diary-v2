@@ -5,7 +5,13 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { settingsContext } from "../app";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import TodoListPaper from "../components/todoListPaper";
-import { addTodo, getAllTodos, updateTodo } from "../services/airtable";
+import {
+  addTodo,
+  addTodosHistory,
+  deleteTodos,
+  getAllTodos,
+  updateTodo,
+} from "../services/airtable";
 
 const TodoListContainer = styled("div")({
   boxSizing: "border-box",
@@ -27,13 +33,18 @@ const AddNewTodoContainer = styled("div")({
   alignItems: "center",
 });
 
+const BottomControlContainer = styled("div")({
+  marginBottom: 10,
+  marginTop: "auto",
+});
+
 const TodoList = () => {
   const { user } = useContext(settingsContext);
 
   const [todo, setTodo] = useState("");
   const queryClient = useQueryClient();
   const fetchAllTodos = getAllTodos;
-  const { isLoading, data: todoArray } = useQuery(
+  const { isLoading, data: todosArray } = useQuery(
     "fetchAllTodos",
     fetchAllTodos
   );
@@ -52,6 +63,25 @@ const TodoList = () => {
     todo.done = true;
     updateTodo(todo, () => {
       queryClient.invalidateQueries("fetchAllTodos");
+    });
+  });
+
+  const handleArchive = useMutation(() => {
+    const deleteTodosArray = todosArray.filter((todo) => {
+      return todo.user === user;
+    });
+    const todosHistory = {
+      user,
+      todos: JSON.stringify(deleteTodosArray),
+      time: new Date().getTime(),
+    };
+    const deleteTodosIdArray = deleteTodosArray.map((todo) => {
+      return todo.id;
+    });
+    addTodosHistory(todosHistory, () => {
+      deleteTodos(deleteTodosIdArray, () => {
+        queryClient.invalidateQueries("fetchAllTodos");
+      });
     });
   });
 
@@ -79,13 +109,22 @@ const TodoList = () => {
             </AddNewTodoContainer>
             <Typography>立下的Flag</Typography>
             <TodoListPaper
-              todoArray={todoArray}
+              todosArray={todosArray}
               doneStatus={false}
               handleCheck={handleCheck.mutate}
             />
 
             <Typography>已完成的Flag</Typography>
-            <TodoListPaper todoArray={todoArray} doneStatus={true} />
+            <TodoListPaper todosArray={todosArray} doneStatus={true} />
+            <BottomControlContainer>
+              <Button
+                color="error"
+                variant="contained"
+                onClick={handleArchive.mutate}
+              >
+                归档
+              </Button>
+            </BottomControlContainer>
           </>
         )}
       </TodoListContainer>
