@@ -18,6 +18,7 @@ import {
   getAllTodos,
   updateTodo,
 } from "../services/airtable";
+import { getCurrentTimestamp } from "../utils/date_utils";
 
 const TodoListContainer = styled("div")({
   boxSizing: "border-box",
@@ -85,10 +86,11 @@ const TodoList = () => {
     const deleteTodosArray = todosArray.filter((todo) => {
       return todo.user === user;
     });
+    const time = getCurrentTimestamp();
     const todosHistory = {
       user,
       todos: JSON.stringify(deleteTodosArray),
-      time: new Date().getTime(),
+      time,
     };
     const deleteTodosIdArray = deleteTodosArray.map((todo) => {
       return todo.id;
