@@ -21,13 +21,10 @@ const TodoList = () => {
   const queryClient = useQueryClient();
 
   const fetchAllTodos = getAllTodos;
-  const {
-    isLoading,
-    isFetching,
-    data: todoArray,
-    isError,
-    error,
-  } = useQuery("fetchAllTodos", fetchAllTodos);
+  const { isLoading, data: todoArray } = useQuery(
+    "fetchAllTodos",
+    fetchAllTodos
+  );
 
   const handleCheck = useMutation((todo) => {
     todo.done = true;
