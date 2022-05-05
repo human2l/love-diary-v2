@@ -4,8 +4,8 @@ import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { settingsContext } from "../app";
+import childrenPng from "../assets/images/children.png";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
-import loveImage from "../assets/images/love_icon.png";
 import FlyingHeart from "../components/flyingHeart/flyingHeart";
 import { getDiaryCountByUser } from "../services/airtable";
 import { timeDiff } from "../utils/date_utils";
@@ -69,7 +69,7 @@ const Dashboard = () => {
       ) : (
         <>
           <FlyingHeart />
-          <Image src={loveImage} />
+          <Image src={childrenPng} />
           <Typography color="textPrimary" variant="h5">
             {settings.Dan.nickname}
             {t("and.label")}
@@ -121,6 +121,7 @@ const Dashboard = () => {
           </DiaryCounterContainer>
         </>
       )}
+      {/* <a href="https://www.flaticon.com/free-icons/children" title="children icons">Children icons created by Freepik - Flaticon</a> */}
     </DashboardContainer>
   );
 };
