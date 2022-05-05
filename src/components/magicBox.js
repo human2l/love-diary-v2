@@ -13,6 +13,7 @@ const ItemsContainer = styled("div")({
 });
 
 const ChestImageContainer = styled("div")({
+  width: "100%",
   position: "absolute",
   transform: "translate(0,-100%)",
 });
@@ -21,8 +22,10 @@ const ChestImage = styled("img")({
   display: "block",
   marginLeft: "auto",
   marginRight: "auto",
+  maxHeight: 64,
+  aspectRatio: "1/1",
   height: "20%",
-  width: "20%",
+  // width: "20%",
 });
 
 const MagicBox = (props) => {
