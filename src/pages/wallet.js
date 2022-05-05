@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "react-query";
 import useSound from "use-sound";
 import { settingsContext } from "../app";
-import dollarPng from "../assets/images/dollar.png";
+import coinsPng from "../assets/images/coins.png";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import walletSVG from "../assets/images/wallet.svg";
 import ahOhSound from "../assets/sounds/ah-oh.mp3";
@@ -110,7 +110,7 @@ const Wallet = () => {
                 <Button
                   variant="contained"
                   color="primary"
-                  startIcon={<Avatar src={dollarPng} />}
+                  startIcon={<Avatar variant="rounded" src={coinsPng} />}
                   onClick={handleCheckIn}
                 >
                   <Typography sx={{ color: "white" }} variant="h5">
@@ -121,7 +121,7 @@ const Wallet = () => {
                 <Button
                   variant="contained"
                   color="primary"
-                  startIcon={<Avatar src={dollarPng} />}
+                  startIcon={<Avatar variant="rounded" src={coinsPng} />}
                   onClick={() => {
                     setWarningMessages([
                       ...warningMessages,
@@ -151,9 +151,7 @@ const Wallet = () => {
           </>
         )}
       </WalletContainer>
-      {/* <a href="https://www.flaticon.com/free-icons/coin" title="coin icons">
-        Coin icons created by Freepik - Flaticon
-      </a> */}
+      {/* <a href="https://www.flaticon.com/free-icons/cute" title="cute icons">Cute icons created by Freepik - Flaticon</a> */}
     </>
   );
 };
