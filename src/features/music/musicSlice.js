@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const musicSlice = createSlice({
   name: "music",
   initialState: {
-    isPlaying: false,
+    isPlaying: true,
   },
   reducers: {
     togglePlaying: (state) => {

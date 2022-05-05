@@ -2,6 +2,7 @@ import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import MusicOffIcon from "@mui/icons-material/MusicOff";
 import { styled, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import useSound from "use-sound";
@@ -29,6 +30,10 @@ const MusicItem = () => {
     !isPlaying ? play() : stop();
     dispatch(togglePlaying());
   };
+
+  useEffect(() => {
+    play();
+  }, [play]);
 
   return (
     <ItemContainer onClick={handleClick}>
