@@ -25,6 +25,7 @@ const MagicBoxContainer = styled("div")({
 
   backgroundColor: "#fff",
   borderRadius: "10px",
+  border: "2px solid black",
 });
 
 const Navbar = (props) => {

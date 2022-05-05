@@ -1,6 +1,7 @@
 import { styled } from "@mui/material";
-import MusicItem from "./MagicBoxItems/musicItem";
-import TodoListItem from "./MagicBoxItems/todoListItem";
+import treasurePng from "../assets/images/treasure.png";
+import MusicItem from "./magicBoxItems/musicItem";
+import TodoListItem from "./magicBoxItems/todoListItem";
 
 const ItemsContainer = styled("div")({
   display: "flex",
@@ -11,12 +12,31 @@ const ItemsContainer = styled("div")({
   height: "100%",
 });
 
+const ChestImageContainer = styled("div")({
+  position: "absolute",
+  transform: "translate(0,-100%)",
+});
+
+const ChestImage = styled("img")({
+  display: "block",
+  marginLeft: "auto",
+  marginRight: "auto",
+  height: "20%",
+  width: "20%",
+});
+
 const MagicBox = (props) => {
   return (
-    <ItemsContainer>
-      <MusicItem />
-      <TodoListItem onClose={props.onClose} />
-    </ItemsContainer>
+    <>
+      <ChestImageContainer>
+        <ChestImage src={treasurePng} />
+      </ChestImageContainer>
+      <ItemsContainer>
+        <MusicItem />
+        <TodoListItem onClose={props.onClose} />
+        {/* <a href="https://www.flaticon.com/free-icons/chest" title="chest icons">Chest icons created by Smashicons - Flaticon</a> */}
+      </ItemsContainer>
+    </>
   );
 };
 export default MagicBox;
