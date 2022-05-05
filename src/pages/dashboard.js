@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import { settingsContext } from "../app";
 import childrenPng from "../assets/images/children.png";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
+import CartoonNumbers from "../components/cartoonNumbers";
 import FlyingHeart from "../components/flyingHeart/flyingHeart";
 import { getDiaryCountByUser } from "../services/airtable";
 import { timeDiff } from "../utils/date_utils";
@@ -16,6 +17,10 @@ const DashboardContainer = styled("div")({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+});
+
+const CartoonNumbersContainer = styled("div")({
+  margin: 20,
 });
 
 const DaysCounterContainer = styled("div")({
@@ -84,7 +89,9 @@ const Dashboard = () => {
             </Typography>
             <DaysWrapper>
               <RedTypography color="primary" variant="h3">
-                {res.day}
+                <CartoonNumbersContainer>
+                  <CartoonNumbers numberString={res.day + ""} />
+                </CartoonNumbersContainer>
               </RedTypography>
             </DaysWrapper>
             <Typography color="textPrimary" variant="h5">
