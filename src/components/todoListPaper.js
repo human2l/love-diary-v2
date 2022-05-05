@@ -22,8 +22,9 @@ const TodoListPaper = ({ todosArray, doneStatus, handleCheck }) => {
   const { user } = useContext(settingsContext);
   const { t } = useTranslation();
   const checkedChips = () => {
-    const checkedArray = todosArray.filter((todo) => todo.done === doneStatus);
-    if (!checkedArray.length) return <div>{t("empty.label")}</div>;
+    const checkedArray = todosArray.find((todo) => todo.done === doneStatus);
+
+    if (!checkedArray) return <div>{t("empty.label")}</div>;
     return checkedArray.map((todo) => {
       return (
         <ChipContainer key={`checked-todo-${todo.id}`}>

@@ -60,13 +60,13 @@ function App() {
     return createTheme({
       palette: {
         primary: {
-          main: settings[user]?.primaryColor || colors.pink[400],
+          main: settings[user]?.primaryColor ?? colors.pink[400],
         },
         secondary: {
-          main: settings[user]?.secondaryColor || colors.blue[400],
+          main: settings[user]?.secondaryColor ?? colors.blue[400],
         },
         text: {
-          primary: settings[user]?.primaryColor || colors.pink[400],
+          primary: settings[user]?.primaryColor ?? colors.pink[400],
           light: colors.pink[50],
         },
         pink: colors.pink[400],

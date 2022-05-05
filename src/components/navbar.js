@@ -54,7 +54,7 @@ const Navbar = (props) => {
       () => navigate("/"),
       () => navigate("/settings"),
     ];
-    return (actions[navValue] || null)();
+    return actions[navValue]();
   };
 
   return (

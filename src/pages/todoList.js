@@ -89,9 +89,10 @@ const TodoList = () => {
 
   const handleArchive = useMutation(() => {
     setArchiveAlertState(false);
-    const deleteTodosArray = todosArray.filter((todo) => {
-      return todo.user === user;
-    });
+    const deleteTodosArray =
+      todosArray.find((todo) => {
+        return todo.user === user;
+      }) ?? [];
     const time = getCurrentTimestamp();
     const todosHistory = {
       user,
