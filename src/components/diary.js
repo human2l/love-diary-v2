@@ -9,9 +9,11 @@ import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
+import useSound from "use-sound";
 import { settingsContext } from "../app";
 import sayLovePng from "../assets/images/say_love.png";
 import sendPng from "../assets/images/send.png";
+import sendSound from "../assets/sounds/send.mp3";
 import useFilestack from "../hooks/useFilestack";
 import { updateDiaryReply } from "../services/airtable";
 import { getCurrentTimestamp } from "../utils/date_utils";
@@ -53,8 +55,10 @@ const SendIcon = styled("img")({
 
 export const Diary = (props) => {
   const queryClient = useQueryClient();
-
   const { t } = useTranslation();
+  const [play] = useSound(sendSound, {
+    volume: 0.5,
+  });
 
   const {
     diaryAuthor,
@@ -85,6 +89,7 @@ export const Diary = (props) => {
   const submitReply = useMutation(() => {
     setReply(false);
     if (replyContent === "") return;
+    play();
     const time = getCurrentTimestamp();
     const reply = [
       ...diaryReplies,
