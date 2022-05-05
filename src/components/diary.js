@@ -1,4 +1,4 @@
-import Button from "@mui/material/Button";
+import { Button } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
@@ -11,6 +11,7 @@ import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
 import { settingsContext } from "../app";
 import sayLovePng from "../assets/images/say_love.png";
+import sendPng from "../assets/images/send.png";
 import useFilestack from "../hooks/useFilestack";
 import { updateDiaryReply } from "../services/airtable";
 import { getCurrentTimestamp } from "../utils/date_utils";
@@ -126,10 +127,11 @@ export const Diary = (props) => {
       />
       <Button
         variant="contained"
+        size="small"
+        sx={{ borderRadius: 20 }}
         onClick={submitReply.mutate}
-        style={{ width: "auto", height: "40px", whiteSpace: "nowrap" }}
       >
-        {t("reply.label")}
+        <img src={sendPng} style={{ height: 25, width: 25 }} alt="send" />
       </Button>
     </ReplyContainer>
   );
