@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { settingsContext } from "../app";
+import languagesPng from "../assets/images/languages.png";
 import ColorTiles from "../components/colorTiles";
 import LanguageSelector from "../components/languageSelector";
 
@@ -22,6 +23,11 @@ const ItemContainer = styled("div")({
   width: "90%",
   display: "flex",
   flexDirection: "column",
+});
+
+const LanguagesIcon = styled("img")({
+  maxHeight: 35,
+  aspectRatio: "1/1",
 });
 
 const LanguageSelectorContainer = styled("div")({
@@ -71,12 +77,13 @@ const Settings = () => {
       <SettingsContainer>
         <ItemContainer>
           <LanguageSelectorContainer>
+            <LanguagesIcon src={languagesPng} sx={{ marginRight: "20px" }} />
             <Typography
               variant="h6"
               color={primaryColor}
               sx={{ marginRight: "20px" }}
             >
-              {t("language.label")}
+              {/* {t("language.label")} */}:
             </Typography>
             <LanguageSelector language={language} setLanguage={setLanguage} />
           </LanguageSelectorContainer>
@@ -121,6 +128,7 @@ const Settings = () => {
           </Button>
         </ItemContainer>
       </SettingsContainer>
+      {/* <a href="https://www.flaticon.com/free-icons/language" title="language icons">Language icons created by Freepik - Flaticon</a> */}
     </>
   );
 };
