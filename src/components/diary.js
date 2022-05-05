@@ -1,4 +1,3 @@
-import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
@@ -11,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
 import { settingsContext } from "../app";
+import sayLovePng from "../assets/images/say_love.png";
 import useFilestack from "../hooks/useFilestack";
 import { updateDiaryReply } from "../services/airtable";
 import { getCurrentTimestamp } from "../utils/date_utils";
@@ -37,6 +37,13 @@ const PhotoContainer = styled("div")({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
+});
+
+const CommentIcon = styled("img")({
+  cursor: "pointer",
+  marginLeft: 5,
+  maxHeight: 25,
+  aspectRatio: "1/1",
 });
 
 export const Diary = (props) => {
@@ -141,7 +148,7 @@ export const Diary = (props) => {
             </Typography>
             <DiaryMetaContainer>
               <Typography color="textSecondary">{diaryDate}</Typography>
-              <ChatOutlinedIcon color="secondary" onClick={toggleReplyPanel} />
+              <CommentIcon src={sayLovePng} onClick={toggleReplyPanel} />
             </DiaryMetaContainer>
           </TitleContainer>
           <Typography
@@ -173,6 +180,7 @@ export const Diary = (props) => {
           {reply && replyControlsView}
         </CardContent>
       </Card>
+      {/* <a href="https://www.flaticon.com/free-icons/heart" title="heart icons">Heart icons created by Freepik - Flaticon</a> */}
     </CardContainer>
   );
 };
