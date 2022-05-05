@@ -1,8 +1,8 @@
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { styled } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
+import { styled } from "@mui/material/styles";
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { settingsContext } from "../app";

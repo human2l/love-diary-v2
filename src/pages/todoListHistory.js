@@ -2,9 +2,9 @@
 // import { Button } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import WarningIcon from "@mui/icons-material/Warning";
-import { styled } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { useContext } from "react";
 import { useQuery } from "react-query";

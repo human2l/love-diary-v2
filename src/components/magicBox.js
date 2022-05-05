@@ -1,4 +1,4 @@
-import { styled } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import treasurePng from "../assets/images/treasure.png";
 import MusicItem from "./magicBoxItems/musicItem";
 import TodoListItem from "./magicBoxItems/todoListItem";
@@ -25,7 +25,6 @@ const ChestImage = styled("img")({
   maxHeight: 64,
   aspectRatio: "1/1",
   height: "20%",
-  // width: "20%",
 });
 
 const MagicBox = (props) => {
