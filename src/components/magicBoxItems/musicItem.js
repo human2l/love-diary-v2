@@ -1,11 +1,11 @@
-import MusicNoteIcon from "@mui/icons-material/MusicNote";
-import MusicOffIcon from "@mui/icons-material/MusicOff";
 import { styled, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import useSound from "use-sound";
+import soundOffPng from "../../assets/images/sound-off.png";
+import soundOnPng from "../../assets/images/sound-on.png";
 import gaoBaiQiQiuMusic from "../../assets/sounds/gaoBaiQiQiu.mp3";
 import { togglePlaying } from "../../features/music/musicSlice";
 
@@ -17,6 +17,17 @@ const ItemContainer = styled("div")({
   alignItems: "center",
   margin: 20,
 });
+
+const SoundOnIcon = styled("img")({
+  maxHeight: 35,
+  aspectRatio: "1/1",
+});
+
+const SoundOffIcon = styled("img")({
+  maxHeight: 35,
+  aspectRatio: "1/1",
+});
+
 const MusicItem = () => {
   const { t } = useTranslation();
   const isPlaying = useSelector((state) => state.music.isPlaying);
@@ -37,12 +48,18 @@ const MusicItem = () => {
 
   return (
     <ItemContainer onClick={handleClick}>
-      <Avatar sx={{ bgcolor: "primary.main" }}>
-        {isPlaying ? <MusicNoteIcon /> : <MusicOffIcon />}
+      <Avatar variant="rounded" sx={{ bgcolor: "primary.main" }}>
+        {isPlaying ? (
+          <SoundOnIcon src={soundOnPng} />
+        ) : (
+          <SoundOffIcon src={soundOffPng} />
+        )}
       </Avatar>
       <Typography>
         {isPlaying ? t("music_on.label") : t("music_off.label")}
       </Typography>
+      {/* <a href="https://www.flaticon.com/free-icons/sound-on" title="sound-on icons">Sound-on icons created by Freepik - Flaticon</a> */}
+      {/* <a href="https://www.flaticon.com/free-icons/sound-off" title="sound off icons">Sound off icons created by Freepik - Flaticon</a> */}
     </ItemContainer>
   );
 };
