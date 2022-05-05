@@ -107,7 +107,7 @@ const Settings = () => {
               </Typography>
               <ColorTiles pickColor={setPrimaryColor} />
             </ColorSelectorContainer>
-            <ColorSelectorContainer>
+            <ColorSelectorContainer sx={{ ml: 5 }}>
               <Typography
                 variant="h6"
                 color={secondaryColor}

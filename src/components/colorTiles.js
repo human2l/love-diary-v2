@@ -8,8 +8,10 @@ const ColorTiles = (props) => {
     flexWrap: "wrap",
   });
   const ColorTile = styled("div")({
-    width: "20%",
+    minWidth: 35,
+    minHeight: 35,
 
+    //!!! chorome browser on mobile does not support aspectRatio, so use fixed minHeight
     aspectRatio: "1/1",
     border: "1px solid white",
   });
