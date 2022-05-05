@@ -32,6 +32,7 @@ const DiaryMetaContainer = styled("div")({
 
 const ReplyContainer = styled("div")({
   display: "flex",
+  justifyContent: "center",
 });
 
 const PhotoContainer = styled("div")({
@@ -41,10 +42,13 @@ const PhotoContainer = styled("div")({
 });
 
 const CommentIcon = styled("img")({
-  cursor: "pointer",
-  marginLeft: 5,
-  maxHeight: 25,
-  aspectRatio: "1/1",
+  width: 30,
+  height: 30,
+});
+
+const SendIcon = styled("img")({
+  width: 30,
+  height: 30,
 });
 
 export const Diary = (props) => {
@@ -118,21 +122,40 @@ export const Diary = (props) => {
 
   const replyControlsView = (
     <ReplyContainer>
-      <TextField
-        label={t("reply_with_colon.label")}
-        variant="standard"
-        style={{ width: "100%" }}
-        value={replyContent}
-        onInput={(e) => setReplyContent(e.target.value)}
-      />
-      <Button
-        variant="contained"
-        size="small"
-        sx={{ borderRadius: 20 }}
-        onClick={submitReply.mutate}
-      >
-        <img src={sendPng} style={{ height: 25, width: 25 }} alt="send" />
-      </Button>
+      {reply ? (
+        <>
+          <TextField
+            label={t("reply_with_colon.label")}
+            variant="standard"
+            style={{ width: "100%" }}
+            value={replyContent}
+            onInput={(e) => setReplyContent(e.target.value)}
+          />
+          <Button
+            variant="text"
+            size="small"
+            sx={{
+              borderRadius: 10,
+            }}
+            onClick={submitReply.mutate}
+          >
+            <SendIcon src={sendPng} />
+          </Button>
+        </>
+      ) : (
+        <Button
+          variant="text"
+          size="small"
+          sx={{
+            borderRadius: 10,
+
+            height: 48, // equal to textField height
+          }}
+          onClick={toggleReplyPanel}
+        >
+          <CommentIcon src={sayLovePng} />
+        </Button>
+      )}
     </ReplyContainer>
   );
 
@@ -150,7 +173,7 @@ export const Diary = (props) => {
             </Typography>
             <DiaryMetaContainer>
               <Typography color="textSecondary">{diaryDate}</Typography>
-              <CommentIcon src={sayLovePng} onClick={toggleReplyPanel} />
+              {/* <CommentIcon src={sayLovePng} onClick={toggleReplyPanel} /> */}
             </DiaryMetaContainer>
           </TitleContainer>
           <Typography
@@ -179,7 +202,7 @@ export const Diary = (props) => {
 
           {diaryRepliesView}
 
-          {reply && replyControlsView}
+          {replyControlsView}
         </CardContent>
       </Card>
       {/* <a href="https://www.flaticon.com/free-icons/heart" title="heart icons">Heart icons created by Freepik - Flaticon</a> */}
