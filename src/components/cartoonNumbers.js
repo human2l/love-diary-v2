@@ -25,22 +25,20 @@ const pngArray = [
 const CartoonNumbers = ({ numberString }) => {
   const numbersArray = numberString.split("");
   return (
-    <>
-      {numbersArray.map((number) => {
+    <div>
+      {numbersArray.map((number, index) => {
         return (
-          <>
-            <img
-              key={`cartoonNumber-${number}`}
-              src={pngArray[Number(number)]}
-              alt={number}
-              style={{ maxHeight: 60, aspectRatio: "1/1" }}
-            />
-          </>
+          <img
+            key={`cartoonNumber-${number}-${index}`}
+            src={pngArray[Number(number)]}
+            alt={number}
+            style={{ maxHeight: 60, aspectRatio: "1/1" }}
+          />
         );
       })}
 
       {/* <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> */}
-    </>
+    </div>
   );
 };
 export default CartoonNumbers;
