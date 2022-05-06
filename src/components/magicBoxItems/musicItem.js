@@ -58,8 +58,6 @@ const MusicItem = () => {
       <Typography>
         {isPlaying ? t("music_on.label") : t("music_off.label")}
       </Typography>
-      {/* <a href="https://www.flaticon.com/free-icons/sound-on" title="sound-on icons">Sound-on icons created by Freepik - Flaticon</a> */}
-      {/* <a href="https://www.flaticon.com/free-icons/sound-off" title="sound off icons">Sound off icons created by Freepik - Flaticon</a> */}
     </ItemContainer>
   );
 };

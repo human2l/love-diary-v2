@@ -36,7 +36,6 @@ const MagicBox = (props) => {
       <ItemsContainer>
         <MusicItem />
         <TodoListItem onClose={props.onClose} />
-        {/* <a href="https://www.flaticon.com/free-icons/chest" title="chest icons">Chest icons created by Smashicons - Flaticon</a> */}
       </ItemsContainer>
     </>
   );

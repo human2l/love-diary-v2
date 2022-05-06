@@ -32,7 +32,6 @@ const TodoListItem = (props) => {
         <ChecklistIcon src={checklistPng} />
       </Avatar>
       <Typography>{t("todo_list.label")}</Typography>
-      {/* <a href="https://www.flaticon.com/free-icons/checklist" title="checklist icons">Checklist icons created by Freepik - Flaticon</a> */}
     </ItemContainer>
   );
 };

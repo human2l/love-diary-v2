@@ -128,7 +128,6 @@ const Settings = () => {
           </Button>
         </ItemContainer>
       </SettingsContainer>
-      {/* <a href="https://www.flaticon.com/free-icons/language" title="language icons">Language icons created by Freepik - Flaticon</a> */}
     </>
   );
 };

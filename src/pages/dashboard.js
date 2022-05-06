@@ -128,7 +128,6 @@ const Dashboard = () => {
           </DiaryCounterContainer>
         </>
       )}
-      {/* <a href="https://www.flaticon.com/free-icons/children" title="children icons">Children icons created by Freepik - Flaticon</a> */}
     </DashboardContainer>
   );
 };
