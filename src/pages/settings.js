@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { settingsContext } from "../app";
 import languagesPng from "../assets/images/languages.png";
-import ColorTiles from "../components/colorTiles";
+import ColorPalette from "../components/colorPalette/colorPalette";
 import LanguageSelector from "../components/languageSelector";
 
 const SettingsContainer = styled("div")({
@@ -37,27 +37,16 @@ const LanguageSelectorContainer = styled("div")({
   alignItems: "center",
 });
 
-const ColorSelectorGroupContainer = styled("div")({
-  display: "flex",
-
-  width: "100%",
-});
-
-const ColorSelectorContainer = styled("div")({
-  width: "50%",
-});
-
 const Settings = () => {
   const { t } = useTranslation();
-
   const { user, settings, updateSettings } = useContext(settingsContext);
   const [language, setLanguage] = useState(settings[user].language);
+
+  const [nickname, setnickname] = useState(settings[user].nickname);
   const [primaryColor, setPrimaryColor] = useState(settings[user].primaryColor);
   const [secondaryColor, setSecondaryColor] = useState(
     settings[user].secondaryColor
   );
-  const [nickname, setnickname] = useState(settings[user].nickname);
-
   const saveSettings = () => {
     const newSettings = {
       ...settings,
@@ -80,7 +69,7 @@ const Settings = () => {
             <LanguagesIcon src={languagesPng} sx={{ marginRight: "20px" }} />
             <Typography
               variant="h6"
-              color={primaryColor}
+              color={settings[user].primaryColor}
               sx={{ marginRight: "20px" }}
             >
               {/* {t("language.label")} */}:
@@ -96,28 +85,12 @@ const Settings = () => {
             onChange={(e) => setnickname(e.target.value)}
             sx={{ marginTop: "20px" }}
           />
-          <ColorSelectorGroupContainer>
-            <ColorSelectorContainer>
-              <Typography
-                variant="h6"
-                color={primaryColor}
-                sx={{ marginTop: "10px" }}
-              >
-                {t("primary_color.label")}
-              </Typography>
-              <ColorTiles pickColor={setPrimaryColor} />
-            </ColorSelectorContainer>
-            <ColorSelectorContainer sx={{ ml: 5 }}>
-              <Typography
-                variant="h6"
-                color={secondaryColor}
-                sx={{ marginTop: "10px" }}
-              >
-                {t("secondary_color.label")}
-              </Typography>
-              <ColorTiles pickColor={setSecondaryColor} />
-            </ColorSelectorContainer>
-          </ColorSelectorGroupContainer>
+          <ColorPalette
+            primaryColor={primaryColor}
+            secondaryColor={secondaryColor}
+            setPrimaryColor={setPrimaryColor}
+            setSecondaryColor={setSecondaryColor}
+          />
           <Button
             size="large"
             variant="contained"
