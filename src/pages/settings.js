@@ -4,9 +4,11 @@ import TextField from "@mui/material/TextField";
 import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { settingsContext } from "../app";
+import backgroundPng from "../assets/images/background.png";
 import languagesPng from "../assets/images/languages.png";
 import ColorPalette from "../components/colorPalette/colorPalette";
 import LanguageSelector from "../components/languageSelector";
+import useFilestack from "../hooks/useFilestack";
 
 const SettingsContainer = styled("div")({
   boxSizing: "border-box",
@@ -30,6 +32,16 @@ const LanguagesIcon = styled("img")({
   aspectRatio: "1/1",
 });
 
+const BackgroundImageSettingContainer = styled("div")({
+  display: "flex",
+  justifyContent: "center",
+});
+
+const BackgroundIcon = styled("img")({
+  maxHeight: 35,
+  aspectRatio: "1/1",
+});
+
 const LanguageSelectorContainer = styled("div")({
   width: "100%",
   display: "flex",
@@ -39,7 +51,8 @@ const LanguageSelectorContainer = styled("div")({
 
 const Settings = () => {
   const { t } = useTranslation();
-  const { user, settings, updateSettings } = useContext(settingsContext);
+  const { user, settings, updateSettings, appSettings, updateAppSettings } =
+    useContext(settingsContext);
   const [language, setLanguage] = useState(settings[user].language);
 
   const [nickname, setnickname] = useState(settings[user].nickname);
@@ -47,6 +60,8 @@ const Settings = () => {
   const [secondaryColor, setSecondaryColor] = useState(
     settings[user].secondaryColor
   );
+  const { openBackgroundImagePicker } = useFilestack();
+
   const saveSettings = () => {
     const newSettings = {
       ...settings,
@@ -59,6 +74,15 @@ const Settings = () => {
       },
     };
     updateSettings(newSettings);
+  };
+
+  const changeBackgroundImage = async () => {
+    await openBackgroundImagePicker((metadata) => {
+      updateAppSettings({
+        id: appSettings.id,
+        backgroundImage: metadata.handle,
+      });
+    });
   };
 
   return (
@@ -91,6 +115,17 @@ const Settings = () => {
             setPrimaryColor={setPrimaryColor}
             setSecondaryColor={setSecondaryColor}
           />
+          <BackgroundImageSettingContainer>
+            <Button
+              size="small"
+              variant="contained"
+              color="secondary"
+              sx={{ marginTop: "20px" }}
+              onClick={changeBackgroundImage}
+            >
+              <BackgroundIcon src={backgroundPng} />
+            </Button>
+          </BackgroundImageSettingContainer>
           <Button
             size="large"
             variant="contained"
