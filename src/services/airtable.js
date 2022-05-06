@@ -9,6 +9,7 @@ const walletBase = base("wallet");
 const settingsBase = base("settings");
 const todosBase = base("todos");
 const todosHistoryBase = base("todosHistory");
+const appSettingsBase = base("appSettings");
 
 const getAllDiarys = async () => {
   const response = await diaryBase
@@ -238,6 +239,31 @@ const getAllTodosHistory = async () => {
   return orderedAllTodosHistory;
 };
 
+const getAppSettings = async () => {
+  const response = await appSettingsBase.select({}).all();
+  const appSettings = {
+    id: response[0].id,
+    backgroundImage: response[0].fields.backgroundImage,
+    defaultBackgroundImage: response[0].fields.defaultBackgroundImage,
+  };
+  return appSettings;
+};
+
+const updateAppSettingsDB = async (settings) => {
+  appSettingsBase.update(
+    settings.id,
+    {
+      backgroundImage: settings.backgroundImage,
+    },
+    function (err) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    }
+  );
+};
+
 export {
   getAllDiarys,
   getDiaryCountByUser,
@@ -255,4 +281,6 @@ export {
   addTodosHistory,
   deleteTodos,
   getAllTodosHistory,
+  getAppSettings,
+  updateAppSettingsDB,
 };
