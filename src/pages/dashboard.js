@@ -56,33 +56,33 @@ const RedTypography = styled(Typography)({
 const Dashboard = () => {
   const { t } = useTranslation();
   const { settings } = useContext(settingsContext);
-  const { isLoading: isLoadingKaiDiaryCount, data: kaiDiaryCount } = useQuery(
-    "updateKaiDiaryCount",
-    () => getDiaryCountByUser("Kai")
-  );
-  const { isLoading: isLoadingDanDiaryCount, data: danDiaryCount } = useQuery(
-    "updateDanDiaryCount",
-    () => getDiaryCountByUser("Dan")
-  );
+  const personASettings = Object.values(settings)[0];
+  const personBSettings = Object.values(settings)[1];
+
+  const { isLoading: isLoadingPersonADiaryCount, data: personADiaryCount } =
+    useQuery("updatePersonADiaryCount", () =>
+      getDiaryCountByUser(personASettings.name)
+    );
+  const { isLoading: isLoadingPersonBDiaryCount, data: personBDiaryCount } =
+    useQuery("updatePersonBDiaryCount", () =>
+      getDiaryCountByUser(personBSettings.name)
+    );
 
   let res = timeDiff(new Date(), new Date("2020-02-14 00:00:00"));
 
   return (
     <DashboardContainer>
-      {isLoadingKaiDiaryCount || isLoadingDanDiaryCount ? (
+      {isLoadingPersonBDiaryCount || isLoadingPersonADiaryCount ? (
         <img src={loadingHeartsSvg} alt="loading" />
       ) : (
         <>
           <FlyingHeart />
           <Image src={childrenPng} />
           <Typography color="textPrimary" variant="h5">
-            {settings.Dan.nickname}
+            {personASettings.nickname}
             {t("and.label")}
-            {settings.Kai.nickname}
+            {personBSettings.nickname}
           </Typography>
-          {/* <Typography color="textPrimary" variant="h5">
-            从2020年2月14日在一起
-          </Typography> */}
           <DaysCounterContainer>
             <Typography color="textPrimary" variant="h5">
               {t("have_been_together_for.label")}
@@ -99,30 +99,32 @@ const Dashboard = () => {
             </Typography>
           </DaysCounterContainer>
           <DiaryCounterContainer>
-            <Typography color={settings.Dan.primaryColor} variant="h5">
-              {settings.Dan.nickname}
+            <Typography color={personASettings.primaryColor} variant="h5">
+              {personASettings.nickname}
               {t("wrote.label")}
               {Math.floor(
-                (danDiaryCount / (danDiaryCount + kaiDiaryCount)) * 100
+                (personADiaryCount / (personADiaryCount + personBDiaryCount)) *
+                  100
               )}
               % {t("of_diaries.label")}
             </Typography>
-            <Typography color={settings.Dan.primaryColor} variant="h5">
+            <Typography color={personASettings.primaryColor} variant="h5">
               {t("total.label.omit")}
-              {danDiaryCount}
+              {personADiaryCount}
               {t("total.label")}
             </Typography>
-            <Typography color={settings.Kai.primaryColor} variant="h5">
-              {settings.Kai.nickname}
+            <Typography color={personBSettings.primaryColor} variant="h5">
+              {personBSettings.nickname}
               {t("wrote.label")}
               {Math.floor(
-                (kaiDiaryCount / (danDiaryCount + kaiDiaryCount)) * 100
+                (personBDiaryCount / (personADiaryCount + personBDiaryCount)) *
+                  100
               )}
               % {t("of_diaries.label")}
             </Typography>
-            <Typography color={settings.Kai.primaryColor} variant="h5">
+            <Typography color={personBSettings.primaryColor} variant="h5">
               {t("total.label.omit")}
-              {kaiDiaryCount}
+              {personBDiaryCount}
               {t("total.label")}
             </Typography>
           </DiaryCounterContainer>

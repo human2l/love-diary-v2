@@ -138,8 +138,8 @@ const updateDanWalletState = async (
 const getUserSettings = async () => {
   const response = await settingsBase.select({}).all();
   return {
-    Dan: { ...response[0].fields, id: response[0].id },
-    Kai: { ...response[1].fields, id: response[1].id },
+    [response[0].fields.name]: { ...response[0].fields, id: response[0].id },
+    [response[1].fields.name]: { ...response[1].fields, id: response[1].id },
   };
 };
 
