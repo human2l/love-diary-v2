@@ -18,7 +18,7 @@ const ColorSelectorGroupContainer = styled("div")({
   marginTop: 10,
   height: 200,
   display: "flex",
-  justifyContent: "space-between",
+  justifyContent: "space-around",
 });
 const TitleGroupContainer = styled("div")({
   display: "flex",
