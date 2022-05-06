@@ -42,10 +42,42 @@ const useFilestack = () => {
     return;
   };
 
+  const openBackgroundImagePicker = async (fileUploadedCallback) => {
+    setFileMetadata(null);
+    const options = {
+      imageDim: [2400, 1080],
+      fromSources: ["local_file_system", "imagesearch", "unsplash", "webcam"],
+      onFileSelected: (file) => {
+        // If you throw any error in this function it will reject the file selection.
+        // The error message will be displayed to the user as an alert.
+        if (file.size > 5 * 1000 * 1000) {
+          throw new Error("File too big, select something smaller than 5MB");
+        }
+      },
+      onUploadDone: (response) => {
+        setFileMetadata(response.filesUploaded[0]);
+        fileUploadedCallback(response.filesUploaded[0]);
+      },
+    };
+    await client.picker(options).open();
+    return;
+  };
+
   const getAuthImgUrl = (handle) => {
     return `https://cdn.filestackcontent.com/${handle}?policy=${process.env.REACT_APP_FILESTACK_POLICY}&signature=${process.env.REACT_APP_FILESTACK_SIGNATURE}`;
   };
 
-  return { fileMetadata, openFilePicker, getAuthImgUrl };
+  const getBackgroundImgUrl = (handle, height, width) => {
+    if (!handle) return;
+    return `https://cdn.filestackcontent.com/resize=height:${height},width:${width},fit:crop/security=policy:${process.env.REACT_APP_FILESTACK_POLICY},signature:${process.env.REACT_APP_FILESTACK_SIGNATURE}/${handle}`;
+  };
+
+  return {
+    fileMetadata,
+    openFilePicker,
+    openBackgroundImagePicker,
+    getAuthImgUrl,
+    getBackgroundImgUrl,
+  };
 };
 export default useFilestack;
