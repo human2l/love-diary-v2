@@ -15,6 +15,7 @@ const ColorPaletteContainer = styled("div")({
 });
 
 const ColorSelectorGroupContainer = styled("div")({
+  marginTop: 10,
   height: 200,
   display: "flex",
   justifyContent: "space-between",
