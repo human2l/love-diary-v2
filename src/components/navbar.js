@@ -9,9 +9,10 @@ import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import Modal from "@mui/material/Modal";
 import Slide from "@mui/material/Slide";
 import { styled } from "@mui/material/styles";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { settingsContext } from "../app";
 import MagicBox from "./magicBox";
 
 const ModalContainer = styled("div")({});
@@ -30,6 +31,8 @@ const MagicBoxContainer = styled("div")({
 
 const Navbar = (props) => {
   const { t } = useTranslation();
+  const { user, settings } = useContext(settingsContext);
+
   const [value, setValue] = useState(-1);
 
   const [open, setOpen] = useState(false);
@@ -62,7 +65,7 @@ const Navbar = (props) => {
     <>
       <Navbar
         sx={{
-          boxShadow: "0 5px 40px #f19da2",
+          boxShadow: `0 10px 30px ${settings[user].primaryColor}`,
           borderTopLeftRadius: 10,
           borderTopRightRadius: 10,
         }}
