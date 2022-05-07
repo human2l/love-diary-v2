@@ -13,6 +13,7 @@ const LanguageSelector = (props) => {
       value={language}
       exclusive
       onChange={handleChange}
+      sx={{ backgroundColor: "white" }}
     >
       <ToggleButton value="en">English</ToggleButton>
       <ToggleButton value="zh-cn">中文</ToggleButton>
