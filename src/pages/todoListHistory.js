@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import { useContext } from "react";
 import { useQuery } from "react-query";
 import { settingsContext } from "../app";
-import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
+import PageLoading from "../components/pageLoading";
 import { getAllTodosHistory } from "../services/airtable";
 import { getCountryDateFromTimestamp } from "../utils/date_utils";
 
@@ -53,7 +53,7 @@ const TodoListHistory = () => {
   return (
     <>
       {isLoading ? (
-        <img src={loadingHeartsSvg} alt="loading" />
+        <PageLoading />
       ) : (
         <TodoListHistoryContainer>
           {todosHistory.map((history) => {
