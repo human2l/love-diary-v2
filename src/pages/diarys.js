@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../app";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import { Diary } from "../components/diary";
+import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
 import TopSnackbar from "../components/topSnackbar";
 import { getAllDiarys } from "../services/airtable";
 import { getCountryDateFromTimestamp } from "../utils/date_utils";
@@ -51,35 +52,39 @@ const Diarys = () => {
   if (isError) console.error(error);
 
   return (
-    <LoveDiaryContainer>
+    <>
       {isLoading ? (
-        <img src={loadingHeartsSvg} alt="loading" />
+        <GlassFullContainer>
+          <img src={loadingHeartsSvg} alt="loading" />
+        </GlassFullContainer>
       ) : (
-        <DiarysContainer>
-          {isFetching && (
-            <TopSnackbar message={t("updating_new_diary.label")} />
-          )}
-          {diarys.map((diary) => {
-            const { key, author, content = "", time, reply, photos } = diary;
+        <LoveDiaryContainer>
+          <DiarysContainer>
+            {isFetching && (
+              <TopSnackbar message={t("updating_new_diary.label")} />
+            )}
+            {diarys.map((diary) => {
+              const { key, author, content = "", time, reply, photos } = diary;
 
-            const diaryDate = getCountryDateFromTimestamp(
-              time,
-              settings[author].country
-            );
+              const diaryDate = getCountryDateFromTimestamp(
+                time,
+                settings[author].country
+              );
 
-            return (
-              <Diary
-                key={key}
-                diaryKey={key}
-                diaryAuthor={author}
-                diaryDate={diaryDate}
-                diaryContent={content}
-                diaryReplies={reply}
-                diaryPhotos={photos}
-              />
-            );
-          })}
-        </DiarysContainer>
+              return (
+                <Diary
+                  key={key}
+                  diaryKey={key}
+                  diaryAuthor={author}
+                  diaryDate={diaryDate}
+                  diaryContent={content}
+                  diaryReplies={reply}
+                  diaryPhotos={photos}
+                />
+              );
+            })}
+          </DiarysContainer>
+        </LoveDiaryContainer>
       )}
       <AddNewDiaryButton
         color="primary"
@@ -90,7 +95,7 @@ const Diarys = () => {
       >
         <EditIcon />
       </AddNewDiaryButton>
-    </LoveDiaryContainer>
+    </>
   );
 };
 
