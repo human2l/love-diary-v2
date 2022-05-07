@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../app";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import ConfirmModal from "../components/confirmModal";
+import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
 import TodoListPaper from "../components/todoListPaper";
 import {
   addTodo,
@@ -90,7 +91,7 @@ const TodoList = () => {
   const handleArchive = useMutation(() => {
     setArchiveAlertState(false);
     const deleteTodosArray =
-      todosArray.find((todo) => {
+      todosArray.filter((todo) => {
         return todo.user === user;
       }) ?? [];
     const time = getCurrentTimestamp();
@@ -111,73 +112,75 @@ const TodoList = () => {
 
   return (
     <>
-      <TodoListContainer>
-        {isLoading ? (
-          <img src={loadingHeartsSvg} alt="loading" />
-        ) : (
-          <>
-            <AddNewTodoContainer>
-              <TextField
-                value={todo}
-                label={t("todo_list.label")}
-                variant="outlined"
-                size="small"
-                sx={{ flex: 1, mr: 3 }}
-                onChange={(e) => {
-                  e.preventDefault();
-                  setTodo(e.target.value);
-                }}
+      <GlassFullContainer>
+        <TodoListContainer>
+          {isLoading ? (
+            <img src={loadingHeartsSvg} alt="loading" />
+          ) : (
+            <>
+              <AddNewTodoContainer>
+                <TextField
+                  value={todo}
+                  label={t("todo_list.label")}
+                  variant="outlined"
+                  size="small"
+                  sx={{ flex: 1, mr: 3 }}
+                  onChange={(e) => {
+                    e.preventDefault();
+                    setTodo(e.target.value);
+                  }}
+                />
+                <Button
+                  variant="contained"
+                  onClick={handleAdd.mutate}
+                  startIcon={<AddBoxOutlinedIcon />}
+                >
+                  {t("add.label")}
+                </Button>
+              </AddNewTodoContainer>
+              <Typography>{t("added_todos.label")}</Typography>
+              <TodoListPaper
+                todosArray={todosArray}
+                doneStatus={false}
+                handleCheck={handleCheck.mutate}
               />
-              <Button
-                variant="contained"
-                onClick={handleAdd.mutate}
-                startIcon={<AddBoxOutlinedIcon />}
-              >
-                {t("add.label")}
-              </Button>
-            </AddNewTodoContainer>
-            <Typography>{t("added_todos.label")}</Typography>
-            <TodoListPaper
-              todosArray={todosArray}
-              doneStatus={false}
-              handleCheck={handleCheck.mutate}
-            />
 
-            <Typography>{t("finished_todos.label")}</Typography>
-            <TodoListPaper todosArray={todosArray} doneStatus={true} />
-            <BottomControlContainer>
-              <Button
-                color="error"
-                variant="contained"
-                onClick={onClickArchiveButton}
-                size="large"
-                startIcon={<ArchiveIcon />}
-              >
-                {t("archive.label")}
-              </Button>
-              <Button
-                color="secondary"
-                variant="contained"
-                onClick={() => {
-                  navigate("/todoListHistory");
-                }}
-                size="large"
-                startIcon={<HistoryOutlinedIcon />}
-              >
-                {t("show_history.label")}
-              </Button>
-            </BottomControlContainer>
-          </>
-        )}
-        {archiveAlertState && (
-          <ConfirmModal
-            confirmTitle={t("warning.label")}
-            confirmDescription={t("archive_warning_content.label")}
-            cancel={() => setArchiveAlertState(false)}
-            confirm={handleArchive.mutate}
-          />
-        )}
-      </TodoListContainer>
+              <Typography>{t("finished_todos.label")}</Typography>
+              <TodoListPaper todosArray={todosArray} doneStatus={true} />
+              <BottomControlContainer>
+                <Button
+                  color="error"
+                  variant="contained"
+                  onClick={onClickArchiveButton}
+                  size="large"
+                  startIcon={<ArchiveIcon />}
+                >
+                  {t("archive.label")}
+                </Button>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  onClick={() => {
+                    navigate("/todoListHistory");
+                  }}
+                  size="large"
+                  startIcon={<HistoryOutlinedIcon />}
+                >
+                  {t("show_history.label")}
+                </Button>
+              </BottomControlContainer>
+            </>
+          )}
+          {archiveAlertState && (
+            <ConfirmModal
+              confirmTitle={t("warning.label")}
+              confirmDescription={t("archive_warning_content.label")}
+              cancel={() => setArchiveAlertState(false)}
+              confirm={handleArchive.mutate}
+            />
+          )}
+        </TodoListContainer>
+      </GlassFullContainer>
     </>
   );
 };
