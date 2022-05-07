@@ -7,6 +7,7 @@ import { settingsContext } from "../app";
 import backgroundPng from "../assets/images/background.png";
 import languagesPng from "../assets/images/languages.png";
 import ColorPalette from "../components/colorPalette/colorPalette";
+import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
 import LanguageSelector from "../components/languageSelector";
 import useFilestack from "../hooks/useFilestack";
 
@@ -86,7 +87,7 @@ const Settings = () => {
   };
 
   return (
-    <>
+    <GlassFullContainer>
       <SettingsContainer>
         <ItemContainer>
           <LanguageSelectorContainer>
@@ -107,7 +108,7 @@ const Settings = () => {
             size="small"
             defaultValue={nickname}
             onChange={(e) => setnickname(e.target.value)}
-            sx={{ marginTop: "20px" }}
+            sx={{ marginTop: "20px", width: "100%" }}
           />
           <ColorPalette
             primaryColor={primaryColor}
@@ -136,7 +137,7 @@ const Settings = () => {
           </Button>
         </ItemContainer>
       </SettingsContainer>
-    </>
+    </GlassFullContainer>
   );
 };
 
