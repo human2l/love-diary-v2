@@ -122,13 +122,12 @@ function App() {
               }}
             >
               <ThemeProvider theme={theme}>
-                <Background>
-                  <Router
-                    authenticated={authenticated}
-                    loginMethod={login}
-                    fetchSettings={fetchSettings}
-                  />
-                </Background>
+                <Background />
+                <Router
+                  authenticated={authenticated}
+                  loginMethod={login}
+                  fetchSettings={fetchSettings}
+                />
               </ThemeProvider>
             </settingsContext.Provider>
           </QueryClientProvider>
