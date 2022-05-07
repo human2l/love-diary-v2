@@ -132,7 +132,7 @@ export const Diary = (props) => {
           <TextField
             label={t("reply_with_colon.label")}
             variant="standard"
-            style={{ width: "100%" }}
+            fullWidth
             value={replyContent}
             onInput={(e) => setReplyContent(e.target.value)}
           />
