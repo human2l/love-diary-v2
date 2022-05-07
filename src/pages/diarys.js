@@ -6,15 +6,14 @@ import { useContext } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../app";
-import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import { Diary } from "../components/diary";
-import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
+import PageLoading from "../components/pageLoading";
 import TopSnackbar from "../components/topSnackbar";
 import { getAllDiarys } from "../services/airtable";
 import { getCountryDateFromTimestamp } from "../utils/date_utils";
 
 const LoveDiaryContainer = styled("div")({
-  boxSizing: "border-box",
+  // boxSizing: "border-box",
   marginLeft: 10,
   marginRight: 10,
   paddingBottom: 65,
@@ -54,9 +53,7 @@ const Diarys = () => {
   return (
     <>
       {isLoading ? (
-        <GlassFullContainer>
-          <img src={loadingHeartsSvg} alt="loading" />
-        </GlassFullContainer>
+        <PageLoading />
       ) : (
         <LoveDiaryContainer>
           <DiarysContainer>
