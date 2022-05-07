@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { settingsContext } from "../app";
 import useFilestack from "../hooks/useFilestack";
 
-const Background = (props) => {
+const Background = () => {
   const { appSettings } = useContext(settingsContext);
 
   const { getBackgroundImgUrl } = useFilestack();
@@ -25,14 +25,13 @@ const Background = (props) => {
     <div
       style={{
         position: "fixed",
-        height: "100%",
-        width: "100%",
+        zIndex: -1,
+        height: "100vh",
+        width: "100vw",
         backgroundSize: "cover",
         backgroundImage: `${imgSrc}`,
       }}
-    >
-      {props.children}
-    </div>
+    ></div>
   );
 };
 export default Background;
