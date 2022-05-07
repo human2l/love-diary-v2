@@ -120,7 +120,6 @@ const NewDiary = () => {
               backgroundColor: "white",
               borderRadius: 2,
               border: "8px solid white",
-              // width: "95%",
             }}
           />
           <ImageControlContainer>
