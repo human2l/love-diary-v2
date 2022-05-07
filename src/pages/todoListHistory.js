@@ -51,63 +51,54 @@ const TodoListHistory = () => {
   );
 
   return (
-    <TodoListHistoryContainer>
+    <>
       {isLoading ? (
         <img src={loadingHeartsSvg} alt="loading" />
       ) : (
-        todosHistory.map((history) => {
-          return (
-            <CardContainer key={history.id}>
-              <Card>
-                <CardContent>
-                  <TitleContainer>
-                    <Typography
-                      variant="h5"
-                      color={settings[history.user].primaryColor}
-                      gutterBottom
-                    >
-                      {history.user}
-                    </Typography>
-                    <TodosMetaContainer>
-                      <Typography color="textSecondary">
-                        {getCountryDateFromTimestamp(
-                          history.time,
-                          settings[history.user].country
-                        )}
+        <TodoListHistoryContainer>
+          {todosHistory.map((history) => {
+            return (
+              <CardContainer key={history.id}>
+                <Card>
+                  <CardContent>
+                    <TitleContainer>
+                      <Typography
+                        variant="h5"
+                        color={settings[history.user].primaryColor}
+                        gutterBottom
+                      >
+                        {history.user}
                       </Typography>
-                    </TodosMetaContainer>
-                  </TitleContainer>
+                      <TodosMetaContainer>
+                        <Typography color="textSecondary">
+                          {getCountryDateFromTimestamp(
+                            history.time,
+                            settings[history.user].country
+                          )}
+                        </Typography>
+                      </TodosMetaContainer>
+                    </TitleContainer>
 
-                  {history.todos.map((todo) => {
-                    return (
-                      <TodoContainer key={todo.id}>
-                        {todo.done ? (
-                          <CheckCircleIcon color="success" />
-                        ) : (
-                          <WarningIcon color="error" />
-                        )}
-                        <Typography sx={{ ml: 1 }}>{todo.name}</Typography>
-                      </TodoContainer>
-                    );
-                  })}
-                </CardContent>
-              </Card>
-            </CardContainer>
-          );
-        })
+                    {history.todos.map((todo) => {
+                      return (
+                        <TodoContainer key={todo.id}>
+                          {todo.done ? (
+                            <CheckCircleIcon color="success" />
+                          ) : (
+                            <WarningIcon color="error" />
+                          )}
+                          <Typography sx={{ ml: 1 }}>{todo.name}</Typography>
+                        </TodoContainer>
+                      );
+                    })}
+                  </CardContent>
+                </Card>
+              </CardContainer>
+            );
+          })}
+        </TodoListHistoryContainer>
       )}
-    </TodoListHistoryContainer>
-    // <Button
-    //   color="primary"
-    //   variant="contained"
-    //   onClick={() => {
-    //     navigate("/todoList");
-    //   }}
-    //   size="large"
-    //   startIcon={<ArrowBackOutlinedIcon />}
-    // >
-    //   返回
-    // </Button>
+    </>
   );
 };
 export default TodoListHistory;
