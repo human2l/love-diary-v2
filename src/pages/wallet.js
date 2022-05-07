@@ -8,11 +8,11 @@ import { useQuery, useQueryClient } from "react-query";
 import useSound from "use-sound";
 import { settingsContext } from "../app";
 import coinsPng from "../assets/images/coins.png";
-import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import walletSVG from "../assets/images/wallet.svg";
 import ahOhSound from "../assets/sounds/ah-oh.mp3";
 import moneySound from "../assets/sounds/multipleCoins.mp3";
 import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
+import PageLoading from "../components/pageLoading";
 import { getWalletState, updateDanWalletState } from "../services/airtable";
 
 const WalletContainer = styled("div")({
@@ -86,12 +86,12 @@ const Wallet = () => {
   };
 
   return (
-    <GlassFullContainer>
-      <WalletContainer>
-        {isLoading ? (
-          <img src={loadingHeartsSvg} alt="loading" />
-        ) : (
-          <>
+    <>
+      {isLoading ? (
+        <PageLoading />
+      ) : (
+        <GlassFullContainer>
+          <WalletContainer>
             <img
               src={walletSVG}
               alt="wallet"
@@ -149,10 +149,10 @@ const Wallet = () => {
                 );
               })}
             </ItemContainer>
-          </>
-        )}
-      </WalletContainer>
-    </GlassFullContainer>
+          </WalletContainer>
+        </GlassFullContainer>
+      )}
+    </>
   );
 };
 
