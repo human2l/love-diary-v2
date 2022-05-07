@@ -108,7 +108,12 @@ const Settings = () => {
             size="small"
             defaultValue={nickname}
             onChange={(e) => setnickname(e.target.value)}
-            sx={{ marginTop: "20px", width: "100%" }}
+            sx={{
+              marginTop: "20px",
+              backgroundColor: "white",
+              borderRadius: 2,
+              border: "8px solid white",
+            }}
           />
           <ColorPalette
             primaryColor={primaryColor}
