@@ -5,16 +5,15 @@ import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { settingsContext } from "../app";
 import childrenPng from "../assets/images/children.png";
-import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import CartoonNumbers from "../components/cartoonNumbers";
 import FlyingHeart from "../components/flyingHeart/flyingHeart";
-import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
 import GlassmorphismContainer from "../components/glassmorphism/glassRoundContainer";
+import PageLoading from "../components/pageLoading";
 import { getDiaryCountByUser } from "../services/airtable";
 import { timeDiff } from "../utils/date_utils";
 
 const DashboardContainer = styled("div")({
-  marginTop: 30,
+  paddingTop: 30,
   marginLeft: "auto",
   marginRight: "auto",
   width: "90%",
@@ -81,9 +80,7 @@ const Dashboard = () => {
   return (
     <>
       {isLoadingPersonBDiaryCount || isLoadingPersonADiaryCount ? (
-        <GlassFullContainer>
-          <img src={loadingHeartsSvg} alt="loading" />
-        </GlassFullContainer>
+        <PageLoading />
       ) : (
         <DashboardContainer>
           <GlassmorphismContainer>
