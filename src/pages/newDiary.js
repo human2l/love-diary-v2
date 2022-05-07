@@ -15,18 +15,17 @@ import { addNewDiary } from "../services/airtable";
 import { getCurrentTimestamp } from "../utils/date_utils";
 
 const NewDiaryContainer = styled("div")({
-  width: "100%",
+  width: "90vw",
   marginLeft: 10,
   marginRight: 10,
   paddingTop: 20,
   paddingBottom: 65,
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "flex-start",
 });
 
 const NewDiaryForm = styled("form")({});
-
-const DiaryTextField = styled(TextField)({
-  width: "100%",
-});
 
 const ControlContainer = styled("div")({
   left: 0,
@@ -104,9 +103,11 @@ const NewDiary = () => {
   };
   return (
     <GlassFullContainer>
-      <NewDiaryContainer>
-        <NewDiaryForm noValidate autoComplete="off">
-          <DiaryTextField
+      <NewDiaryForm noValidate autoComplete="off">
+        <NewDiaryContainer>
+          <TextField
+            // fullWidth
+            size="small"
             onChange={handleChange}
             label={t("new_diary.label")}
             placeholder={t("new_diary_placeholder.label")}
@@ -115,6 +116,12 @@ const NewDiary = () => {
             maxRows={(window.innerHeight - 56) / 23}
             value={newDiaryContent}
             helperText={warningMessage}
+            sx={{
+              backgroundColor: "white",
+              borderRadius: 2,
+              border: "8px solid white",
+              // width: "95%",
+            }}
           />
           <ImageControlContainer>
             <Button
@@ -154,16 +161,16 @@ const NewDiary = () => {
               </Button>
             </ControlContainer>
           )}
-        </NewDiaryForm>
-        {submissionAlertState && (
-          <ConfirmModal
-            confirmTitle={settings[user].nickname}
-            confirmDescription={t("submit_confirm.label")}
-            cancel={() => setSubmissionAlertState(false)}
-            confirm={submitDiary}
-          />
-        )}
-      </NewDiaryContainer>
+        </NewDiaryContainer>
+      </NewDiaryForm>
+      {submissionAlertState && (
+        <ConfirmModal
+          confirmTitle={settings[user].nickname}
+          confirmDescription={t("submit_confirm.label")}
+          cancel={() => setSubmissionAlertState(false)}
+          confirm={submitDiary}
+        />
+      )}
     </GlassFullContainer>
   );
 };
