@@ -9,11 +9,13 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../app";
 import ConfirmModal from "../components/confirmModal";
+import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
 import useFilestack from "../hooks/useFilestack";
 import { addNewDiary } from "../services/airtable";
 import { getCurrentTimestamp } from "../utils/date_utils";
 
 const NewDiaryContainer = styled("div")({
+  width: "100%",
   marginLeft: 10,
   marginRight: 10,
   paddingTop: 20,
@@ -101,66 +103,68 @@ const NewDiary = () => {
     }
   };
   return (
-    <NewDiaryContainer>
-      <NewDiaryForm noValidate autoComplete="off">
-        <DiaryTextField
-          onChange={handleChange}
-          label={t("new_diary.label")}
-          placeholder={t("new_diary_placeholder.label")}
-          multiline
-          variant="outlined"
-          maxRows={(window.innerHeight - 56) / 23}
-          value={newDiaryContent}
-          helperText={warningMessage}
-        />
-        <ImageControlContainer>
-          <Button
-            component="label"
-            size="small"
-            variant="contained"
-            color="primary"
-            onClick={(e) => {
-              selectImageFile(e);
-            }}
-          >
-            {t("add_photo.label")}
-          </Button>
-        </ImageControlContainer>
-
-        {imageUploaded && (
-          <Card>
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                image={getAuthImgUrl(fileMetadata.handle)}
-              />
-            </CardActionArea>
-          </Card>
-        )}
-        {!submitted && (
-          <ControlContainer>
+    <GlassFullContainer>
+      <NewDiaryContainer>
+        <NewDiaryForm noValidate autoComplete="off">
+          <DiaryTextField
+            onChange={handleChange}
+            label={t("new_diary.label")}
+            placeholder={t("new_diary_placeholder.label")}
+            multiline
+            variant="outlined"
+            maxRows={(window.innerHeight - 56) / 23}
+            value={newDiaryContent}
+            helperText={warningMessage}
+          />
+          <ImageControlContainer>
             <Button
-              size="large"
+              component="label"
+              size="small"
               variant="contained"
-              onClick={() => {
-                setAuthor(user);
-                setSubmissionAlertState(true);
+              color="primary"
+              onClick={(e) => {
+                selectImageFile(e);
               }}
             >
-              {t("submit.label")}
+              {t("add_photo.label")}
             </Button>
-          </ControlContainer>
+          </ImageControlContainer>
+
+          {imageUploaded && (
+            <Card>
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  image={getAuthImgUrl(fileMetadata.handle)}
+                />
+              </CardActionArea>
+            </Card>
+          )}
+          {!submitted && (
+            <ControlContainer>
+              <Button
+                size="large"
+                variant="contained"
+                onClick={() => {
+                  setAuthor(user);
+                  setSubmissionAlertState(true);
+                }}
+              >
+                {t("submit.label")}
+              </Button>
+            </ControlContainer>
+          )}
+        </NewDiaryForm>
+        {submissionAlertState && (
+          <ConfirmModal
+            confirmTitle={settings[user].nickname}
+            confirmDescription={t("submit_confirm.label")}
+            cancel={() => setSubmissionAlertState(false)}
+            confirm={submitDiary}
+          />
         )}
-      </NewDiaryForm>
-      {submissionAlertState && (
-        <ConfirmModal
-          confirmTitle={settings[user].nickname}
-          confirmDescription={t("submit_confirm.label")}
-          cancel={() => setSubmissionAlertState(false)}
-          confirm={submitDiary}
-        />
-      )}
-    </NewDiaryContainer>
+      </NewDiaryContainer>
+    </GlassFullContainer>
   );
 };
 
