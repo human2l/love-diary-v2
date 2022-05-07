@@ -8,12 +8,19 @@ import childrenPng from "../assets/images/children.png";
 import loadingHeartsSvg from "../assets/images/loadingHearts.svg";
 import CartoonNumbers from "../components/cartoonNumbers";
 import FlyingHeart from "../components/flyingHeart/flyingHeart";
+import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
+import GlassmorphismContainer from "../components/glassmorphism/glassRoundContainer";
 import { getDiaryCountByUser } from "../services/airtable";
 import { timeDiff } from "../utils/date_utils";
 
 const DashboardContainer = styled("div")({
-  position: "relative",
-  height: "100vh",
+  marginTop: 30,
+  marginLeft: "auto",
+  marginRight: "auto",
+  width: "90%",
+});
+
+const ContentContainer = styled("div")({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -37,6 +44,7 @@ const DiaryCounterContainer = styled("div")({
   justifyContent: "center",
   alignItems: "center",
   textAlign: "center",
+  marginBottom: 20,
 });
 
 const Image = styled("img")({
@@ -71,66 +79,74 @@ const Dashboard = () => {
   let res = timeDiff(new Date(), new Date("2020-02-14 00:00:00"));
 
   return (
-    <DashboardContainer>
+    <>
       {isLoadingPersonBDiaryCount || isLoadingPersonADiaryCount ? (
-        <img src={loadingHeartsSvg} alt="loading" />
+        <GlassFullContainer>
+          <img src={loadingHeartsSvg} alt="loading" />
+        </GlassFullContainer>
       ) : (
-        <>
-          <FlyingHeart />
-          <Image src={childrenPng} />
-          <Typography color="textPrimary" variant="h5">
-            {personASettings.nickname}
-            {t("and.label")}
-            {personBSettings.nickname}
-          </Typography>
-          <DaysCounterContainer>
-            <Typography color="textPrimary" variant="h5">
-              {t("have_been_together_for.label")}
-            </Typography>
-            <DaysWrapper>
-              <RedTypography color="primary" variant="h3">
-                <CartoonNumbersContainer>
-                  <CartoonNumbers numberString={res.day + ""} />
-                </CartoonNumbersContainer>
-              </RedTypography>
-            </DaysWrapper>
-            <Typography color="textPrimary" variant="h5">
-              {t("days.label")}
-            </Typography>
-          </DaysCounterContainer>
-          <DiaryCounterContainer>
-            <Typography color={personASettings.primaryColor} variant="h5">
-              {personASettings.nickname}
-              {t("wrote.label")}
-              {Math.floor(
-                (personADiaryCount / (personADiaryCount + personBDiaryCount)) *
-                  100
-              )}
-              % {t("of_diaries.label")}
-            </Typography>
-            <Typography color={personASettings.primaryColor} variant="h5">
-              {t("total.label.omit")}
-              {personADiaryCount}
-              {t("total.label")}
-            </Typography>
-            <Typography color={personBSettings.primaryColor} variant="h5">
-              {personBSettings.nickname}
-              {t("wrote.label")}
-              {Math.floor(
-                (personBDiaryCount / (personADiaryCount + personBDiaryCount)) *
-                  100
-              )}
-              % {t("of_diaries.label")}
-            </Typography>
-            <Typography color={personBSettings.primaryColor} variant="h5">
-              {t("total.label.omit")}
-              {personBDiaryCount}
-              {t("total.label")}
-            </Typography>
-          </DiaryCounterContainer>
-        </>
+        <DashboardContainer>
+          <GlassmorphismContainer>
+            <ContentContainer>
+              <FlyingHeart />
+              <Image src={childrenPng} />
+              <Typography color="textPrimary" variant="h5">
+                {personASettings.nickname}
+                {t("and.label")}
+                {personBSettings.nickname}
+              </Typography>
+              <DaysCounterContainer>
+                <Typography color="textPrimary" variant="h5">
+                  {t("have_been_together_for.label")}
+                </Typography>
+                <DaysWrapper>
+                  <RedTypography color="primary" variant="h3">
+                    <CartoonNumbersContainer>
+                      <CartoonNumbers numberString={res.day + ""} />
+                    </CartoonNumbersContainer>
+                  </RedTypography>
+                </DaysWrapper>
+                <Typography color="textPrimary" variant="h5">
+                  {t("days.label")}
+                </Typography>
+              </DaysCounterContainer>
+              <DiaryCounterContainer>
+                <Typography color={personASettings.primaryColor} variant="h5">
+                  {personASettings.nickname}
+                  {t("wrote.label")}
+                  {Math.floor(
+                    (personADiaryCount /
+                      (personADiaryCount + personBDiaryCount)) *
+                      100
+                  )}
+                  % {t("of_diaries.label")}
+                </Typography>
+                <Typography color={personASettings.primaryColor} variant="h5">
+                  {t("total.label.omit")}
+                  {personADiaryCount}
+                  {t("total.label")}
+                </Typography>
+                <Typography color={personBSettings.primaryColor} variant="h5">
+                  {personBSettings.nickname}
+                  {t("wrote.label")}
+                  {Math.floor(
+                    (personBDiaryCount /
+                      (personADiaryCount + personBDiaryCount)) *
+                      100
+                  )}
+                  % {t("of_diaries.label")}
+                </Typography>
+                <Typography color={personBSettings.primaryColor} variant="h5">
+                  {t("total.label.omit")}
+                  {personBDiaryCount}
+                  {t("total.label")}
+                </Typography>
+              </DiaryCounterContainer>
+            </ContentContainer>
+          </GlassmorphismContainer>
+        </DashboardContainer>
       )}
-    </DashboardContainer>
+    </>
   );
 };
 
