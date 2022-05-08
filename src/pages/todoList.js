@@ -77,8 +77,7 @@ const TodoList = () => {
     });
   });
 
-  const handleCheck = useMutation((todo) => {
-    todo.done = true;
+  const handleTodo = useMutation((todo) => {
     updateTodo(todo, () => {
       queryClient.invalidateQueries("fetchAllTodos");
     });
@@ -91,10 +90,10 @@ const TodoList = () => {
 
   const handleArchive = useMutation(() => {
     setArchiveAlertState(false);
-    const deleteTodosArray =
-      todosArray.filter((todo) => {
-        return todo.user === user;
-      }) ?? [];
+    const deleteTodosArray = todosArray.filter((todo) => {
+      return todo.user === user;
+    });
+    if (!deleteTodosArray.length) return;
     const time = getCurrentTimestamp();
     const todosHistory = {
       user,
@@ -145,11 +144,15 @@ const TodoList = () => {
             <TodoListPaper
               todosArray={todosArray}
               doneStatus={false}
-              handleCheck={handleCheck.mutate}
+              handleTodo={handleTodo.mutate}
             />
 
             <Typography>{t("finished_todos.label")}</Typography>
-            <TodoListPaper todosArray={todosArray} doneStatus={true} />
+            <TodoListPaper
+              todosArray={todosArray}
+              doneStatus={true}
+              handleTodo={handleTodo.mutate}
+            />
             <BottomControlContainer>
               <Button
                 color="error"

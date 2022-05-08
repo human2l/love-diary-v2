@@ -1,3 +1,4 @@
+import CancelIcon from "@mui/icons-material/Cancel";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
@@ -18,7 +19,7 @@ const Label = styled("div")({
   textOverflow: "ellipsis",
 });
 
-const TodoListPaper = ({ todosArray, doneStatus, handleCheck }) => {
+const TodoListPaper = ({ todosArray, doneStatus, handleTodo }) => {
   const { user } = useContext(settingsContext);
   const { t } = useTranslation();
   const checkedChips = () => {
@@ -26,17 +27,22 @@ const TodoListPaper = ({ todosArray, doneStatus, handleCheck }) => {
 
     if (!checkedArray.length) return <div>{t("empty.label")}</div>;
     return checkedArray.map((todo) => {
+      let deleteIcon = null;
+      let onDelete = null;
+      if (user === todo.user) {
+        deleteIcon = !doneStatus ? <CheckCircleIcon /> : <CancelIcon />;
+        onDelete = () => {
+          todo.done = !doneStatus;
+          handleTodo(todo);
+        };
+      }
       return (
         <ChipContainer key={`checked-todo-${todo.id}`}>
           <Chip
             size="medium"
             label={<Label>{todo.name}</Label>}
-            deleteIcon={
-              !doneStatus && user === todo.user ? <CheckCircleIcon /> : null
-            }
-            onDelete={
-              !doneStatus && user === todo.user ? () => handleCheck(todo) : null
-            }
+            deleteIcon={deleteIcon}
+            onDelete={onDelete}
             color={todo.user === user ? "primary" : "secondary"}
             style={{
               maxWidth: "100%",
