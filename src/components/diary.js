@@ -130,6 +130,9 @@ export const Diary = (props) => {
       {reply ? (
         <>
           <TextField
+            inputProps={{
+              autoComplete: "off",
+            }}
             label={t("reply_with_colon.label")}
             variant="standard"
             fullWidth

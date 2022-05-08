@@ -106,7 +106,9 @@ const NewDiary = () => {
       <NewDiaryForm noValidate autoComplete="off">
         <NewDiaryContainer>
           <TextField
-            // fullWidth
+            inputProps={{
+              autoComplete: "off",
+            }}
             size="small"
             onChange={handleChange}
             label={t("new_diary.label")}

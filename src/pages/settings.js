@@ -102,6 +102,9 @@ const Settings = () => {
             <LanguageSelector language={language} setLanguage={setLanguage} />
           </LanguageSelectorContainer>
           <TextField
+            inputProps={{
+              autoComplete: "off",
+            }}
             id="outlined-basic"
             label={t("nickname.label")}
             variant="outlined"

@@ -119,6 +119,9 @@ const TodoList = () => {
           <TodoListContainer>
             <AddNewTodoContainer>
               <TextField
+                inputProps={{
+                  autoComplete: "off",
+                }}
                 value={todo}
                 label={t("todo_list.label")}
                 variant="outlined"
