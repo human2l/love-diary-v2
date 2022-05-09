@@ -4,13 +4,14 @@ import CardActionArea from "@mui/material/CardActionArea";
 import CardMedia from "@mui/material/CardMedia";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../app";
 import ConfirmModal from "../components/confirmModal";
 import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
 import useFilestack from "../hooks/useFilestack";
+import useLocalStorage from "../hooks/useLocalStorage";
 import { addNewDiary } from "../services/airtable";
 import { getCurrentTimestamp } from "../utils/date_utils";
 
@@ -49,21 +50,28 @@ const NewDiary = () => {
 
   const { user, settings } = useContext(settingsContext);
   const { fileMetadata, openFilePicker, getAuthImgUrl } = useFilestack();
+  const [defaultDiaryContent, setDefaultDiaryContent] = useLocalStorage(
+    "diaryDraft",
+    ""
+  );
 
-  let defaultDiaryContent = localStorage.getItem("diaryDraft");
-  if (!defaultDiaryContent) defaultDiaryContent = "";
-  const [newDiaryContent, setNewDiaryContent] = useState(defaultDiaryContent);
+  console.log(defaultDiaryContent);
   const [submitted, setSubmitted] = useState(false);
   const [warningMessage, setWarningMessage] = useState("");
   const [submissionAlertState, setSubmissionAlertState] = useState(false);
   const [author, setAuthor] = useState("");
+  const newDiaryContent = useRef(defaultDiaryContent);
 
   const [imageUploaded, setImageUploaded] = useState(false);
   let navigate = useNavigate();
 
   const handleChange = (event) => {
-    localStorage.setItem("diaryDraft", event.target.value);
-    setNewDiaryContent(event.target.value);
+    setDefaultDiaryContent(event.target.value);
+    newDiaryContent.current = event.target.value;
+    console.log(
+      "🚀 ~ file: newDiary.js ~ line 68 ~ handleChange ~ newDiaryContent.current",
+      newDiaryContent.current
+    );
   };
 
   const selectImageFile = async (e) => {
@@ -79,14 +87,12 @@ const NewDiary = () => {
     setWarningMessage(t("saving.label"));
     try {
       let photos = [];
-
-      // const fileMetadata = getFileMetadata();
       const imageType = ["image/jpeg", "image/jpg", "image/png"];
       if (fileMetadata && imageType.includes(fileMetadata.mimetype)) {
         photos.push(fileMetadata.handle);
       }
       const newDiary = {
-        content: newDiaryContent,
+        content: newDiaryContent.current,
         time,
         author,
         photos,
@@ -95,7 +101,7 @@ const NewDiary = () => {
 
       await addNewDiary(newDiary);
       setWarningMessage(t("saved.label"));
-      localStorage.removeItem("diaryDraft");
+      setDefaultDiaryContent("");
       navigate("/diarys");
     } catch (error) {
       setWarningMessage(t("save_failed.label") + error);
@@ -116,7 +122,7 @@ const NewDiary = () => {
             multiline
             variant="outlined"
             maxRows={(window.innerHeight - 56) / 23}
-            value={newDiaryContent}
+            value={newDiaryContent.current}
             helperText={warningMessage}
             sx={{
               backgroundColor: "white",
