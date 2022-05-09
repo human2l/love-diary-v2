@@ -55,7 +55,6 @@ const NewDiary = () => {
   const [submitted, setSubmitted] = useState(false);
   const [warningMessage, setWarningMessage] = useState("");
   const [submissionAlertState, setSubmissionAlertState] = useState(false);
-  const [author, setAuthor] = useState("");
 
   const [imageUploaded, setImageUploaded] = useState(false);
   let navigate = useNavigate();
@@ -84,7 +83,7 @@ const NewDiary = () => {
       const newDiary = {
         content: diaryContent,
         time,
-        author,
+        user,
         photos,
         reply: [],
       };
@@ -150,7 +149,6 @@ const NewDiary = () => {
                 size="large"
                 variant="contained"
                 onClick={() => {
-                  setAuthor(user);
                   setSubmissionAlertState(true);
                 }}
               >
