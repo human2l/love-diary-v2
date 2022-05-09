@@ -29,6 +29,12 @@ const AppContainer = styled("div")({
   height: "100vh",
 });
 
+const LoadingBackground = styled("div")({
+  height: "100%",
+  width: "100%",
+  backgroundColor: "pink",
+});
+
 const LoadingImgWrapper = styled("div")({
   display: "flex",
   justifyContent: "center",
@@ -62,12 +68,12 @@ function App() {
   const fetchSettings = async () => {
     setSettings(await getUserSettings());
     setAppSettings(await getAppSettings());
+    setIsLoading(false);
   };
 
   useEffect(() => {
     (async () => {
-      fetchSettings();
-      setIsLoading(false);
+      await fetchSettings();
     })();
   }, []);
 
@@ -105,34 +111,41 @@ function App() {
 
   return (
     <>
-      {isLoading ? (
-        <LoadingImgWrapper>
-          <img src={loadingHeartsSvg} alt="loading" />
-        </LoadingImgWrapper>
-      ) : (
-        <AppContainer>
-          <QueryClientProvider client={queryClient}>
-            <settingsContext.Provider
-              value={{
-                user,
-                settings,
-                updateSettings,
-                appSettings,
-                updateAppSettings,
-              }}
-            >
-              <ThemeProvider theme={theme}>
-                <Background />
-                <Router
-                  authenticated={authenticated}
-                  loginMethod={login}
-                  fetchSettings={fetchSettings}
-                />
-              </ThemeProvider>
-            </settingsContext.Provider>
-          </QueryClientProvider>
-        </AppContainer>
-      )}
+      <AppContainer>
+        {isLoading ? (
+          <LoadingBackground>
+            <LoadingImgWrapper>
+              <img src={loadingHeartsSvg} alt="loading" height="500px" />
+            </LoadingImgWrapper>
+          </LoadingBackground>
+        ) : (
+          <>
+            <QueryClientProvider client={queryClient}>
+              <settingsContext.Provider
+                value={{
+                  user,
+                  settings,
+                  updateSettings,
+                  appSettings,
+                  updateAppSettings,
+                }}
+              >
+                <ThemeProvider theme={theme}>
+                  <Router
+                    authenticated={authenticated}
+                    loginMethod={login}
+                    fetchSettings={fetchSettings}
+                  />
+                </ThemeProvider>
+              </settingsContext.Provider>
+            </QueryClientProvider>
+            <Background
+              imgId={appSettings.backgroundImage}
+              defaultImgId={appSettings.defaultBackgroundImage}
+            />
+          </>
+        )}
+      </AppContainer>
       {/* <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> */}
     </>
   );
