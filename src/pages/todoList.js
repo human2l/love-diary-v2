@@ -13,6 +13,7 @@ import ConfirmModal from "../components/confirmModal";
 import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
 import PageLoading from "../components/pageLoading";
 import TodoListPaper from "../components/todoListPaper";
+import useLocalStorage from "../hooks/useLocalStorage";
 import {
   addTodo,
   addTodosHistory,
@@ -55,7 +56,7 @@ const TodoList = () => {
 
   const { user } = useContext(settingsContext);
   const { t } = useTranslation();
-  const [todo, setTodo] = useState("");
+  const [todo, setTodo] = useLocalStorage("todoDraft", "");
   const [archiveAlertState, setArchiveAlertState] = useState(false);
 
   const queryClient = useQueryClient();
