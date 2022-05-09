@@ -1,5 +1,3 @@
-// import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
-// import { Button } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import WarningIcon from "@mui/icons-material/Warning";
 import Card from "@mui/material/Card";
@@ -18,7 +16,6 @@ const TodoListHistoryContainer = styled("div")({
   marginLeft: 10,
   marginRight: 10,
   paddingBottom: 65,
-  // maxWidth: 500,
   display: "flex",
   flexDirection: "column",
 });
@@ -38,11 +35,9 @@ const TodosMetaContainer = styled("div")({
 
 const TodoContainer = styled("div")({
   display: "flex",
-  //   justifyContent: "space-between",
 });
 
 const TodoListHistory = () => {
-  //   let navigate = useNavigate();
   const { settings } = useContext(settingsContext);
 
   const { isLoading, data: todosHistory } = useQuery(
