@@ -15,6 +15,7 @@ import sayLovePng from "../assets/images/say_love.png";
 import sendPng from "../assets/images/send.png";
 import sendSound from "../assets/sounds/send.mp3";
 import useFilestack from "../hooks/useFilestack";
+import useLocalStorage from "../hooks/useLocalStorage";
 import { updateDiaryReply } from "../services/airtable";
 import { getCurrentTimestamp } from "../utils/date_utils";
 import DiaryReply from "./diaryReply";
@@ -72,7 +73,8 @@ export const Diary = (props) => {
   const { user, settings } = useContext(settingsContext);
 
   const [reply, setReply] = useState(false);
-  const [replyContent, setReplyContent] = useState("");
+
+  const [replyContent, setReplyContent] = useLocalStorage("replyDraft", "");
   const { getAuthImgUrl } = useFilestack();
 
   const convertToParagraph = (text) => {
@@ -84,6 +86,10 @@ export const Diary = (props) => {
         </span>
       );
     });
+  };
+
+  const handleChangeReply = (e) => {
+    setReplyContent(e.target.value);
   };
 
   const submitReply = useMutation(() => {
@@ -137,7 +143,7 @@ export const Diary = (props) => {
             variant="standard"
             fullWidth
             value={replyContent}
-            onInput={(e) => setReplyContent(e.target.value)}
+            onChange={handleChangeReply}
           />
           <Button
             variant="text"
@@ -181,7 +187,6 @@ export const Diary = (props) => {
             </Typography>
             <DiaryMetaContainer>
               <Typography color="textSecondary">{diaryDate}</Typography>
-              {/* <CommentIcon src={sayLovePng} onClick={toggleReplyPanel} /> */}
             </DiaryMetaContainer>
           </TitleContainer>
           <Typography
