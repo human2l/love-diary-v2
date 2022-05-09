@@ -83,7 +83,7 @@ const NewDiary = () => {
       const newDiary = {
         content: diaryContent,
         time,
-        user,
+        author: user,
         photos,
         reply: [],
       };
