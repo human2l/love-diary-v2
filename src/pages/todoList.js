@@ -67,7 +67,6 @@ const TodoList = () => {
   );
 
   const handleAdd = useMutation(() => {
-    if (!todo.length) return;
     const newTodo = {
       name: todo,
       user,
@@ -85,7 +84,6 @@ const TodoList = () => {
   });
 
   const onClickArchiveButton = () => {
-    if (!todosArray.length) return;
     setArchiveAlertState(true);
   };
 
@@ -139,7 +137,7 @@ const TodoList = () => {
                   setTodo(e.target.value);
                 }}
               />
-              <Fab color="primary" onClick={handleAdd.mutate}>
+              <Fab color="primary" onClick={handleAdd.mutate} disabled={!todo}>
                 <AddIcon />
               </Fab>
             </AddNewTodoContainer>
@@ -158,6 +156,7 @@ const TodoList = () => {
             />
             <BottomControlContainer>
               <Button
+                disabled={!todosArray.length}
                 color="error"
                 variant="contained"
                 onClick={onClickArchiveButton}
