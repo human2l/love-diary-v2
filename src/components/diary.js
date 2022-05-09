@@ -146,7 +146,7 @@ export const Diary = (props) => {
             onChange={handleChangeReply}
           />
           <Button
-            variant="text"
+            variant="outlined"
             size="small"
             sx={{
               borderRadius: 10,
