@@ -1,14 +1,14 @@
-import { useMemo } from "react";
 import useFilestack from "../hooks/useFilestack";
+import useWindowSize from "../hooks/useWindowSize";
 
-const Background = ({ imgId, defaultImgId, onLoadMethod }) => {
+const Background = ({ imgId, defaultImgId }) => {
   const { getBackgroundImgUrl } = useFilestack();
-  const imgSrc = useMemo(
-    () =>
-      getBackgroundImgUrl(imgId, window.innerHeight, window.innerWidth) ??
-      getBackgroundImgUrl(defaultImgId, window.innerHeight, window.innerWidth),
-    [defaultImgId, getBackgroundImgUrl, imgId]
-  );
+  const windowSize = useWindowSize("fixed");
+
+  //use fixed size imgSrc base on window size
+  const imgSrc =
+    getBackgroundImgUrl(imgId, windowSize.height, windowSize.width) ??
+    getBackgroundImgUrl(defaultImgId, windowSize.height, windowSize.width);
 
   return (
     <div
@@ -22,7 +22,9 @@ const Background = ({ imgId, defaultImgId, onLoadMethod }) => {
         backgroundSize: "cover",
         backgroundImage: `url(${imgSrc})`,
       }}
-    ></div>
+    >
+      {console.log(imgSrc)}
+    </div>
   );
 };
 export default Background;
