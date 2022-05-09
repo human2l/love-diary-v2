@@ -22,9 +22,7 @@ const Background = ({ imgId, defaultImgId }) => {
         backgroundSize: "cover",
         backgroundImage: `url(${imgSrc})`,
       }}
-    >
-      {console.log(imgSrc)}
-    </div>
+    ></div>
   );
 };
 export default Background;
