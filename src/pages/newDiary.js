@@ -4,7 +4,7 @@ import CardActionArea from "@mui/material/CardActionArea";
 import CardMedia from "@mui/material/CardMedia";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
-import { useContext, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../app";
@@ -50,28 +50,18 @@ const NewDiary = () => {
 
   const { user, settings } = useContext(settingsContext);
   const { fileMetadata, openFilePicker, getAuthImgUrl } = useFilestack();
-  const [defaultDiaryContent, setDefaultDiaryContent] = useLocalStorage(
-    "diaryDraft",
-    ""
-  );
+  const [diaryContent, setDiaryContent] = useLocalStorage("diaryDraft", "");
 
-  console.log(defaultDiaryContent);
   const [submitted, setSubmitted] = useState(false);
   const [warningMessage, setWarningMessage] = useState("");
   const [submissionAlertState, setSubmissionAlertState] = useState(false);
   const [author, setAuthor] = useState("");
-  const newDiaryContent = useRef(defaultDiaryContent);
 
   const [imageUploaded, setImageUploaded] = useState(false);
   let navigate = useNavigate();
 
   const handleChange = (event) => {
-    setDefaultDiaryContent(event.target.value);
-    newDiaryContent.current = event.target.value;
-    console.log(
-      "🚀 ~ file: newDiary.js ~ line 68 ~ handleChange ~ newDiaryContent.current",
-      newDiaryContent.current
-    );
+    setDiaryContent(event.target.value);
   };
 
   const selectImageFile = async (e) => {
@@ -92,7 +82,7 @@ const NewDiary = () => {
         photos.push(fileMetadata.handle);
       }
       const newDiary = {
-        content: newDiaryContent.current,
+        content: diaryContent,
         time,
         author,
         photos,
@@ -101,7 +91,7 @@ const NewDiary = () => {
 
       await addNewDiary(newDiary);
       setWarningMessage(t("saved.label"));
-      setDefaultDiaryContent("");
+      setDiaryContent("");
       navigate("/diarys");
     } catch (error) {
       setWarningMessage(t("save_failed.label") + error);
@@ -122,7 +112,7 @@ const NewDiary = () => {
             multiline
             variant="outlined"
             maxRows={(window.innerHeight - 56) / 23}
-            value={newDiaryContent.current}
+            value={diaryContent}
             helperText={warningMessage}
             sx={{
               backgroundColor: "white",
