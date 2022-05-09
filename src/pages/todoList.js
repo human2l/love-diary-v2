@@ -140,7 +140,6 @@ const TodoList = () => {
                 }}
               />
               <Fab color="primary" onClick={handleAdd.mutate}>
-                {/* {t("add.label")} */}
                 <AddIcon />
               </Fab>
             </AddNewTodoContainer>
