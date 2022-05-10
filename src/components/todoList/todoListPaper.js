@@ -6,7 +6,7 @@ import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { settingsContext } from "../app";
+import { settingsContext } from "../../app";
 
 const ChipContainer = styled("div")({
   maxWidth: "100%",

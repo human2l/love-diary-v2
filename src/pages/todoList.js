@@ -12,7 +12,7 @@ import { settingsContext } from "../app";
 import ConfirmModal from "../components/confirmModal";
 import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
 import PageLoading from "../components/pageLoading";
-import TodoListPaper from "../components/todoListPaper";
+import TodoListPaper from "../components/todoList/todoListPaper";
 import useLocalStorage from "../hooks/useLocalStorage";
 import {
   addTodo,
