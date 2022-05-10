@@ -8,6 +8,7 @@ import { useContext } from "react";
 import { useQuery } from "react-query";
 import { settingsContext } from "../app";
 import PageLoading from "../components/pageLoading";
+import TodoListDashboard from "../components/todoList/todoListDashboard";
 import { getAllTodosHistory } from "../services/airtable";
 import { getCountryDateFromTimestamp } from "../utils/date_utils";
 
@@ -37,32 +38,6 @@ const TodoContainer = styled("div")({
   display: "flex",
 });
 
-const TodoListDashBoard = styled("div")({
-  position: "fixed",
-  height: "70px",
-  width: "100%",
-  background: `rgba(255,255,255,0.8)`,
-  borderBottomLeftRadius: 10,
-  borderBottomRightRadius: 10,
-  display: "flex",
-  justifyContent: "space-around",
-  alignItems: "center",
-});
-
-const AchievedGroup = styled("div")({
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-});
-
-const FinishedRateGroup = styled("div")({
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-});
-
 const TodoListHistory = () => {
   const { settings } = useContext(settingsContext);
 
@@ -77,27 +52,7 @@ const TodoListHistory = () => {
         <PageLoading />
       ) : (
         <>
-          <TodoListDashBoard>
-            <FinishedRateGroup>
-              <Typography variant="h5">Finished Rate</Typography>
-              <Typography>100%</Typography>
-            </FinishedRateGroup>
-            <AchievedGroup>
-              <Typography variant="h5">Achieved</Typography>
-              <Typography>123</Typography>
-            </AchievedGroup>
-            <Typography variant="h2">Dan</Typography>
-            <Typography variant="h2">vs</Typography>
-            <Typography variant="h2">Kai</Typography>
-            <AchievedGroup>
-              <Typography variant="h5">Achieved</Typography>
-              <Typography>123</Typography>
-            </AchievedGroup>
-            <FinishedRateGroup>
-              <Typography variant="h5">Finished Rate</Typography>
-              <Typography>100%</Typography>
-            </FinishedRateGroup>
-          </TodoListDashBoard>
+          <TodoListDashboard todosHistory={todosHistory} />
 
           <TodoListHistoryCardsContainer>
             {todosHistory.map((history) => {
