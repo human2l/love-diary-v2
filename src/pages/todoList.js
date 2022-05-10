@@ -141,14 +141,30 @@ const TodoList = () => {
                 <AddIcon />
               </Fab>
             </AddNewTodoContainer>
-            <Typography>{t("added_todos.label")}</Typography>
+            <Typography
+              pt="2px"
+              pb="2px"
+              pl="10px"
+              pr="10px"
+              sx={{ backgroundColor: "primary.main", borderRadius: "5px" }}
+            >
+              {t("added_todos.label")}
+            </Typography>
             <TodoListPaper
               todosArray={todosArray}
               doneStatus={false}
               handleTodo={handleTodo.mutate}
             />
 
-            <Typography>{t("finished_todos.label")}</Typography>
+            <Typography
+              pt="2px"
+              pb="2px"
+              pl="10px"
+              pr="10px"
+              sx={{ backgroundColor: "secondary.main", borderRadius: "5px" }}
+            >
+              {t("finished_todos.label")}
+            </Typography>
             <TodoListPaper
               todosArray={todosArray}
               doneStatus={true}
