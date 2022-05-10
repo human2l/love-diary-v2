@@ -5,7 +5,7 @@ import { settingsContext } from "../../app";
 
 const TodoListDashboardContainer = styled("div")({
   position: "fixed",
-  height: "70px",
+  height: "50px",
   width: "100%",
   background: `rgba(255,255,255,1)`,
   borderBottomLeftRadius: 10,
@@ -58,45 +58,45 @@ const TodoListDashboard = ({ todosHistory }) => {
   return (
     <TodoListDashboardContainer
       sx={{
-        boxShadow: `0 -10px 40px ${settings[user].primaryColor}`,
+        boxShadow: `0 -15px 20px ${settings[user].primaryColor}`,
       }}
     >
       <FinishedRateGroup>
-        <Typography variant="h5" color={settings["Dan"].primaryColor}>
+        <Typography variant="h0" color={settings["Dan"].primaryColor}>
           Finished Rate
         </Typography>
-        <Typography variant="h5" color={settings["Dan"].secondaryColor}>
+        <Typography variant="h0" color={settings["Dan"].secondaryColor}>
           {userTodosDoneRate("Dan")}%
         </Typography>
       </FinishedRateGroup>
       <AchievedGroup>
-        <Typography variant="h5" color={settings["Dan"].primaryColor}>
+        <Typography variant="h0" color={settings["Dan"].primaryColor}>
           Achieved
         </Typography>
-        <Typography variant="h5" color={settings["Dan"].secondaryColor}>
+        <Typography variant="h0" color={settings["Dan"].secondaryColor}>
           {userAchieved("Dan").length}
         </Typography>
       </AchievedGroup>
-      <Typography variant="h2" color={settings["Dan"].primaryColor}>
+      <Typography variant="h4" color={settings["Dan"].primaryColor}>
         Dan
       </Typography>
-      <Typography variant="h3">vs</Typography>
-      <Typography variant="h2" color={settings["Kai"].primaryColor}>
+      <Typography variant="h5">vs</Typography>
+      <Typography variant="h4" color={settings["Kai"].primaryColor}>
         Kai
       </Typography>
       <AchievedGroup>
-        <Typography variant="h5" color={settings["Kai"].primaryColor}>
+        <Typography variant="h0" color={settings["Kai"].primaryColor}>
           Achieved
         </Typography>
-        <Typography variant="h5" color={settings["Kai"].secondaryColor}>
+        <Typography variant="h0" color={settings["Kai"].secondaryColor}>
           {userAchieved("Kai").length}
         </Typography>
       </AchievedGroup>
       <FinishedRateGroup>
-        <Typography variant="h5" color={settings["Kai"].primaryColor}>
+        <Typography variant="h0" color={settings["Kai"].primaryColor}>
           Finished Rate
         </Typography>
-        <Typography variant="h5" color={settings["Kai"].secondaryColor}>
+        <Typography variant="h0" color={settings["Kai"].secondaryColor}>
           {userTodosDoneRate("Kai")}%
         </Typography>
       </FinishedRateGroup>
