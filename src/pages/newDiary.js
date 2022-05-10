@@ -52,7 +52,6 @@ const NewDiary = () => {
   const { fileMetadata, openFilePicker, getAuthImgUrl } = useFilestack();
   const [diaryContent, setDiaryContent] = useLocalStorage("diaryDraft", "");
 
-  const [submitted, setSubmitted] = useState(false);
   const [warningMessage, setWarningMessage] = useState("");
   const [submissionAlertState, setSubmissionAlertState] = useState(false);
 
@@ -72,7 +71,6 @@ const NewDiary = () => {
 
   const submitDiary = async () => {
     const time = getCurrentTimestamp();
-    setSubmitted(true);
     setWarningMessage(t("saving.label"));
     try {
       let photos = [];
@@ -143,19 +141,18 @@ const NewDiary = () => {
               </CardActionArea>
             </Card>
           )}
-          {!submitted && (
-            <ControlContainer>
-              <Button
-                size="large"
-                variant="contained"
-                onClick={() => {
-                  setSubmissionAlertState(true);
-                }}
-              >
-                {t("submit.label")}
-              </Button>
-            </ControlContainer>
-          )}
+          <ControlContainer>
+            <Button
+              disabled={!diaryContent.length}
+              size="large"
+              variant="contained"
+              onClick={() => {
+                setSubmissionAlertState(true);
+              }}
+            >
+              {t("submit.label")}
+            </Button>
+          </ControlContainer>
         </NewDiaryContainer>
       </NewDiaryForm>
       {submissionAlertState && (
