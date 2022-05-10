@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import { useContext } from "react";
 import { settingsContext } from "../../app";
 
-const TodoListDashBoardContainer = styled("div")({
+const TodoListDashboardContainer = styled("div")({
   position: "fixed",
   height: "70px",
   width: "100%",
@@ -56,7 +56,7 @@ const TodoListDashboard = ({ todosHistory }) => {
   };
 
   return (
-    <TodoListDashBoardContainer
+    <TodoListDashboardContainer
       sx={{
         boxShadow: `0 -10px 40px ${settings[user].primaryColor}`,
       }}
@@ -100,7 +100,7 @@ const TodoListDashboard = ({ todosHistory }) => {
           {userTodosDoneRate("Kai")}%
         </Typography>
       </FinishedRateGroup>
-    </TodoListDashBoardContainer>
+    </TodoListDashboardContainer>
   );
 };
 export default TodoListDashboard;
