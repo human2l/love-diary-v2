@@ -32,6 +32,29 @@ const FinishedRateGroup = styled("div")({
 const TodoListDashboard = ({ todosHistory }) => {
   const { user, settings } = useContext(settingsContext);
 
+  const userTodos = (user) => {
+    return todosHistory
+      .filter((history) => {
+        return history.user === user;
+      })
+      .map((history) => {
+        return [...history.todos];
+      })
+      .flat(1);
+  };
+
+  const userAchieved = (user) => {
+    return userTodos(user).filter((todo) => {
+      return todo.done;
+    });
+  };
+
+  const userTodosDoneRate = (user) => {
+    return Math.floor(
+      (userAchieved(user).length / userTodos(user).length) * 100
+    );
+  };
+
   return (
     <TodoListDashBoardContainer
       sx={{
@@ -43,6 +66,7 @@ const TodoListDashboard = ({ todosHistory }) => {
           Finished Rate
         </Typography>
         <Typography variant="h5" color={settings["Dan"].secondaryColor}>
+          {userTodosDoneRate("Dan")}%
         </Typography>
       </FinishedRateGroup>
       <AchievedGroup>
@@ -50,6 +74,7 @@ const TodoListDashboard = ({ todosHistory }) => {
           Achieved
         </Typography>
         <Typography variant="h5" color={settings["Dan"].secondaryColor}>
+          {userAchieved("Dan").length}
         </Typography>
       </AchievedGroup>
       <Typography variant="h2" color={settings["Dan"].primaryColor}>
@@ -64,6 +89,7 @@ const TodoListDashboard = ({ todosHistory }) => {
           Achieved
         </Typography>
         <Typography variant="h5" color={settings["Kai"].secondaryColor}>
+          {userAchieved("Kai").length}
         </Typography>
       </AchievedGroup>
       <FinishedRateGroup>
@@ -71,6 +97,7 @@ const TodoListDashboard = ({ todosHistory }) => {
           Finished Rate
         </Typography>
         <Typography variant="h5" color={settings["Kai"].secondaryColor}>
+          {userTodosDoneRate("Kai")}%
         </Typography>
       </FinishedRateGroup>
     </TodoListDashBoardContainer>
