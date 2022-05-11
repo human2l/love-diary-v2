@@ -35,9 +35,8 @@ const ListContainer = styled("div")({
 
 const MusicCollection = () => {
   const { stopBgm, setMusic } = useContext(settingsContext);
-  const [selectedIndex, setSelectedIndex] = useState(1);
-
-  const { musicList } = useSoundLibrary("学猫叫");
+  const { musicList } = useSoundLibrary("有点甜");
+  const [selectedIndex, setSelectedIndex] = useState(4);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);

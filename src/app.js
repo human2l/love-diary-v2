@@ -55,7 +55,7 @@ function App() {
   const [theme, setTheme] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const isPlaying = useSelector((state) => state.music.isPlaying);
-  const [music, setMusic] = useState("学猫叫");
+  const [music, setMusic] = useState("有点甜");
   const { musicControl } = useSoundLibrary(music);
   const play = musicControl[0];
   const stop = musicControl[1].stop;
