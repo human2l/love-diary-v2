@@ -86,7 +86,12 @@ const TodoListHistory = () => {
                             ) : (
                               <WarningIcon color="error" />
                             )}
-                            <Typography sx={{ ml: 1 }}>{todo.name}</Typography>
+                            <Typography
+                              color={settings[todo.user].primaryColor}
+                              sx={{ ml: 1 }}
+                            >
+                              {todo.name}
+                            </Typography>
                           </TodoContainer>
                         );
                       })}
