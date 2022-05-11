@@ -17,6 +17,7 @@ const DashboardContainer = styled("div")({
   marginLeft: "auto",
   marginRight: "auto",
   width: "90%",
+  height: "100%",
 });
 
 const ContentContainer = styled("div")({
