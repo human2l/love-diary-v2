@@ -84,6 +84,10 @@ function App() {
     })();
   }, []);
 
+  useEffect(() => {
+    play();
+  }, [play]);
+
   const newTheme = useMemo(() => {
     return createTheme({
       palette: {

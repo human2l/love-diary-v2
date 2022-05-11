@@ -1,6 +1,6 @@
 import { styled, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { settingsContext } from "../../app";
@@ -38,10 +38,6 @@ const MusicItem = () => {
     !isPlaying ? playBgm() : stopBgm();
     dispatch(togglePlaying());
   };
-
-  useEffect(() => {
-    playBgm();
-  }, [playBgm]);
 
   return (
     <ItemContainer onClick={handleClick}>
