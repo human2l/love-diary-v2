@@ -25,7 +25,7 @@ const ContentContainer = styled("div")({
   marginRight: "auto",
   flexDirection: "column",
   alignItems: "center",
-  width: "500px",
+  width: "100%",
 });
 
 const ListContainer = styled("div")({
