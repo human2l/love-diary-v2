@@ -3,6 +3,7 @@ import Navbar from "./components/navbar";
 import Dashboard from "./pages/dashboard";
 import Diarys from "./pages/diarys";
 import Login from "./pages/login";
+import MusicCollection from "./pages/musicCollection";
 import NewDiary from "./pages/newDiary";
 import Settings from "./pages/settings";
 import TodoList from "./pages/todoList";
@@ -24,6 +25,7 @@ const Router = (props) => {
             <Route path="/settings" element={<Settings />} />
             <Route path="/toDoList" element={<TodoList />} />
             <Route path="/toDoListHistory" element={<TodoListHistory />} />
+            <Route path="/musicCollection" element={<MusicCollection />} />
           </>
         )}
         <Route path="*" element={<Login login={loginMethod} />} />
