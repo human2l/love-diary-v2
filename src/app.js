@@ -88,8 +88,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    isPlaying && play();
-  }, [isPlaying, play]);
+    isPlaying ? play() : stop();
+  }, [isPlaying, play, stop]);
 
   const newTheme = useMemo(() => {
     return createTheme({
