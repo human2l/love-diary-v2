@@ -3,11 +3,11 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-import useSound from "use-sound";
 import loadingHeartsSvg from "./assets/images/loadingHearts.svg";
-import gaoBaiQiQiuMusic from "./assets/sounds/gaoBaiQiQiu.mp3";
 import Background from "./components/background";
+import useSoundLibrary from "./hooks/useSoundLibrary";
 import Router from "./routes";
 import {
   getAppSettings,
@@ -27,6 +27,7 @@ export const settingsContext = React.createContext({
   updateAppSettings: () => {},
   playBgm: () => {},
   stopBgm: () => {},
+  setMusic: () => {},
 });
 
 const AppContainer = styled("div")({
@@ -53,9 +54,11 @@ function App() {
   const [user, setUser] = useState("");
   const [theme, setTheme] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [play, { stop }] = useSound(gaoBaiQiQiuMusic, {
-    volume: 0.5,
-  });
+  const isPlaying = useSelector((state) => state.music.isPlaying);
+  const [music, setMusic] = useState("学猫叫");
+  const { musicControl } = useSoundLibrary(music);
+  const play = musicControl[0];
+  const stop = musicControl[1].stop;
 
   const updateSettings = async (newSettings) => {
     await updateSettingsDB(newSettings);
@@ -85,8 +88,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    play();
-  }, [play]);
+    isPlaying && play();
+  }, [isPlaying, play]);
 
   const newTheme = useMemo(() => {
     return createTheme({
@@ -144,6 +147,7 @@ function App() {
                   updateAppSettings,
                   playBgm: play,
                   stopBgm: stop,
+                  setMusic,
                 }}
               >
                 <ThemeProvider theme={theme}>
