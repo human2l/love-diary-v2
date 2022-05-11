@@ -10,6 +10,8 @@ const ItemContainer = styled("div")({
   justifyContent: "center",
   alignItems: "center",
   margin: 20,
+  height: "64px",
+  width: "64px",
 });
 const AlbumIcon = styled("img")({
   maxHeight: 35,
