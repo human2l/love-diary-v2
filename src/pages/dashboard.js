@@ -7,7 +7,7 @@ import { settingsContext } from "../app";
 import childrenPng from "../assets/images/children.png";
 import CartoonNumbers from "../components/cartoonNumbers";
 import FlyingHeart from "../components/flyingHeart/flyingHeart";
-import GlassmorphismContainer from "../components/glassmorphism/glassRoundContainer";
+import GlassRoundContainer from "../components/glassmorphism/glassRoundContainer";
 import PageLoading from "../components/pageLoading";
 import { getDiaryCountByUser } from "../services/airtable";
 import { timeDiff } from "../utils/date_utils";
@@ -84,7 +84,7 @@ const Dashboard = () => {
         <PageLoading />
       ) : (
         <DashboardContainer>
-          <GlassmorphismContainer>
+          <GlassRoundContainer>
             <ContentContainer>
               <FlyingHeart />
               <Image src={childrenPng} />
@@ -141,7 +141,7 @@ const Dashboard = () => {
                 </Typography>
               </DiaryCounterContainer>
             </ContentContainer>
-          </GlassmorphismContainer>
+          </GlassRoundContainer>
         </DashboardContainer>
       )}
     </>
