@@ -48,7 +48,11 @@ const MusicCollection = () => {
     <MusicCollectionContainer>
       <GlassRoundContainer>
         <ContentContainer>
-          <Typography variant="h3" color="primary">
+          <Typography
+            variant="h3"
+            color="primary"
+            sx={{ mt: "10px", mb: "10px" }}
+          >
             Music List
           </Typography>
           <ListContainer>
