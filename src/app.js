@@ -4,7 +4,9 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { QueryClient, QueryClientProvider } from "react-query";
 import styled from "styled-components";
+import useSound from "use-sound";
 import loadingHeartsSvg from "./assets/images/loadingHearts.svg";
+import gaoBaiQiQiuMusic from "./assets/sounds/gaoBaiQiQiu.mp3";
 import Background from "./components/background";
 import Router from "./routes";
 import {
@@ -23,6 +25,8 @@ export const settingsContext = React.createContext({
   updateSettings: () => {},
   appSettings: {},
   updateAppSettings: () => {},
+  playBgm: () => {},
+  stopBgm: () => {},
 });
 
 const AppContainer = styled("div")({
@@ -49,6 +53,9 @@ function App() {
   const [user, setUser] = useState("");
   const [theme, setTheme] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [play, { stop }] = useSound(gaoBaiQiQiuMusic, {
+    volume: 0.5,
+  });
 
   const updateSettings = async (newSettings) => {
     await updateSettingsDB(newSettings);
@@ -121,6 +128,9 @@ function App() {
         ) : (
           <>
             <QueryClientProvider client={queryClient}>
+              {/* {process.env.NODE_ENV === "development" && (
+                <ReactQueryDevtoolsPanel style={{ paddingBottom: "70px" }} />
+              )} */}
               <settingsContext.Provider
                 value={{
                   user,
@@ -128,6 +138,8 @@ function App() {
                   updateSettings,
                   appSettings,
                   updateAppSettings,
+                  playBgm: play,
+                  stopBgm: stop,
                 }}
               >
                 <ThemeProvider theme={theme}>

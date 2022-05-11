@@ -1,12 +1,11 @@
 import { styled, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import useSound from "use-sound";
+import { settingsContext } from "../../app";
 import soundOffPng from "../../assets/images/sound-off.png";
 import soundOnPng from "../../assets/images/sound-on.png";
-import gaoBaiQiQiuMusic from "../../assets/sounds/gaoBaiQiQiu.mp3";
 import { togglePlaying } from "../../features/music/musicSlice";
 
 const ItemContainer = styled("div")({
@@ -29,24 +28,20 @@ const SoundOffIcon = styled("img")({
   maxHeight: 35,
   aspectRatio: "1/1",
 });
-
 const MusicItem = () => {
+  const { playBgm, stopBgm } = useContext(settingsContext);
   const { t } = useTranslation();
   const isPlaying = useSelector((state) => state.music.isPlaying);
   const dispatch = useDispatch();
 
-  const [play, { stop }] = useSound(gaoBaiQiQiuMusic, {
-    volume: 0.5,
-  });
-
   const handleClick = () => {
-    !isPlaying ? play() : stop();
+    !isPlaying ? playBgm() : stopBgm();
     dispatch(togglePlaying());
   };
 
   useEffect(() => {
-    play();
-  }, [play]);
+    playBgm();
+  }, [playBgm]);
 
   return (
     <ItemContainer onClick={handleClick}>
