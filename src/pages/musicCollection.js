@@ -34,15 +34,19 @@ const ListContainer = styled("div")({
 });
 
 const MusicCollection = () => {
-  const { stopBgm, setMusic } = useContext(settingsContext);
-  const { musicList } = useSoundLibrary("有点甜");
-  const [selectedIndex, setSelectedIndex] = useState(4);
+  const { setMusic, settings, user, updateSettings } =
+    useContext(settingsContext);
+  const { musicList } = useSoundLibrary();
+  const userMusicIndex = musicList.findIndex((listMusic) => {
+    return listMusic.name === settings[user].music;
+  });
+  const [selectedIndex, setSelectedIndex] = useState(userMusicIndex);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
-    stopBgm();
     setMusic(musicList[index].name);
   };
+
   return (
     <MusicCollectionContainer>
       <GlassRoundContainer>
