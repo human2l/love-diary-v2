@@ -74,7 +74,7 @@ const Navbar = (props) => {
           setValue(newValue);
           navAction(newValue);
           // fetch settings whenever user click on one tab
-          props.fetchSettings();
+          // props.fetchSettings();
         }}
         showLabels
       >
