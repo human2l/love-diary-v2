@@ -3,7 +3,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import loadingHeartsSvg from "./assets/images/loadingHearts.svg";
 import Background from "./components/background";
@@ -25,8 +24,7 @@ export const settingsContext = React.createContext({
   updateSettings: () => {},
   appSettings: {},
   updateAppSettings: () => {},
-  playBgm: () => {},
-  stopBgm: () => {},
+  musicPlayer: {},
   setMusic: () => {},
 });
 
@@ -54,28 +52,28 @@ function App() {
   const [user, setUser] = useState("");
   const [theme, setTheme] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const isPlaying = useSelector((state) => state.music.isPlaying);
-  const [music, setMusic] = useState("有点甜");
-  const { musicControl } = useSoundLibrary(music);
-  const play = musicControl[0];
-  const stop = musicControl[1].stop;
+  const { musicPlayer, setMusic } = useSoundLibrary();
 
   const updateSettings = async (newSettings) => {
+    console.log("updateSettings");
     await updateSettingsDB(newSettings);
     setSettings(newSettings);
   };
 
   const updateAppSettings = async (newAppSettings) => {
+    console.log("updateAppSettings");
     await updateAppSettingsDB(newAppSettings);
     setAppSettings(newAppSettings);
   };
 
   const login = (user) => {
+    console.log("login");
     setAuthenticated(true);
     setUser(user);
   };
 
   const fetchSettings = async () => {
+    console.log("fetchSettings");
     setSettings(await getUserSettings());
     setAppSettings(await getAppSettings());
     setIsLoading(false);
@@ -88,10 +86,18 @@ function App() {
   }, []);
 
   useEffect(() => {
-    isPlaying ? play() : stop();
-  }, [isPlaying, play, stop]);
+    console.log("setMusic");
+
+    musicPlayer && musicPlayer.stop();
+    settings[user]?.music && setMusic(settings[user]?.music);
+  }, [musicPlayer, setMusic, settings, user]);
+
+  useEffect(() => {
+    musicPlayer && musicPlayer.play();
+  }, [musicPlayer]);
 
   const newTheme = useMemo(() => {
+    console.log("createNewTheme");
     return createTheme({
       palette: {
         primary: {
@@ -116,6 +122,7 @@ function App() {
   }, [settings, user]);
 
   useEffect(() => {
+    console.log("setTheme");
     setTheme(newTheme);
   }, [newTheme]);
 
@@ -145,8 +152,7 @@ function App() {
                   updateSettings,
                   appSettings,
                   updateAppSettings,
-                  playBgm: play,
-                  stopBgm: stop,
+                  musicPlayer,
                   setMusic,
                 }}
               >
