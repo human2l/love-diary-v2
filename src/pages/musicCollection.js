@@ -44,6 +44,14 @@ const MusicCollection = () => {
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
+    const newSettings = {
+      ...settings,
+      [user]: {
+        ...settings[user],
+        music: musicList[index].name,
+      },
+    };
+    updateSettings(newSettings);
     setMusic(musicList[index].name);
   };
 
