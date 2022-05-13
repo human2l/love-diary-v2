@@ -48,5 +48,8 @@
   "warning.label": "Warning",
   "archive_warning_content.label": "Continue to clear all your todos and archive them?",
   "show_history.label": "Show History",
-  "empty.label": "...Empty..."
+  "empty.label": "...Empty...",
+  "music_collection.label": "Music List",
+  "finished_rate.label": "Finished Rate",
+  "achieved.label": "Achieved"
 }

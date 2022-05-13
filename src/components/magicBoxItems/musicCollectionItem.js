@@ -1,8 +1,9 @@
 import { styled, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { settingsContext } from "../../app";
 import albumPng from "../../assets/images/album.png";
-
 const ItemContainer = styled("div")({
   cursor: "pointer",
   display: "flex",
@@ -20,7 +21,7 @@ const AlbumIcon = styled("img")({
 
 const MusicCollectionItem = (props) => {
   let navigate = useNavigate();
-
+  const { t } = useContext(settingsContext);
   const handleOnClick = () => {
     props.onClose();
     navigate("/musicCollection");
@@ -31,7 +32,7 @@ const MusicCollectionItem = (props) => {
       <Avatar variant="rounded" sx={{ bgcolor: "primary.main" }}>
         <AlbumIcon src={albumPng} />
       </Avatar>
-      <Typography>音乐库</Typography>
+      <Typography>{t("music_collection.label")}</Typography>
     </ItemContainer>
   );
 };

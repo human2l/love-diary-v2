@@ -30,7 +30,7 @@ const FinishedRateGroup = styled("div")({
 });
 
 const TodoListDashboard = ({ todosHistory }) => {
-  const { user, settings } = useContext(settingsContext);
+  const { t, user, settings } = useContext(settingsContext);
 
   const userTodos = (user) => {
     return todosHistory
@@ -58,22 +58,30 @@ const TodoListDashboard = ({ todosHistory }) => {
   return (
     <TodoListDashboardContainer
       sx={{
-        boxShadow: `0 -15px 20px ${settings[user].primaryColor}`,
+        boxShadow: `0 -15px 30px ${settings[user].primaryColor}`,
       }}
     >
       <FinishedRateGroup>
         <Typography variant="h0" color={settings["Dan"].primaryColor}>
-          Finished Rate
+          {t("finished_rate.label")}
         </Typography>
-        <Typography variant="h0" color={settings["Dan"].secondaryColor}>
+        <Typography
+          variant="h0"
+          color={settings["Dan"].secondaryColor}
+          sx={{ mt: "5px" }}
+        >
           {userTodosDoneRate("Dan")}%
         </Typography>
       </FinishedRateGroup>
       <AchievedGroup>
         <Typography variant="h0" color={settings["Dan"].primaryColor}>
-          Achieved
+          {t("achieved.label")}
         </Typography>
-        <Typography variant="h0" color={settings["Dan"].secondaryColor}>
+        <Typography
+          variant="h0"
+          color={settings["Dan"].secondaryColor}
+          sx={{ mt: "5px" }}
+        >
           {userAchieved("Dan").length}
         </Typography>
       </AchievedGroup>
@@ -86,17 +94,25 @@ const TodoListDashboard = ({ todosHistory }) => {
       </Typography>
       <AchievedGroup>
         <Typography variant="h0" color={settings["Kai"].primaryColor}>
-          Achieved
+          {t("achieved.label")}
         </Typography>
-        <Typography variant="h0" color={settings["Kai"].secondaryColor}>
+        <Typography
+          variant="h0"
+          color={settings["Kai"].secondaryColor}
+          sx={{ mt: "5px" }}
+        >
           {userAchieved("Kai").length}
         </Typography>
       </AchievedGroup>
       <FinishedRateGroup>
         <Typography variant="h0" color={settings["Kai"].primaryColor}>
-          Finished Rate
+          {t("finished_rate.label")}
         </Typography>
-        <Typography variant="h0" color={settings["Kai"].secondaryColor}>
+        <Typography
+          variant="h0"
+          color={settings["Kai"].secondaryColor}
+          sx={{ mt: "5px" }}
+        >
           {userTodosDoneRate("Kai")}%
         </Typography>
       </FinishedRateGroup>

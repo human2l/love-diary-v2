@@ -48,5 +48,8 @@
   "warning.label": "警告",
   "archive_warning_content.label": "此操作将会清空你当前的所有flag并归档，继续？",
   "show_history.label": "显示历史归档",
-  "empty.label": "（空）"
+  "empty.label": "（空）",
+  "music_collection.label": "音乐库",
+  "finished_rate.label": "完成率",
+  "achieved.label": "已完成"
 }

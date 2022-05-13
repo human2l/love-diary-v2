@@ -34,7 +34,7 @@ const ListContainer = styled("div")({
 });
 
 const MusicCollection = () => {
-  const { setMusic, settings, user, updateSettings } =
+  const { t, setMusic, settings, user, updateSettings } =
     useContext(settingsContext);
   const { musicList } = useSoundLibrary();
   const userMusicIndex = musicList.findIndex((listMusic) => {
@@ -64,7 +64,7 @@ const MusicCollection = () => {
             color="primary"
             sx={{ mt: "10px", mb: "10px" }}
           >
-            Music List
+            {t("music_collection.label")}
           </Typography>
           <ListContainer>
             <Box sx={{ minWidth: "50%", bgcolor: "background.paper" }}>
