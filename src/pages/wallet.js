@@ -7,7 +7,7 @@ import { useQuery, useQueryClient } from "react-query";
 import useSound from "use-sound";
 import { settingsContext } from "../app";
 import coinsPng from "../assets/images/coins.png";
-import walletSVG from "../assets/images/wallet.svg";
+import moneyHeartPng from "../assets/images/money_heart.png";
 import ahOhSound from "../assets/sounds/ah-oh.mp3";
 import moneySound from "../assets/sounds/multipleCoins.mp3";
 import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
@@ -90,10 +90,10 @@ const Wallet = () => {
         <GlassFullContainer>
           <WalletContainer>
             <img
-              src={walletSVG}
+              src={moneyHeartPng}
               alt="wallet"
-              height="50px"
-              width="50px"
+              height="100px"
+              width="100px"
               style={{ marginTop: "100px" }}
             />
             <ItemContainer>
