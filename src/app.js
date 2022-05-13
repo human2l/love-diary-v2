@@ -34,6 +34,7 @@ const AppContainer = styled("div")({
 });
 
 const LoadingBackground = styled("div")({
+  position: "fixed",
   height: "100%",
   width: "100%",
   backgroundColor: "pink",
