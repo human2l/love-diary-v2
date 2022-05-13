@@ -1,8 +1,3 @@
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import InventoryIcon from "@mui/icons-material/Inventory";
-import SettingsIcon from "@mui/icons-material/Settings";
 import Backdrop from "@mui/material/Backdrop";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -12,6 +7,11 @@ import { styled } from "@mui/material/styles";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../app";
+import diaryPng from "../assets/images/diary.png";
+import magicBoxPng from "../assets/images/magicBox.png";
+import settingsPng from "../assets/images/settings.png";
+import walletPng from "../assets/images/wallet.png";
+import wePng from "../assets/images/we.png";
 import MagicBox from "./magicBox";
 
 const ModalContainer = styled("div")({});
@@ -44,7 +44,7 @@ const Navbar = (props) => {
     width: "100%",
     left: 0,
     bottom: 0,
-    height: "56px",
+    height: "60px",
   });
 
   const navAction = (navValue) => {
@@ -74,24 +74,67 @@ const Navbar = (props) => {
           // fetch settings whenever user click on one tab
           // props.fetchSettings();
         }}
-        showLabels
+        // showLabels
       >
         <BottomNavigationAction
           label={t("love_diary.label")}
-          icon={<AssignmentIcon />}
+          icon={
+            <img
+              src={diaryPng}
+              alt="diary"
+              height={40}
+              width={40}
+              style={{ transform: "Translate(0, 0px)" }}
+            />
+          }
         />
         <BottomNavigationAction
           label={t("wallet.label")}
-          icon={<AccountBalanceWalletIcon />}
+          icon={
+            <img
+              src={walletPng}
+              alt="diary"
+              height={40}
+              width={40}
+              style={{ transform: "Translate(0, 0px)" }}
+            />
+          }
         />
         <BottomNavigationAction
           label={t("magic_box.label")}
-          icon={<InventoryIcon fontSize="large" />}
+          icon={
+            <img
+              src={magicBoxPng}
+              alt="diary"
+              height={40}
+              width={40}
+              style={{ transform: "Translate(0, 0px)" }}
+            />
+          }
         />
-        <BottomNavigationAction label={t("we.label")} icon={<FavoriteIcon />} />
+        <BottomNavigationAction
+          label={t("we.label")}
+          icon={
+            <img
+              src={wePng}
+              alt="diary"
+              height={40}
+              width={40}
+              style={{ transform: "Translate(0, 0px)" }}
+            />
+          }
+        />
         <BottomNavigationAction
           label={t("settings.label")}
-          icon={<SettingsIcon />}
+          icon={
+            <img
+              src={settingsPng}
+              alt="diary"
+              height={40}
+              width={40}
+              style={{ transform: "Translate(0, 0px)" }}
+            />
+          }
         />
       </Navbar>
       <ModalContainer>
