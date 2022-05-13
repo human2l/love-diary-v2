@@ -1,4 +1,3 @@
-import EditIcon from "@mui/icons-material/Edit";
 import Fab from "@mui/material/Fab";
 import { styled } from "@mui/material/styles";
 import { t } from "i18next";
@@ -6,6 +5,7 @@ import { useContext } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../app";
+import writingPng from "../assets/images/writing.png";
 import { Diary } from "../components/diary";
 import PageLoading from "../components/pageLoading";
 import TopSnackbar from "../components/topSnackbar";
@@ -90,7 +90,7 @@ const Diarys = () => {
           navigate("/new_diary");
         }}
       >
-        <EditIcon />
+        <img src={writingPng} height={30} width={30} alt="writing-icon" />
       </AddNewDiaryButton>
     </>
   );
