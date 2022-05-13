@@ -18,6 +18,7 @@ const SettingsContainer = styled("div")({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+  overflow: "scroll",
 });
 
 const ItemContainer = styled("div")({
