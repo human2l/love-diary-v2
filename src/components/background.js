@@ -7,8 +7,9 @@ const Background = ({ imgId, defaultImgId }) => {
 
   //use fixed size imgSrc base on window size
   const imgSrc =
-    getBackgroundImgUrl(imgId, windowSize.height, windowSize.width) ??
-    getBackgroundImgUrl(defaultImgId, windowSize.height, windowSize.width);
+    windowSize.height &&
+    (getBackgroundImgUrl(imgId, windowSize.height, windowSize.width) ??
+      getBackgroundImgUrl(defaultImgId, windowSize.height, windowSize.width));
 
   return (
     <div
