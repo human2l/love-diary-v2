@@ -2,9 +2,11 @@ import { Howl } from "howler";
 import { useEffect, useState } from "react";
 import gaoBaiQiQiuSrc from "../assets/sounds/gaoBaiQiQiu.mp3";
 import mianHuaTangSrc from "../assets/sounds/mianHuaTang.mp3";
+import qingNingSrc from "../assets/sounds/qingNing.mp3";
 import reAi105Src from "../assets/sounds/reAi105.mp3";
 import wanYouYinLiSrc from "../assets/sounds/wanYouYinLi.mp3";
 import xiaoShiGuangSrc from "../assets/sounds/xiaoShiGuang.mp3";
+import xiaoXingXingSrc from "../assets/sounds/xiaoXingXing.mp3";
 import xueMaoJiaoSrc from "../assets/sounds/xueMaoJiao.mp3";
 import youDianTianSrc from "../assets/sounds/youDianTian.mp3";
 import youHeBuKeSrc from "../assets/sounds/youHeBuKe.mp3";
@@ -40,6 +42,14 @@ const musicList = [
   {
     name: "棉花糖",
     src: mianHuaTangSrc,
+  },
+  {
+    name: "小星星",
+    src: xiaoXingXingSrc,
+  },
+  {
+    name: "青柠",
+    src: qingNingSrc,
   },
 ];
 
