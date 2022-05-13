@@ -14,8 +14,8 @@ import { getCountryDateFromTimestamp } from "../utils/date_utils";
 
 const LoveDiaryContainer = styled("div")({
   // boxSizing: "border-box",
-  marginLeft: 10,
-  marginRight: 10,
+  marginLeft: 8,
+  marginRight: 8,
   paddingBottom: 65,
   // maxWidth: 500,
   display: "flex",
