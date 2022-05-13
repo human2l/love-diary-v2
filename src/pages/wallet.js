@@ -3,7 +3,6 @@ import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { useContext, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "react-query";
 import useSound from "use-sound";
 import { settingsContext } from "../app";
@@ -41,9 +40,7 @@ const canCheckIn = (date1, date2) => {
 const Wallet = () => {
   const queryClient = useQueryClient();
 
-  const { t } = useTranslation();
-
-  const { settings } = useContext(settingsContext);
+  const { t, settings } = useContext(settingsContext);
   const [warningMessages, setWarningMessages] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [playMoneySound] = useSound(moneySound, { volume: 0.5 });

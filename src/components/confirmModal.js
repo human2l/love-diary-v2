@@ -2,7 +2,8 @@ import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { useTranslation } from "react-i18next";
+import { useContext } from "react";
+import { settingsContext } from "../app";
 
 const ModalContent = styled("div")({
   padding: 20,
@@ -19,7 +20,8 @@ const ConfirmModal = ({
   cancel,
   confirm,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useContext(settingsContext);
+
   return (
     <Modal
       open

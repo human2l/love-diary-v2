@@ -5,7 +5,6 @@ import { Button, styled, Typography } from "@mui/material";
 import Fab from "@mui/material/Fab";
 import TextField from "@mui/material/TextField";
 import { useContext, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../app";
@@ -54,8 +53,7 @@ const BottomControlContainer = styled("div")({
 const TodoList = () => {
   let navigate = useNavigate();
 
-  const { user } = useContext(settingsContext);
-  const { t } = useTranslation();
+  const { t, user } = useContext(settingsContext);
   const [todo, setTodo] = useLocalStorage("todoDraft", "");
   const [archiveAlertState, setArchiveAlertState] = useState(false);
 

@@ -1,7 +1,6 @@
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { useContext } from "react";
-import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { settingsContext } from "../app";
 import childrenPng from "../assets/images/children.png";
@@ -62,8 +61,7 @@ const RedTypography = styled(Typography)({
 });
 
 const Dashboard = () => {
-  const { t } = useTranslation();
-  const { settings } = useContext(settingsContext);
+  const { t, settings } = useContext(settingsContext);
   const personASettings = Object.values(settings)[0];
   const personBSettings = Object.values(settings)[1];
 

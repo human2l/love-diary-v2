@@ -19,6 +19,7 @@ import "./services/i18next";
 const queryClient = new QueryClient();
 
 export const settingsContext = React.createContext({
+  t: () => {},
   user: "",
   settings: {},
   updateSettings: () => {},
@@ -45,7 +46,7 @@ const LoadingImgWrapper = styled("div")({
 });
 
 function App() {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [authenticated, setAuthenticated] = useState(false);
   const [settings, setSettings] = useState({});
   const [appSettings, setAppSettings] = useState({});
@@ -147,6 +148,7 @@ function App() {
               )} */}
               <settingsContext.Provider
                 value={{
+                  t,
                   user,
                   settings,
                   updateSettings,

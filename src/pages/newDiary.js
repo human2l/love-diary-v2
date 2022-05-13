@@ -5,7 +5,6 @@ import CardMedia from "@mui/material/CardMedia";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import { useContext, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../app";
 import ConfirmModal from "../components/confirmModal";
@@ -46,9 +45,7 @@ const ImageControlContainer = styled("div")({
 });
 
 const NewDiary = () => {
-  const { t } = useTranslation();
-
-  const { user, settings } = useContext(settingsContext);
+  const { t, user, settings } = useContext(settingsContext);
   const { fileMetadata, openFilePicker, getAuthImgUrl } = useFilestack();
   const [diaryContent, setDiaryContent] = useLocalStorage("diaryDraft", "");
 

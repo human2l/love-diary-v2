@@ -2,7 +2,6 @@ import { Button, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import { useContext, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { settingsContext } from "../app";
 import backgroundPng from "../assets/images/background.png";
 import languagesPng from "../assets/images/languages.png";
@@ -51,8 +50,7 @@ const LanguageSelectorContainer = styled("div")({
 });
 
 const Settings = () => {
-  const { t } = useTranslation();
-  const { user, settings, updateSettings, appSettings, updateAppSettings } =
+  const { t, user, settings, updateSettings, appSettings, updateAppSettings } =
     useContext(settingsContext);
   const [language, setLanguage] = useState(settings[user].language);
 

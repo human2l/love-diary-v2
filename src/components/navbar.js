@@ -10,7 +10,6 @@ import Modal from "@mui/material/Modal";
 import Slide from "@mui/material/Slide";
 import { styled } from "@mui/material/styles";
 import { useContext, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../app";
 import MagicBox from "./magicBox";
@@ -30,8 +29,7 @@ const MagicBoxContainer = styled("div")({
 });
 
 const Navbar = (props) => {
-  const { t } = useTranslation();
-  const { user, settings } = useContext(settingsContext);
+  const { t, user, settings } = useContext(settingsContext);
 
   const [value, setValue] = useState(-1);
 

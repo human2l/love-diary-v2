@@ -1,8 +1,8 @@
 import { Button, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { HexColorPicker } from "react-colorful";
-import { useTranslation } from "react-i18next";
+import { settingsContext } from "../../app";
 import colorSelectionPng from "../../assets/images/color-selection.png";
 import colorsPng from "../../assets/images/colors.png";
 import exchangePng from "../../assets/images/exchange.png";
@@ -59,7 +59,7 @@ const ColorPalette = ({
   setPrimaryColor,
   setSecondaryColor,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useContext(settingsContext);
 
   const [pro, setPro] = useState(false);
 

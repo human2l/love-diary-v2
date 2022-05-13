@@ -6,7 +6,6 @@ import CardMedia from "@mui/material/CardMedia";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useContext, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
 import useSound from "use-sound";
@@ -56,7 +55,6 @@ const SendIcon = styled("img")({
 
 export const Diary = (props) => {
   const queryClient = useQueryClient();
-  const { t } = useTranslation();
   const [play] = useSound(sendSound, {
     volume: 0.5,
   });
@@ -69,6 +67,7 @@ export const Diary = (props) => {
     diaryReplies,
     diaryPhotos,
   } = props;
+  const { t } = useContext(settingsContext);
 
   const { user, settings } = useContext(settingsContext);
 

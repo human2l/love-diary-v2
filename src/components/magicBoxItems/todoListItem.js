@@ -1,8 +1,8 @@
 import { styled, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-// import { useSelector, useDispatch } from "react-redux";
-import { useTranslation } from "react-i18next";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { settingsContext } from "../../app";
 import checklistPng from "../../assets/images/checklist.png";
 
 const ItemContainer = styled("div")({
@@ -22,7 +22,8 @@ const ChecklistIcon = styled("img")({
 });
 
 const TodoListItem = (props) => {
-  const { t } = useTranslation();
+  const { t } = useContext(settingsContext);
+
   let navigate = useNavigate();
   const handleOnClick = () => {
     props.onClose();

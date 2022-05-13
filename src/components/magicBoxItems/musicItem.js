@@ -1,7 +1,6 @@
 import { styled, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { useContext, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { settingsContext } from "../../app";
 import soundOffPng from "../../assets/images/sound-off.png";
 import soundOnPng from "../../assets/images/sound-on.png";
@@ -27,9 +26,8 @@ const SoundOffIcon = styled("img")({
   aspectRatio: "1/1",
 });
 const MusicItem = () => {
-  const { musicPlayer } = useContext(settingsContext);
+  const { t, musicPlayer } = useContext(settingsContext);
   const [playMusic, setPlayMusic] = useState(true);
-  const { t } = useTranslation();
 
   const handleClick = () => {
     if (musicPlayer.playing()) {

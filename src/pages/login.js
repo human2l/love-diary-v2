@@ -1,10 +1,10 @@
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import useSound from "use-sound";
+import { settingsContext } from "../app";
 import popDownSound from "../assets/sounds/pop-down.mp3";
 import popUpOffSound from "../assets/sounds/pop-up-off.mp3";
 import popUpOnSound from "../assets/sounds/pop-up-on.mp3";
@@ -37,7 +37,7 @@ const PasswordPad = styled.div`
 const PasswordButtonText = styled(Typography)``;
 
 const Login = (props) => {
-  const { t } = useTranslation();
+  const { t } = useContext(settingsContext);
 
   const [password, setPassword] = useState("");
 
