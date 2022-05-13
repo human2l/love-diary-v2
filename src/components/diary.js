@@ -44,13 +44,13 @@ const PhotoContainer = styled("div")({
 });
 
 const CommentIcon = styled("img")({
-  width: 30,
-  height: 30,
+  width: 40,
+  height: 40,
 });
 
 const SendIcon = styled("img")({
-  width: 30,
-  height: 30,
+  width: 48,
+  height: 48,
 });
 
 export const Diary = (props) => {
@@ -145,7 +145,7 @@ export const Diary = (props) => {
             onChange={handleChangeReply}
           />
           <Button
-            variant="outlined"
+            variant="text"
             size="small"
             sx={{
               borderRadius: 10,
