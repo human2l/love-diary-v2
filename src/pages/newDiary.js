@@ -105,7 +105,7 @@ const NewDiary = () => {
             placeholder={t("new_diary_placeholder.label")}
             multiline
             variant="outlined"
-            maxRows={(window.innerHeight - 56) / 23}
+            maxRows={(window.innerHeight - 65) / 23}
             value={diaryContent}
             helperText={warningMessage}
             sx={{
