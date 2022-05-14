@@ -6,14 +6,15 @@ import Slide from "@mui/material/Slide";
 import { styled } from "@mui/material/styles";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useSound from "use-sound";
 import { settingsContext } from "../app";
 import diaryPng from "../assets/images/diary.png";
 import magicBoxPng from "../assets/images/magicBox.png";
 import settingsPng from "../assets/images/settings.png";
 import walletPng from "../assets/images/wallet.png";
 import wePng from "../assets/images/we.png";
+import buttonMp3 from "../assets/sounds/button.mp3";
 import MagicBox from "./magicBox";
-
 const ModalContainer = styled("div")({});
 
 const MagicBoxContainer = styled("div")({
@@ -30,7 +31,9 @@ const MagicBoxContainer = styled("div")({
 
 const Navbar = (props) => {
   const { t, user, settings } = useContext(settingsContext);
-
+  const [play] = useSound(buttonMp3, {
+    volume: 0.5,
+  });
   const [value, setValue] = useState(-1);
 
   const [open, setOpen] = useState(false);
@@ -71,6 +74,7 @@ const Navbar = (props) => {
         onChange={(event, newValue) => {
           setValue(newValue);
           navAction(newValue);
+          play();
           // fetch settings whenever user click on one tab
           // props.fetchSettings();
         }}
