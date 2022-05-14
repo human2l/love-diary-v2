@@ -38,6 +38,11 @@ const TodoContainer = styled("div")({
   display: "flex",
 });
 
+const TotalMoneyContainer = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+});
+
 const TodoListHistory = () => {
   const { settings } = useContext(settingsContext);
 
@@ -62,7 +67,7 @@ const TodoListHistory = () => {
                     <CardContent>
                       <TitleContainer>
                         <Typography
-                          variant="h5"
+                          variant="h4"
                           color={settings[history.user].primaryColor}
                           gutterBottom
                         >
@@ -88,13 +93,33 @@ const TodoListHistory = () => {
                             )}
                             <Typography
                               color={settings[todo.user].primaryColor}
-                              sx={{ ml: 1 }}
+                              sx={{ ml: 1, flex: "1" }}
                             >
                               {todo.name}
+                            </Typography>
+                            <Typography
+                              color={settings[todo.user].primaryColor}
+                              sx={{ ml: 1 }}
+                            >
+                              {todo.money}
                             </Typography>
                           </TodoContainer>
                         );
                       })}
+                      <TotalMoneyContainer>
+                        <Typography
+                          color={settings[history.user].secondaryColor}
+                          variant="h5"
+                        >
+                          合计
+                        </Typography>
+                        <Typography
+                          color={settings[history.user].secondaryColor}
+                          variant="h5"
+                        >
+                          {history.money}
+                        </Typography>
+                      </TotalMoneyContainer>
                     </CardContent>
                   </Card>
                 </CardContainer>
