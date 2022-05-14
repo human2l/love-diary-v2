@@ -20,6 +20,7 @@ const getAllTodosHistory = async () => {
       user: todosHistory.fields.user,
       todos: JSON.parse(todosHistory.fields.todos),
       time: todosHistory.fields.time,
+      money: todosHistory.fields.money,
     };
   });
 
