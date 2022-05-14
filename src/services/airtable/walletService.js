@@ -2,23 +2,22 @@ import base from "./airtable";
 
 const walletBase = base("wallet");
 
-const getDanMoney = async () => {
-  const response = await walletBase.select({}).all();
-  const danMoney = response[1].fields.number;
-  return danMoney;
-};
+// const getDanMoney = async () => {
+//   const response = await walletBase.select({}).all();
+//   const danMoney = response[1].fields.number;
+//   return danMoney;
+// };
 
 const getWalletState = async () => {
   const response = await walletBase.select({}).all();
-  // const walletState = {};
-  // for (let record of response) {
-  //   walletState[record.fields.name] = { ...record.fields, id: record.id };
-  // }
-  // console.log(walletState);
-  return response;
+  const walletState = {};
+  for (let record of response) {
+    walletState[record.fields.name] = { ...record.fields, id: record.id };
+  }
+  return walletState;
 };
 
-const updateDanWalletState = async (
+const updateUserWalletState = async (
   walletId,
   number,
   lastCheckInDate,
@@ -40,4 +39,4 @@ const updateDanWalletState = async (
   );
 };
 
-export { getDanMoney, getWalletState, updateDanWalletState };
+export { getWalletState, updateUserWalletState };

@@ -14,7 +14,7 @@ import GlassRoundContainer from "../components/glassmorphism/glassRoundContainer
 import PageLoading from "../components/pageLoading";
 import {
   getWalletState,
-  updateDanWalletState,
+  updateUserWalletState,
 } from "../services/airtable/walletService";
 
 const WalletContainer = styled("div")({
@@ -51,7 +51,7 @@ const canCheckIn = (date1, date2) => {
 const Wallet = () => {
   const queryClient = useQueryClient();
 
-  const { t, settings } = useContext(settingsContext);
+  const { t, user, settings } = useContext(settingsContext);
   const [warningMessages, setWarningMessages] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [playMoneySound] = useSound(moneySound, { volume: 0.5 });
@@ -65,21 +65,26 @@ const Wallet = () => {
     refetchOnWindowFocus: false,
   });
 
-  let danWalletId, danMoney, lastCheckInDate;
+  let userWalletId, userMoney, lastCheckInDate;
   if (isSuccess) {
-    danWalletId = data[1].id;
-    danMoney = data[1].fields.number.toFixed(2);
-    lastCheckInDate = data[1].fields.lastCheckInDate;
+    userWalletId = data[user].id;
+    userMoney = data[user].number.toFixed(2);
+    lastCheckInDate = data[user].lastCheckInDate;
   }
 
   const handleCheckIn = async () => {
     setIsFetching(true);
     const now = new Date().getTime();
-    const addedDanMoney = Number((Math.random() / 2).toFixed(2));
-    const newDanMoney = Number(danMoney) + addedDanMoney;
-    await updateDanWalletState(danWalletId, newDanMoney, now, onUpdateFinish);
+    const addedUserMoney = Number((Math.random() / 2).toFixed(2));
+    const newUserMoney = Number(userMoney) + addedUserMoney;
+    await updateUserWalletState(
+      userWalletId,
+      newUserMoney,
+      now,
+      onUpdateFinish
+    );
     playMoneySound();
-    setWarningMessages([`${t("get_money.label")}$${addedDanMoney}`]);
+    setWarningMessages([`${t("get_money.label")}$${addedUserMoney}`]);
   };
 
   const onUpdateFinish = async () => {
@@ -109,12 +114,12 @@ const Wallet = () => {
                 // style={{ marginTop: "50px" }}
               />
               <ItemContainer>
-                <Typography color={settings["Dan"].primaryColor} variant="h5">
-                  {settings.Dan.nickname}
+                <Typography color={settings[user].primaryColor} variant="h5">
+                  {settings[user].nickname}
                   {t("account_balance.label")}
                 </Typography>
                 <Typography color="textPrimary" variant="h5">
-                  $ {danMoney}
+                  $ {userMoney}
                 </Typography>
                 {canCheckIn(lastCheckInDate, new Date().getTime()) ? (
                   <Button
