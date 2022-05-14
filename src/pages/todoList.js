@@ -7,7 +7,9 @@ import TextField from "@mui/material/TextField";
 import { useContext, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
+import useSound from "use-sound";
 import { settingsContext } from "../app";
+import cashierMp3 from "../assets/sounds/cashier.mp3";
 import ConfirmModal from "../components/confirmModal";
 import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
 import PageLoading from "../components/pageLoading";
@@ -55,6 +57,9 @@ const BottomControlContainer = styled("div")({
 const TodoList = () => {
   let navigate = useNavigate();
   const [playTypingSound] = useTypingSound();
+  const [play] = useSound(cashierMp3, {
+    volume: 0.5,
+  });
   const { t, user } = useContext(settingsContext);
   const [todo, setTodo] = useLocalStorage("todoDraft", "");
   const [archiveAlertState, setArchiveAlertState] = useState(false);
@@ -94,6 +99,7 @@ const TodoList = () => {
   };
 
   const handleArchive = useMutation(() => {
+    play();
     setArchiveAlertState(false);
     const userTodosArray = todosArray.filter((todo) => {
       return todo.user === user;
