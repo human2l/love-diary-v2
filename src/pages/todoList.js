@@ -20,6 +20,7 @@ import {
   getAllTodos,
   updateTodo,
 } from "../services/airtable/todosService";
+import { updateUserMoney } from "../services/airtable/walletService";
 import { getCurrentTimestamp } from "../utils/date_utils";
 
 const TodoListContainer = styled("div")({
@@ -87,25 +88,40 @@ const TodoList = () => {
 
   const handleArchive = useMutation(() => {
     setArchiveAlertState(false);
-    const deleteTodosArray = todosArray.filter((todo) => {
+    const userTodosArray = todosArray.filter((todo) => {
       return todo.user === user;
+    });
+    const deleteTodosArray = userTodosArray.map((todo) => {
+      const deleteTodo = { ...todo, money: todo.done ? 0.02 : -0.01 };
+      return deleteTodo;
     });
     if (!deleteTodosArray.length) return;
     const time = getCurrentTimestamp();
+    const money = addedMoney(deleteTodosArray);
     const todosHistory = {
       user,
       todos: JSON.stringify(deleteTodosArray),
       time,
+      money,
     };
     const deleteTodosIdArray = deleteTodosArray.map((todo) => {
       return todo.id;
     });
     addTodosHistory(todosHistory, () => {
+      updateUserMoney(user, money);
       deleteTodos(deleteTodosIdArray, () => {
         queryClient.invalidateQueries("fetchAllTodos");
       });
     });
   });
+
+  const addedMoney = (todosArray) => {
+    const addMoney = todosArray.reduce((sum, todo) => {
+      const newSum = sum + Number(todo.money);
+      return newSum;
+    }, 0);
+    return Number(addMoney.toFixed(2));
+  };
 
   return (
     <>
