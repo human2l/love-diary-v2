@@ -11,6 +11,7 @@ import ConfirmModal from "../components/confirmModal";
 import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
 import useFilestack from "../hooks/useFilestack";
 import useLocalStorage from "../hooks/useLocalStorage";
+import useTypingSound from "../hooks/useTypingSound";
 import { addNewDiary } from "../services/airtable/diaryService";
 import { getCurrentTimestamp } from "../utils/date_utils";
 
@@ -46,6 +47,7 @@ const ImageControlContainer = styled("div")({
 
 const NewDiary = () => {
   const { t, user, settings } = useContext(settingsContext);
+  const [playTypingSound] = useTypingSound();
   const { fileMetadata, openFilePicker, getAuthImgUrl } = useFilestack();
   const [diaryContent, setDiaryContent] = useLocalStorage("diaryDraft", "");
 
@@ -56,6 +58,7 @@ const NewDiary = () => {
   let navigate = useNavigate();
 
   const handleChange = (event) => {
+    playTypingSound();
     setDiaryContent(event.target.value);
   };
 

@@ -15,6 +15,7 @@ import sendPng from "../assets/images/send.png";
 import sendSound from "../assets/sounds/send.mp3";
 import useFilestack from "../hooks/useFilestack";
 import useLocalStorage from "../hooks/useLocalStorage";
+import useTypingSound from "../hooks/useTypingSound";
 import { updateDiaryReply } from "../services/airtable/diaryService";
 import { getCurrentTimestamp } from "../utils/date_utils";
 import DiaryReply from "./diaryReply";
@@ -69,6 +70,8 @@ export const Diary = (props) => {
   } = props;
   const { t } = useContext(settingsContext);
 
+  const [playTypingSound] = useTypingSound();
+
   const { user, settings } = useContext(settingsContext);
 
   const [reply, setReply] = useState(false);
@@ -89,6 +92,7 @@ export const Diary = (props) => {
 
   const handleChangeReply = (e) => {
     setReplyContent(e.target.value);
+    playTypingSound();
   };
 
   const submitReply = useMutation(() => {

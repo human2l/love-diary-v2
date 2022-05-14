@@ -13,6 +13,7 @@ import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
 import PageLoading from "../components/pageLoading";
 import TodoListPaper from "../components/todoList/todoListPaper";
 import useLocalStorage from "../hooks/useLocalStorage";
+import useTypingSound from "../hooks/useTypingSound";
 import { addTodosHistory } from "../services/airtable/todosHistoryService";
 import {
   addTodo,
@@ -53,7 +54,7 @@ const BottomControlContainer = styled("div")({
 
 const TodoList = () => {
   let navigate = useNavigate();
-
+  const [playTypingSound] = useTypingSound();
   const { t, user } = useContext(settingsContext);
   const [todo, setTodo] = useLocalStorage("todoDraft", "");
   const [archiveAlertState, setArchiveAlertState] = useState(false);
@@ -64,6 +65,12 @@ const TodoList = () => {
     "fetchAllTodos",
     fetchAllTodos
   );
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setTodo(e.target.value);
+    playTypingSound();
+  };
 
   const handleAdd = useMutation(() => {
     const newTodo = {
@@ -146,10 +153,7 @@ const TodoList = () => {
                   borderRadius: 2,
                   border: "8px solid white",
                 }}
-                onChange={(e) => {
-                  e.preventDefault();
-                  setTodo(e.target.value);
-                }}
+                onChange={(e) => handleChange(e)}
               />
               <Fab color="primary" onClick={handleAdd.mutate} disabled={!todo}>
                 <AddIcon />

@@ -9,6 +9,7 @@ import ColorPalette from "../components/colorPalette/colorPalette";
 import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
 import LanguageSelector from "../components/languageSelector";
 import useFilestack from "../hooks/useFilestack";
+import useTypingSound from "../hooks/useTypingSound";
 
 const SettingsContainer = styled("div")({
   boxSizing: "border-box",
@@ -53,6 +54,7 @@ const LanguageSelectorContainer = styled("div")({
 const Settings = () => {
   const { t, user, settings, updateSettings, appSettings, updateAppSettings } =
     useContext(settingsContext);
+  const [playTypingSound] = useTypingSound();
   const [language, setLanguage] = useState(settings[user].language);
 
   const [nickname, setnickname] = useState(settings[user].nickname);
@@ -61,6 +63,12 @@ const Settings = () => {
     settings[user].secondaryColor
   );
   const { openBackgroundImagePicker } = useFilestack();
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setnickname(e.target.value);
+    playTypingSound();
+  };
 
   const saveSettings = () => {
     const newSettings = {
@@ -109,7 +117,7 @@ const Settings = () => {
             variant="outlined"
             size="small"
             defaultValue={nickname}
-            onChange={(e) => setnickname(e.target.value)}
+            onChange={(e) => handleChange(e)}
             sx={{
               marginTop: "20px",
               backgroundColor: "white",
