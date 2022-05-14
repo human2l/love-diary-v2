@@ -10,7 +10,7 @@ import coinsPng from "../assets/images/coins.png";
 import moneyHeartPng from "../assets/images/money_heart.png";
 import ahOhSound from "../assets/sounds/ah-oh.mp3";
 import moneySound from "../assets/sounds/multipleCoins.mp3";
-import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
+import GlassRoundContainer from "../components/glassmorphism/glassRoundContainer";
 import PageLoading from "../components/pageLoading";
 import {
   getWalletState,
@@ -18,15 +18,23 @@ import {
 } from "../services/airtable/walletService";
 
 const WalletContainer = styled("div")({
-  height: "100vh",
-  // paddingBottom: 65,
+  paddingTop: 30,
+  marginLeft: "auto",
+  marginRight: "auto",
+  width: "90%",
+  height: "100%",
+});
+
+const ContentContainer = styled("div")({
+  paddingTop: "50px",
+  paddingBottom: "50px",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
 });
 
 const ItemContainer = styled("div")({
-  paddingTop: 20,
+  // paddingTop: 20,
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -90,67 +98,71 @@ const Wallet = () => {
       {isLoading ? (
         <PageLoading />
       ) : (
-        <GlassFullContainer>
-          <WalletContainer>
-            <img
-              src={moneyHeartPng}
-              alt="wallet"
-              height="100px"
-              width="100px"
-              style={{ marginTop: "100px" }}
-            />
-            <ItemContainer>
-              <Typography color={settings["Dan"].primaryColor} variant="h5">
-                {settings.Dan.nickname}
-                {t("account_balance.label")}
-              </Typography>
-              <Typography color="textPrimary" variant="h5">
-                $ {danMoney}
-              </Typography>
-              {canCheckIn(lastCheckInDate, new Date().getTime()) ? (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  startIcon={<Avatar variant="rounded" src={coinsPng} />}
-                  onClick={handleCheckIn}
-                >
-                  <Typography sx={{ color: "white" }} variant="h5">
-                    {isFetching ? t("checking_in.label") : t("check_in.label")}
-                  </Typography>
-                </Button>
-              ) : (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  startIcon={<Avatar variant="rounded" src={coinsPng} />}
-                  onClick={() => {
-                    setWarningMessages([
-                      ...warningMessages,
-                      t("already_checked_in_warning.label"),
-                    ]);
-                    playAhOhSound();
-                  }}
-                >
-                  <Typography sx={{ color: "white" }} variant="h5">
-                    {t("checked_in.label")}
-                  </Typography>
-                </Button>
-              )}
-              <Typography color="secondary" variant="h6">
-                {t("time_before_next_check_in.label")}
-                {nextCheckInAllowedTime()}
-                {t("hours.label")}
-              </Typography>
-              {warningMessages.map((warningMessage, index) => {
-                return (
-                  <Typography key={index} color="primary" variant="h5">
-                    {warningMessage}
-                  </Typography>
-                );
-              })}
-            </ItemContainer>
-          </WalletContainer>
-        </GlassFullContainer>
+        <WalletContainer>
+          <GlassRoundContainer>
+            <ContentContainer>
+              <img
+                src={moneyHeartPng}
+                alt="wallet"
+                height="100px"
+                width="100px"
+                // style={{ marginTop: "50px" }}
+              />
+              <ItemContainer>
+                <Typography color={settings["Dan"].primaryColor} variant="h5">
+                  {settings.Dan.nickname}
+                  {t("account_balance.label")}
+                </Typography>
+                <Typography color="textPrimary" variant="h5">
+                  $ {danMoney}
+                </Typography>
+                {canCheckIn(lastCheckInDate, new Date().getTime()) ? (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<Avatar variant="rounded" src={coinsPng} />}
+                    onClick={handleCheckIn}
+                  >
+                    <Typography sx={{ color: "white" }} variant="h5">
+                      {isFetching
+                        ? t("checking_in.label")
+                        : t("check_in.label")}
+                    </Typography>
+                  </Button>
+                ) : (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<Avatar variant="rounded" src={coinsPng} />}
+                    onClick={() => {
+                      setWarningMessages([
+                        ...warningMessages,
+                        t("already_checked_in_warning.label"),
+                      ]);
+                      playAhOhSound();
+                    }}
+                  >
+                    <Typography sx={{ color: "white" }} variant="h5">
+                      {t("checked_in.label")}
+                    </Typography>
+                  </Button>
+                )}
+                <Typography color="secondary" variant="h6">
+                  {t("time_before_next_check_in.label")}
+                  {nextCheckInAllowedTime()}
+                  {t("hours.label")}
+                </Typography>
+                {warningMessages.map((warningMessage, index) => {
+                  return (
+                    <Typography key={index} color="primary" variant="h5">
+                      {warningMessage}
+                    </Typography>
+                  );
+                })}
+              </ItemContainer>
+            </ContentContainer>
+          </GlassRoundContainer>
+        </WalletContainer>
       )}
     </>
   );
