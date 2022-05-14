@@ -9,7 +9,7 @@ import writingPng from "../assets/images/writing.png";
 import { Diary } from "../components/diary";
 import PageLoading from "../components/pageLoading";
 import TopSnackbar from "../components/topSnackbar";
-import { getAllDiarys } from "../services/airtable";
+import { getAllDiarys } from "../services/airtable/diaryService";
 import { getCountryDateFromTimestamp } from "../utils/date_utils";
 
 const LoveDiaryContainer = styled("div")({

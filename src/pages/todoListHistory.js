@@ -9,7 +9,7 @@ import { useQuery } from "react-query";
 import { settingsContext } from "../app";
 import PageLoading from "../components/pageLoading";
 import TodoListDashboard from "../components/todoList/todoListDashboard";
-import { getAllTodosHistory } from "../services/airtable";
+import { getAllTodosHistory } from "../services/airtable/todosHistoryService";
 import { getCountryDateFromTimestamp } from "../utils/date_utils";
 
 const TodoListHistoryCardsContainer = styled("div")({

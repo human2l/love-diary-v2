@@ -10,10 +10,12 @@ import useSoundLibrary from "./hooks/useSoundLibrary";
 import Router from "./routes";
 import {
   getAppSettings,
-  getUserSettings,
   updateAppSettingsDB,
+} from "./services/airtable/appSettingsService";
+import {
+  getUserSettings,
   updateSettingsDB,
-} from "./services/airtable";
+} from "./services/airtable/settingsService";
 import "./services/i18next";
 
 const queryClient = new QueryClient();

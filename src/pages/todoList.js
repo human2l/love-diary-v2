@@ -13,13 +13,13 @@ import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
 import PageLoading from "../components/pageLoading";
 import TodoListPaper from "../components/todoList/todoListPaper";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { addTodosHistory } from "../services/airtable/todosHistoryService";
 import {
   addTodo,
-  addTodosHistory,
   deleteTodos,
   getAllTodos,
   updateTodo,
-} from "../services/airtable";
+} from "../services/airtable/todosService";
 import { getCurrentTimestamp } from "../utils/date_utils";
 
 const TodoListContainer = styled("div")({

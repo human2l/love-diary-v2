@@ -8,7 +8,7 @@ import CartoonNumbers from "../components/cartoonNumbers";
 import FlyingHeart from "../components/flyingHeart/flyingHeart";
 import GlassRoundContainer from "../components/glassmorphism/glassRoundContainer";
 import PageLoading from "../components/pageLoading";
-import { getDiaryCountByUser } from "../services/airtable";
+import { getDiaryCountByUser } from "../services/airtable/diaryService";
 import { timeDiff } from "../utils/date_utils";
 
 const DashboardContainer = styled("div")({

@@ -11,7 +11,7 @@ import ConfirmModal from "../components/confirmModal";
 import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
 import useFilestack from "../hooks/useFilestack";
 import useLocalStorage from "../hooks/useLocalStorage";
-import { addNewDiary } from "../services/airtable";
+import { addNewDiary } from "../services/airtable/diaryService";
 import { getCurrentTimestamp } from "../utils/date_utils";
 
 const NewDiaryContainer = styled("div")({

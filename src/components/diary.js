@@ -15,7 +15,7 @@ import sendPng from "../assets/images/send.png";
 import sendSound from "../assets/sounds/send.mp3";
 import useFilestack from "../hooks/useFilestack";
 import useLocalStorage from "../hooks/useLocalStorage";
-import { updateDiaryReply } from "../services/airtable";
+import { updateDiaryReply } from "../services/airtable/diaryService";
 import { getCurrentTimestamp } from "../utils/date_utils";
 import DiaryReply from "./diaryReply";
 
