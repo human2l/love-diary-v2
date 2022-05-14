@@ -78,63 +78,23 @@ const Navbar = (props) => {
       >
         <BottomNavigationAction
           label={t("love_diary.label")}
-          icon={
-            <img
-              src={diaryPng}
-              alt="diary"
-              height={40}
-              width={40}
-              style={{ transform: "Translate(0, 0px)" }}
-            />
-          }
+          icon={<img src={diaryPng} alt="diary" height={40} width={40} />}
         />
         <BottomNavigationAction
           label={t("wallet.label")}
-          icon={
-            <img
-              src={walletPng}
-              alt="diary"
-              height={40}
-              width={40}
-              style={{ transform: "Translate(0, 0px)" }}
-            />
-          }
+          icon={<img src={walletPng} alt="diary" height={40} width={40} />}
         />
         <BottomNavigationAction
           label={t("magic_box.label")}
-          icon={
-            <img
-              src={magicBoxPng}
-              alt="diary"
-              height={40}
-              width={40}
-              style={{ transform: "Translate(0, 0px)" }}
-            />
-          }
+          icon={<img src={magicBoxPng} alt="diary" height={40} width={40} />}
         />
         <BottomNavigationAction
           label={t("we.label")}
-          icon={
-            <img
-              src={wePng}
-              alt="diary"
-              height={40}
-              width={40}
-              style={{ transform: "Translate(0, 0px)" }}
-            />
-          }
+          icon={<img src={wePng} alt="diary" height={40} width={40} />}
         />
         <BottomNavigationAction
           label={t("settings.label")}
-          icon={
-            <img
-              src={settingsPng}
-              alt="diary"
-              height={40}
-              width={40}
-              style={{ transform: "Translate(0, 0px)" }}
-            />
-          }
+          icon={<img src={settingsPng} alt="diary" height={40} width={40} />}
         />
       </Navbar>
       <ModalContainer>
