@@ -28,7 +28,7 @@ const TodoListContainer = styled("div")({
   width: "90%",
   marginLeft: "auto",
   marginRight: "auto",
-  paddingBottom: 56,
+  paddingBottom: 65,
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
