@@ -23,6 +23,7 @@ const queryClient = new QueryClient();
 export const settingsContext = React.createContext({
   t: () => {},
   user: "",
+  getPartner: () => {},
   settings: {},
   updateSettings: () => {},
   appSettings: {},
@@ -57,6 +58,11 @@ function App() {
   const [theme, setTheme] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { musicPlayer, setMusic } = useSoundLibrary();
+
+  const getPartner = () => {
+    const users = Object.keys(settings);
+    return users.find((currentUser) => currentUser !== user);
+  };
 
   const updateSettings = async (newSettings) => {
     console.log("updateSettings");
@@ -153,6 +159,7 @@ function App() {
                 value={{
                   t,
                   user,
+                  getPartner,
                   settings,
                   updateSettings,
                   appSettings,

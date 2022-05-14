@@ -51,7 +51,7 @@ const canCheckIn = (date1, date2) => {
 const Wallet = () => {
   const queryClient = useQueryClient();
 
-  const { t, user, settings } = useContext(settingsContext);
+  const { t, user, getPartner, settings } = useContext(settingsContext);
   const [warningMessages, setWarningMessages] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [playMoneySound] = useSound(moneySound, { volume: 0.5 });
@@ -65,10 +65,11 @@ const Wallet = () => {
     refetchOnWindowFocus: false,
   });
 
-  let userWalletId, userMoney, lastCheckInDate;
+  let userWalletId, userMoney, partnerMoney, lastCheckInDate;
   if (isSuccess) {
     userWalletId = data[user].id;
     userMoney = data[user].number.toFixed(2);
+    partnerMoney = data[getPartner()].number.toFixed(2);
     lastCheckInDate = data[user].lastCheckInDate;
   }
 
@@ -111,14 +112,26 @@ const Wallet = () => {
                 alt="wallet"
                 height="100px"
                 width="100px"
-                // style={{ marginTop: "50px" }}
               />
               <ItemContainer>
+                <Typography
+                  color={settings[getPartner()].primaryColor}
+                  variant="h5"
+                >
+                  {settings[getPartner()].nickname}
+                  {t("account_balance.label")}
+                </Typography>
+                <Typography
+                  color={settings[getPartner()].primaryColor}
+                  variant="h5"
+                >
+                  $ {partnerMoney}
+                </Typography>
                 <Typography color={settings[user].primaryColor} variant="h5">
                   {settings[user].nickname}
                   {t("account_balance.label")}
                 </Typography>
-                <Typography color="textPrimary" variant="h5">
+                <Typography color={settings[user].primaryColor} variant="h5">
                   $ {userMoney}
                 </Typography>
                 {canCheckIn(lastCheckInDate, new Date().getTime()) ? (
