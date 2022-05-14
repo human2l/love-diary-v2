@@ -14,7 +14,7 @@ const SettingsContainer = styled("div")({
   boxSizing: "border-box",
   height: "100%",
   width: "100%",
-  paddingBottom: 56,
+  paddingBottom: 65,
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
