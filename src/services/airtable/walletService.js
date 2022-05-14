@@ -39,4 +39,34 @@ const updateUserWalletState = async (
   );
 };
 
-export { getWalletState, updateUserWalletState };
+const getUserWalletStatus = async (user) => {
+  const response = await walletBase
+    .select({
+      filterByFormula: `{name}="${user}"`,
+    })
+    .all();
+  return { ...response[0].fields, id: response[0].id };
+};
+
+const updateUserMoney = async (user, money) => {
+  const userWalletStatus = await getUserWalletStatus(user);
+  walletBase.update(
+    userWalletStatus.id,
+    {
+      number: userWalletStatus.number + money,
+    },
+    function (err) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    }
+  );
+};
+
+export {
+  getWalletState,
+  updateUserWalletState,
+  getUserWalletStatus,
+  updateUserMoney,
+};
