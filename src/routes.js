@@ -11,7 +11,7 @@ import TodoListHistory from "./pages/todoListHistory.js";
 import Wallet from "./pages/wallet";
 
 const Router = (props) => {
-  const { authenticated, loginMethod, fetchSettings } = props;
+  const { authenticated, loginMethod } = props;
 
   return (
     <BrowserRouter>
@@ -30,7 +30,7 @@ const Router = (props) => {
         )}
         <Route path="*" element={<Login login={loginMethod} />} />
       </Routes>
-      {authenticated && <Navbar fetchSettings={fetchSettings} />}
+      {authenticated && <Navbar />}
     </BrowserRouter>
   );
 };

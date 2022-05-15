@@ -75,10 +75,7 @@ const Navbar = (props) => {
           setValue(newValue);
           navAction(newValue);
           play();
-          // fetch settings whenever user click on one tab
-          // props.fetchSettings();
         }}
-        // showLabels
       >
         <BottomNavigationAction
           label={t("love_diary.label")}

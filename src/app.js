@@ -58,18 +58,20 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const { musicPlayer, setMusic } = useSoundLibrary();
 
+  const userSettings = useMemo(() => settings[user], [settings, user]);
+
   const theme = useMemo(() => {
     console.log("createNewTheme");
     return createTheme({
       palette: {
         primary: {
-          main: settings[user]?.primaryColor ?? colors.pink[400],
+          main: userSettings?.primaryColor ?? colors.pink[400],
         },
         secondary: {
-          main: settings[user]?.secondaryColor ?? colors.blue[400],
+          main: userSettings?.secondaryColor ?? colors.blue[400],
         },
         text: {
-          primary: settings[user]?.primaryColor ?? colors.pink[400],
+          primary: userSettings?.primaryColor ?? colors.pink[400],
           light: colors.pink[50],
         },
         pink: colors.pink[400],
@@ -81,9 +83,7 @@ function App() {
         fontFamily: ["Ma Shan Zheng"].join(","),
       },
     });
-  }, [settings, user]);
-
-  const userMusic = useMemo(() => settings[user]?.music, [settings, user]);
+  }, [userSettings?.primaryColor, userSettings?.secondaryColor]);
 
   const getPartner = () => {
     const users = Object.keys(settings);
@@ -121,14 +121,20 @@ function App() {
     })();
   }, []);
 
+  const userMusic = useMemo(() => userSettings?.music, [userSettings?.music]);
+
   useEffect(() => {
     console.log("setMusic");
     setMusic(userMusic);
   }, [setMusic, userMusic]);
 
+  const userLanguage = useMemo(
+    () => userSettings?.language,
+    [userSettings?.language]
+  );
   useEffect(() => {
-    i18n.changeLanguage(settings[user]?.language);
-  }, [i18n, settings, user]);
+    i18n.changeLanguage(userLanguage);
+  }, [i18n, userLanguage]);
 
   return (
     <>
@@ -159,11 +165,7 @@ function App() {
                 }}
               >
                 <ThemeProvider theme={theme}>
-                  <Router
-                    authenticated={authenticated}
-                    loginMethod={login}
-                    fetchSettings={fetchSettings}
-                  />
+                  <Router authenticated={authenticated} loginMethod={login} />
                 </ThemeProvider>
               </settingsContext.Provider>
             </QueryClientProvider>
