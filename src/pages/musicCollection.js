@@ -34,7 +34,7 @@ const ListContainer = styled("div")({
 });
 
 const MusicCollection = () => {
-  const { t, setMusic, settings, user, updateSettings } =
+  const { t, setMusic, musicPlayer, settings, user, updateSettings } =
     useContext(settingsContext);
   const { musicList } = useSoundLibrary();
   const userMusicIndex = musicList.findIndex((listMusic) => {
@@ -52,6 +52,7 @@ const MusicCollection = () => {
       },
     };
     updateSettings(newSettings);
+    musicPlayer?.stop();
     setMusic(musicList[index].name);
   };
 

@@ -97,14 +97,8 @@ function App() {
 
   useEffect(() => {
     console.log("setMusic");
-
-    musicPlayer && musicPlayer.stop();
     settings[user]?.music && setMusic(settings[user]?.music);
-  }, [musicPlayer, setMusic, settings, user]);
-
-  useEffect(() => {
-    musicPlayer && musicPlayer.play();
-  }, [musicPlayer]);
+  }, [setMusic, settings, user]);
 
   const newTheme = useMemo(() => {
     console.log("createNewTheme");

@@ -66,6 +66,7 @@ const useSoundLibrary = () => {
         new Howl({
           src: [foundMusic.src],
           loop: true,
+          autoplay: true,
           volume: 0.5,
         })
       );
