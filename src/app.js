@@ -133,6 +133,7 @@ function App() {
     [userSettings?.language]
   );
   useEffect(() => {
+    console.log("setLanguage");
     i18n.changeLanguage(userLanguage);
   }, [i18n, userLanguage]);
 
