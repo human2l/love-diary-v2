@@ -105,7 +105,16 @@ const TodoList = () => {
       return todo.user === user;
     });
     const deleteTodosArray = userTodosArray.map((todo) => {
-      const deleteTodo = { ...todo, money: todo.done ? 0.02 : -0.01 };
+      // add money: 0.01--0.05
+      const addAmount = Number((Math.random() * 0.04 + 0.01).toFixed(2));
+      // minus money: 0.01--0.03
+      const minusAmount = Number(
+        (0 - (Math.random() * 0.02 + 0.01)).toFixed(2)
+      );
+      const deleteTodo = {
+        ...todo,
+        money: todo.done ? addAmount : minusAmount,
+      };
       return deleteTodo;
     });
     if (!deleteTodosArray.length) return;
