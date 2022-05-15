@@ -35,7 +35,7 @@ const ControlContainer = styled("div")({
   justifyContent: "space-around",
   position: "fixed",
   marginLeft: "auto",
-  bottom: 60,
+  bottom: 65,
 });
 
 const ImageControlContainer = styled("div")({
