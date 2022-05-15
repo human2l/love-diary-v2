@@ -34,7 +34,7 @@ const ListContainer = styled("div")({
 });
 
 const MusicCollection = () => {
-  const { t, setMusic, musicPlayer, settings, user, updateSettings } =
+  const { t, musicPlayer, settings, user, updateSettings } =
     useContext(settingsContext);
   const { musicList } = useSoundLibrary();
   const userMusicIndex = musicList.findIndex((listMusic) => {
@@ -42,7 +42,8 @@ const MusicCollection = () => {
   });
   const [selectedIndex, setSelectedIndex] = useState(userMusicIndex);
 
-  const handleListItemClick = (event, index) => {
+  const handleListItemClick = (e, index) => {
+    e.preventDefault();
     setSelectedIndex(index);
     const newSettings = {
       ...settings,
@@ -53,7 +54,6 @@ const MusicCollection = () => {
     };
     updateSettings(newSettings);
     musicPlayer?.stop();
-    setMusic(musicList[index].name);
   };
 
   return (
@@ -75,7 +75,10 @@ const MusicCollection = () => {
                     <div key={index}>
                       <ListItemButton
                         selected={selectedIndex === index}
-                        onClick={(event) => handleListItemClick(event, index)}
+                        onClick={(e) => {
+                          selectedIndex !== index &&
+                            handleListItemClick(e, index);
+                        }}
                       >
                         <ListItemText primary={music.name} />
                       </ListItemButton>

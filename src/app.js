@@ -55,9 +55,35 @@ function App() {
   const [settings, setSettings] = useState({});
   const [appSettings, setAppSettings] = useState({});
   const [user, setUser] = useState("");
-  const [theme, setTheme] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { musicPlayer, setMusic } = useSoundLibrary();
+
+  const theme = useMemo(() => {
+    console.log("createNewTheme");
+    return createTheme({
+      palette: {
+        primary: {
+          main: settings[user]?.primaryColor ?? colors.pink[400],
+        },
+        secondary: {
+          main: settings[user]?.secondaryColor ?? colors.blue[400],
+        },
+        text: {
+          primary: settings[user]?.primaryColor ?? colors.pink[400],
+          light: colors.pink[50],
+        },
+        pink: colors.pink[400],
+        blue: colors.blue[400],
+        white: colors.grey[50],
+        black: colors.grey[800],
+      },
+      typography: {
+        fontFamily: ["Ma Shan Zheng"].join(","),
+      },
+    });
+  }, [settings, user]);
+
+  const userMusic = useMemo(() => settings[user]?.music, [settings, user]);
 
   const getPartner = () => {
     const users = Object.keys(settings);
@@ -97,38 +123,8 @@ function App() {
 
   useEffect(() => {
     console.log("setMusic");
-    settings[user]?.music && setMusic(settings[user]?.music);
-  }, [setMusic, settings, user]);
-
-  const newTheme = useMemo(() => {
-    console.log("createNewTheme");
-    return createTheme({
-      palette: {
-        primary: {
-          main: settings[user]?.primaryColor ?? colors.pink[400],
-        },
-        secondary: {
-          main: settings[user]?.secondaryColor ?? colors.blue[400],
-        },
-        text: {
-          primary: settings[user]?.primaryColor ?? colors.pink[400],
-          light: colors.pink[50],
-        },
-        pink: colors.pink[400],
-        blue: colors.blue[400],
-        white: colors.grey[50],
-        black: colors.grey[800],
-      },
-      typography: {
-        fontFamily: ["Ma Shan Zheng"].join(","),
-      },
-    });
-  }, [settings, user]);
-
-  useEffect(() => {
-    console.log("setTheme");
-    setTheme(newTheme);
-  }, [newTheme]);
+    setMusic(userMusic);
+  }, [setMusic, userMusic]);
 
   useEffect(() => {
     i18n.changeLanguage(settings[user]?.language);
