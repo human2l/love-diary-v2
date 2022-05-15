@@ -1,9 +1,11 @@
 import { styled, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { useContext, useEffect, useState } from "react";
+import useSound from "use-sound";
 import { settingsContext } from "../../app";
 import soundOffPng from "../../assets/images/sound-off.png";
 import soundOnPng from "../../assets/images/sound-on.png";
+import buttonMp3 from "../../assets/sounds/button.mp3";
 
 const ItemContainer = styled("div")({
   cursor: "pointer",
@@ -27,9 +29,14 @@ const SoundOffIcon = styled("img")({
 });
 const MusicItem = () => {
   const { t, musicPlayer } = useContext(settingsContext);
+  const [play] = useSound(buttonMp3, {
+    volume: 0.5,
+  });
   const [playMusic, setPlayMusic] = useState(true);
 
   const handleClick = () => {
+    play();
+
     if (musicPlayer.playing()) {
       musicPlayer.stop();
       setPlayMusic(false);
