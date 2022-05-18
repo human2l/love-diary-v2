@@ -22,6 +22,7 @@ const DashboardContainer = styled("div")({
 const ContentContainer = styled("div")({
   display: "flex",
   flexDirection: "column",
+  justifyContent: "center",
   alignItems: "center",
 });
 
@@ -86,7 +87,11 @@ const Dashboard = () => {
             <ContentContainer>
               <FlyingHeart />
               <Image src={childrenPng} />
-              <Typography color="textPrimary" variant="h5">
+              <Typography
+                color="textPrimary"
+                variant="h5"
+                sx={{ textAlign: "center" }}
+              >
                 {personASettings.nickname}
                 {t("and.label")}
                 {personBSettings.nickname}
