@@ -13,7 +13,7 @@ import { getAllTodosHistory } from "../services/airtable/todosHistoryService";
 import { getCountryDateFromTimestamp } from "../utils/date_utils";
 
 const TodoListHistoryCardsContainer = styled("div")({
-  paddingTop: "50px",
+  paddingTop: "90px",
   marginLeft: 10,
   marginRight: 10,
   display: "flex",
