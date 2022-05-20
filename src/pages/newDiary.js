@@ -48,7 +48,7 @@ const ImageControlContainer = styled("div")({
 });
 
 const AddImageIcon = styled("img")({
-  maxHeight: 40,
+  maxHeight: 30,
   aspectRatio: "1/1",
 });
 
@@ -160,7 +160,7 @@ const NewDiary = () => {
                 setSubmissionAlertState(true);
               }}
             >
-              <AddImageIcon src={gunPng} disabled />
+              <AddImageIcon src={gunPng} />
               {t("submit.label")}
             </Button>
           </ControlContainer>
