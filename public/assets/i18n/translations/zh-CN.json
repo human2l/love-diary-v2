@@ -51,5 +51,6 @@
   "empty.label": "（空）",
   "music_collection.label": "音乐库",
   "finished_rate.label": "完成率",
-  "achieved.label": "已完成"
+  "achieved.label": "已完成",
+  "background-image.label": "背景图片"
 }

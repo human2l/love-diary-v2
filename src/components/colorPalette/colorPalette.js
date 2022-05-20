@@ -102,7 +102,7 @@ const ColorPalette = ({
           color="secondary"
           size="large"
           variant="contained"
-          sx={{ borderRadius: 10 }}
+          sx={{ borderRadius: "10px" }}
           onClick={() => setPro(!pro)}
         >
           <ButtonIconsGroup>

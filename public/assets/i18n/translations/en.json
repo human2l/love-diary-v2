@@ -51,5 +51,6 @@
   "empty.label": "...Empty...",
   "music_collection.label": "Music List",
   "finished_rate.label": "Finished Rate",
-  "achieved.label": "Achieved"
+  "achieved.label": "Achieved",
+  "background-image.label": "Background Image"
 }

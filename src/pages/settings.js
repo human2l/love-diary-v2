@@ -133,13 +133,14 @@ const Settings = () => {
           />
           <BackgroundImageSettingContainer>
             <Button
-              size="small"
+              size="medium"
               variant="contained"
               color="secondary"
-              sx={{ marginTop: "20px" }}
+              sx={{ marginTop: "20px", borderRadius: "10px" }}
               onClick={changeBackgroundImage}
             >
               <BackgroundIcon src={backgroundPng} />
+              {t("background-image.label")}
             </Button>
           </BackgroundImageSettingContainer>
           <Button
