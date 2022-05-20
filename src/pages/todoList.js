@@ -1,6 +1,4 @@
 import AddIcon from "@mui/icons-material/Add";
-import ArchiveIcon from "@mui/icons-material/Archive";
-import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import { Button, styled, Typography } from "@mui/material";
 import Fab from "@mui/material/Fab";
 import TextField from "@mui/material/TextField";
@@ -9,6 +7,8 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import useSound from "use-sound";
 import { settingsContext } from "../app";
+import archivePng from "../assets/images/archive.png";
+import historyPng from "../assets/images/history.png";
 import cashierMp3 from "../assets/sounds/cashier.mp3";
 import ConfirmModal from "../components/confirmModal";
 import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
@@ -52,6 +52,14 @@ const BottomControlContainer = styled("div")({
   justifyContent: "space-between",
   marginBottom: 10,
   marginTop: "auto",
+});
+
+const ArchiveIcon = styled("img")({
+  maxHeight: "25px",
+});
+
+const HistoryIcon = styled("img")({
+  maxHeight: "25px",
 });
 
 const TodoList = () => {
@@ -209,9 +217,9 @@ const TodoList = () => {
                 color="error"
                 variant="contained"
                 onClick={onClickArchiveButton}
-                size="large"
-                startIcon={<ArchiveIcon />}
+                size="medium"
               >
+                <ArchiveIcon src={archivePng} />
                 {t("archive.label")}
               </Button>
               <Button
@@ -220,9 +228,9 @@ const TodoList = () => {
                 onClick={() => {
                   navigate("/todoListHistory");
                 }}
-                size="large"
-                startIcon={<HistoryOutlinedIcon />}
+                size="medium"
               >
+                <HistoryIcon src={historyPng} />
                 {t("show_history.label")}
               </Button>
             </BottomControlContainer>
