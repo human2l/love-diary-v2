@@ -7,6 +7,8 @@ import TextField from "@mui/material/TextField";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../app";
+import addImagePng from "../assets/images/add-image.png";
+import gunPng from "../assets/images/gun.png";
 import ConfirmModal from "../components/confirmModal";
 import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
 import useFilestack from "../hooks/useFilestack";
@@ -43,6 +45,11 @@ const ImageControlContainer = styled("div")({
   justifyContent: "space-between",
   paddingTop: "10px",
   paddingBottom: "10px",
+});
+
+const AddImageIcon = styled("img")({
+  maxHeight: 40,
+  aspectRatio: "1/1",
 });
 
 const NewDiary = () => {
@@ -119,14 +126,15 @@ const NewDiary = () => {
           />
           <ImageControlContainer>
             <Button
-              component="label"
               size="small"
               variant="contained"
               color="primary"
+              sx={{ borderRadius: "10px" }}
               onClick={(e) => {
                 selectImageFile(e);
               }}
             >
+              <AddImageIcon src={addImagePng} />
               {t("add_photo.label")}
             </Button>
           </ImageControlContainer>
@@ -144,12 +152,15 @@ const NewDiary = () => {
           <ControlContainer>
             <Button
               disabled={!diaryContent.length}
-              size="large"
+              size="medium"
               variant="contained"
+              color="primary"
+              sx={{ borderRadius: "10px" }}
               onClick={() => {
                 setSubmissionAlertState(true);
               }}
             >
+              <AddImageIcon src={gunPng} disabled />
               {t("submit.label")}
             </Button>
           </ControlContainer>
