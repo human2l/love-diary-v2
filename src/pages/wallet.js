@@ -18,6 +18,7 @@ import {
 } from "../services/airtable/walletService";
 
 const WalletContainer = styled("div")({
+  boxSizing: "border-box",
   paddingTop: 30,
   marginLeft: "auto",
   marginRight: "auto",

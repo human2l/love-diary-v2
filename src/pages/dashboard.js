@@ -12,6 +12,7 @@ import { getDiaryCountByUser } from "../services/airtable/diaryService";
 import { timeDiff } from "../utils/date_utils";
 
 const DashboardContainer = styled("div")({
+  boxSizing: "border-box",
   paddingTop: 30,
   marginLeft: "auto",
   marginRight: "auto",
