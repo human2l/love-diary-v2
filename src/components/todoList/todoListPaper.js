@@ -38,7 +38,7 @@ const TodoListPaper = ({ todosArray, doneStatus, handleTodo }) => {
       }
       return (
         <ChipContainer key={`checked-todo-${todo.id}`}>
-          <Grow in timeout={400 * index} onExit={() => console.log("a")}>
+          <Grow in timeout={400 * index}>
             <Chip
               size="medium"
               label={<Label>{todo.name}</Label>}
