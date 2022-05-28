@@ -1,6 +1,7 @@
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Chip from "@mui/material/Chip";
+import Grow from "@mui/material/Grow";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
@@ -20,11 +21,12 @@ const Label = styled("div")({
 
 const TodoListPaper = ({ todosArray, doneStatus, handleTodo }) => {
   const { t, user } = useContext(settingsContext);
+
   const checkedChips = () => {
     const checkedArray = todosArray.filter((todo) => todo.done === doneStatus);
 
     if (!checkedArray.length) return <div>{t("empty.label")}</div>;
-    return checkedArray.map((todo) => {
+    return checkedArray.map((todo, index) => {
       let deleteIcon = null;
       let onDelete = null;
       if (user === todo.user) {
@@ -36,16 +38,18 @@ const TodoListPaper = ({ todosArray, doneStatus, handleTodo }) => {
       }
       return (
         <ChipContainer key={`checked-todo-${todo.id}`}>
-          <Chip
-            size="medium"
-            label={<Label>{todo.name}</Label>}
-            deleteIcon={deleteIcon}
-            onDelete={onDelete}
-            color={todo.user === user ? "primary" : "secondary"}
-            style={{
-              maxWidth: "100%",
-            }}
-          />
+          <Grow in timeout={400 * index} onExit={() => console.log("a")}>
+            <Chip
+              size="medium"
+              label={<Label>{todo.name}</Label>}
+              deleteIcon={deleteIcon}
+              onDelete={onDelete}
+              color={todo.user === user ? "primary" : "secondary"}
+              style={{
+                maxWidth: "100%",
+              }}
+            />
+          </Grow>
         </ChipContainer>
       );
     });
