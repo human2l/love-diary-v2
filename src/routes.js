@@ -9,6 +9,7 @@ import Settings from "./pages/settings";
 import TodoList from "./pages/todoList";
 import TodoListHistory from "./pages/todoListHistory.js";
 import Wallet from "./pages/wallet";
+import Wishboard from "./pages/wishboard";
 
 const Router = (props) => {
   const { authenticated, loginMethod } = props;
@@ -26,6 +27,7 @@ const Router = (props) => {
             <Route path="/toDoList" element={<TodoList />} />
             <Route path="/toDoListHistory" element={<TodoListHistory />} />
             <Route path="/musicCollection" element={<MusicCollection />} />
+            <Route path="/wishboard" element={<Wishboard />} />
           </>
         )}
         <Route path="*" element={<Login login={loginMethod} />} />

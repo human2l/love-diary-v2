@@ -12,7 +12,7 @@ const ItemContainer = styled("div")({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  margin: 20,
+  margin: 10,
   height: "64px",
   width: "64px",
 });

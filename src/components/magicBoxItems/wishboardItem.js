@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import useSound from "use-sound";
 import { settingsContext } from "../../app";
-import albumPng from "../../assets/images/album.png";
+import checklistPng from "../../assets/images/checklist.png";
 import buttonMp3 from "../../assets/sounds/button.mp3";
 const ItemContainer = styled("div")({
   cursor: "pointer",
@@ -16,30 +16,30 @@ const ItemContainer = styled("div")({
   height: "64px",
   width: "64px",
 });
-const AlbumIcon = styled("img")({
+
+const ChecklistIcon = styled("img")({
   maxHeight: 35,
   aspectRatio: "1/1",
 });
 
-const MusicCollectionItem = (props) => {
-  let navigate = useNavigate();
+const TodoListItem = (props) => {
   const { t } = useContext(settingsContext);
   const [play] = useSound(buttonMp3, {
     volume: 0.5,
   });
+  let navigate = useNavigate();
   const handleOnClick = () => {
     play();
     props.onClose();
-    navigate("/musicCollection");
+    navigate("/wishboard");
   };
-
   return (
     <ItemContainer onClick={handleOnClick}>
       <Avatar variant="rounded" sx={{ bgcolor: "primary.main" }}>
-        <AlbumIcon src={albumPng} />
+        <ChecklistIcon src={checklistPng} />
       </Avatar>
-      <Typography>{t("music_collection.label")}</Typography>
+      <Typography>愿景板</Typography>
     </ItemContainer>
   );
 };
-export default MusicCollectionItem;
+export default TodoListItem;
