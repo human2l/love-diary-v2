@@ -63,6 +63,26 @@ const useFilestack = () => {
     return;
   };
 
+  const openWishImagePicker = async (fileUploadedCallback) => {
+    setFileMetadata(null);
+    const options = {
+      fromSources: ["local_file_system"],
+      onFileSelected: (file) => {
+        // If you throw any error in this function it will reject the file selection.
+        // The error message will be displayed to the user as an alert.
+        if (file.size > 5 * 1000 * 1000) {
+          throw new Error("File too big, select something smaller than 5MB");
+        }
+      },
+      onUploadDone: (response) => {
+        setFileMetadata(response.filesUploaded[0]);
+        fileUploadedCallback(response.filesUploaded[0]);
+      },
+    };
+    await client.picker(options).open();
+    return;
+  };
+
   const getAuthImgUrl = (handle) => {
     return `https://cdn.filestackcontent.com/${handle}?policy=${process.env.REACT_APP_FILESTACK_POLICY}&signature=${process.env.REACT_APP_FILESTACK_SIGNATURE}`;
   };
@@ -76,6 +96,7 @@ const useFilestack = () => {
     fileMetadata,
     openFilePicker,
     openBackgroundImagePicker,
+    openWishImagePicker,
     getAuthImgUrl,
     getBackgroundImgUrl,
   };
