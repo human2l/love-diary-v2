@@ -6,6 +6,7 @@ import ImageListItem from "@mui/material/ImageListItem";
 import useSound from "use-sound";
 import addWishPng from "../assets/images/add.png";
 import buttonMp3 from "../assets/sounds/button.mp3";
+import useFilestack from "../hooks/useFilestack";
 
 const WishboardContainer = styled("div")({
   display: "flex",
@@ -22,6 +23,7 @@ const AddNewWishImageButton = styled(Fab)({
 });
 
 const Wishboard = () => {
+  const { fileMetadata, openFilePicker } = useFilestack();
   const [play] = useSound(buttonMp3, {
     volume: 0.5,
   });
@@ -46,6 +48,9 @@ const Wishboard = () => {
         aria-label="edit"
         onClick={() => {
           play();
+          openFilePicker(() => {
+            console.log("opened");
+          });
         }}
       >
         <img src={addWishPng} height={30} width={30} alt="writing-icon" />
