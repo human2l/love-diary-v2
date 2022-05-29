@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import useSound from "use-sound";
 import { settingsContext } from "../../app";
-import checklistPng from "../../assets/images/checklist.png";
+import wishboardPng from "../../assets/images/snow-globe.png";
 import buttonMp3 from "../../assets/sounds/button.mp3";
 const ItemContainer = styled("div")({
   cursor: "pointer",
@@ -36,7 +36,7 @@ const TodoListItem = (props) => {
   return (
     <ItemContainer onClick={handleOnClick}>
       <Avatar variant="rounded" sx={{ bgcolor: "primary.main" }}>
-        <ChecklistIcon src={checklistPng} />
+        <ChecklistIcon src={wishboardPng} />
       </Avatar>
       <Typography>愿景板</Typography>
     </ItemContainer>

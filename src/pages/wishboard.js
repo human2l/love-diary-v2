@@ -4,7 +4,7 @@ import Fab from "@mui/material/Fab";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import useSound from "use-sound";
-import writingPng from "../assets/images/writing.png";
+import addWishPng from "../assets/images/add.png";
 import buttonMp3 from "../assets/sounds/button.mp3";
 
 const WishboardContainer = styled("div")({
@@ -48,7 +48,7 @@ const Wishboard = () => {
           play();
         }}
       >
-        <img src={writingPng} height={30} width={30} alt="writing-icon" />
+        <img src={addWishPng} height={30} width={30} alt="writing-icon" />
       </AddNewWishImageButton>
     </WishboardContainer>
   );
