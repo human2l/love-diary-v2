@@ -27,7 +27,7 @@ const AddNewWishImageButton = styled(Fab)({
 });
 
 const Wishboard = () => {
-  const { fileMetadata, openWishImagePicker, getAuthImgUrl } = useFilestack();
+  const { openWishImagePicker, getAuthImgUrl } = useFilestack();
   const { isLoading, data: wishes } = useQuery("getAllWishes", getAllWishes);
 
   const [newWishImageId, setNewWishImageId] = useState(null);
@@ -36,8 +36,9 @@ const Wishboard = () => {
   });
 
   const addWishImage = async () => {
-    await openWishImagePicker(() => {
-      setNewWishImageId(fileMetadata.handle);
+    await openWishImagePicker((imageId) => {
+      console.log(imageId);
+      setNewWishImageId(imageId);
     });
   };
 
@@ -50,11 +51,11 @@ const Wishboard = () => {
     })();
   }, [newWishImageId]);
 
-  useEffect(() => {
-    (async () => {
-      console.log(await getAllWishes());
-    })();
-  }, []);
+  //   useEffect(() => {
+  //     (async () => {
+  //       console.log(await getAllWishes());
+  //     })();
+  //   }, []);
 
   return (
     <>

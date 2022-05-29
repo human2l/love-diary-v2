@@ -64,19 +64,17 @@ const useFilestack = () => {
   };
 
   const openWishImagePicker = async (fileUploadedCallback) => {
-    setFileMetadata(null);
     const options = {
       fromSources: ["local_file_system"],
       onFileSelected: (file) => {
         // If you throw any error in this function it will reject the file selection.
         // The error message will be displayed to the user as an alert.
-        if (file.size > 5 * 1000 * 1000) {
-          throw new Error("File too big, select something smaller than 5MB");
+        if (file.size > 1 * 1000 * 1000) {
+          throw new Error("File too big, select something smaller than 1MB");
         }
       },
       onUploadDone: (response) => {
-        setFileMetadata(response.filesUploaded[0]);
-        fileUploadedCallback();
+        fileUploadedCallback(response.filesUploaded[0].handle);
       },
     };
     await client.picker(options).open();
