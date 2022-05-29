@@ -4,7 +4,7 @@ import Fab from "@mui/material/Fab";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import useSound from "use-sound";
 import addWishPng from "../assets/images/add.png";
 import buttonMp3 from "../assets/sounds/button.mp3";
@@ -34,6 +34,7 @@ const Wishboard = () => {
   const [play] = useSound(buttonMp3, {
     volume: 0.5,
   });
+  const queryClient = useQueryClient();
 
   const addWishImage = async () => {
     await openWishImagePicker((imageId) => {
@@ -47,15 +48,10 @@ const Wishboard = () => {
       if (newWishImageId) {
         const newWish = { imageId: newWishImageId };
         await addWish(newWish);
+        queryClient.invalidateQueries("getAllWishes");
       }
     })();
-  }, [newWishImageId]);
-
-  //   useEffect(() => {
-  //     (async () => {
-  //       console.log(await getAllWishes());
-  //     })();
-  //   }, []);
+  }, [newWishImageId, queryClient]);
 
   return (
     <>
