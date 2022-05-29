@@ -2,6 +2,17 @@ import base from "./airtable";
 
 const wishboardBase = base("wishboard");
 
+const getAllWishes = async () => {
+  const response = await wishboardBase.select({}).all();
+  const allWishes = response.map(({ fields, id }) => {
+    return {
+      ...fields,
+      key: id,
+    };
+  });
+  return allWishes;
+};
+
 const addWish = async (newWish) => {
   wishboardBase.create(
     {
@@ -16,4 +27,4 @@ const addWish = async (newWish) => {
   );
 };
 
-export { addWish };
+export { addWish, getAllWishes };
