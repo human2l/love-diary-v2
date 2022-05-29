@@ -8,11 +8,14 @@ import { useQuery, useQueryClient } from "react-query";
 import useSound from "use-sound";
 import addWishPng from "../assets/images/add.png";
 import buttonMp3 from "../assets/sounds/button.mp3";
+import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
 import PageLoading from "../components/pageLoading";
 import useFilestack from "../hooks/useFilestack";
 import { addWish, getAllWishes } from "../services/airtable/wishboardService";
 
 const WishboardContainer = styled("div")({
+  marginLeft: "5px",
+  marginRight: "5px",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -58,32 +61,34 @@ const Wishboard = () => {
       {isLoading ? (
         <PageLoading />
       ) : (
-        <WishboardContainer>
-          <Box sx={{ overflowY: "scroll" }}>
-            {newWishImageId ?? newWishImageId}
-            <ImageList variant="masonry" cols={2} gap={8}>
-              {wishes.map((wish) => (
-                <ImageListItem key={wish.key}>
-                  <img
-                    src={getAuthImgUrl(wish.imageId)}
-                    alt={wish.imageId}
-                    loading="lazy"
-                  />
-                </ImageListItem>
-              ))}
-            </ImageList>
-          </Box>
-          <AddNewWishImageButton
-            color="primary"
-            aria-label="edit"
-            onClick={() => {
-              play();
-              addWishImage();
-            }}
-          >
-            <img src={addWishPng} height={30} width={30} alt="writing-icon" />
-          </AddNewWishImageButton>
-        </WishboardContainer>
+        <GlassFullContainer>
+          <WishboardContainer>
+            <Box sx={{ overflowY: "scroll" }}>
+              {newWishImageId ?? newWishImageId}
+              <ImageList variant="masonry" cols={2} gap={8}>
+                {wishes.map((wish) => (
+                  <ImageListItem key={wish.key}>
+                    <img
+                      src={getAuthImgUrl(wish.imageId)}
+                      alt={wish.imageId}
+                      loading="lazy"
+                    />
+                  </ImageListItem>
+                ))}
+              </ImageList>
+            </Box>
+            <AddNewWishImageButton
+              color="primary"
+              aria-label="edit"
+              onClick={() => {
+                play();
+                addWishImage();
+              }}
+            >
+              <img src={addWishPng} height={30} width={30} alt="writing-icon" />
+            </AddNewWishImageButton>
+          </WishboardContainer>
+        </GlassFullContainer>
       )}
     </>
   );
