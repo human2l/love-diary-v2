@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
+import ImageListItemBar from "@mui/material/ImageListItemBar";
 import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import useSound from "use-sound";
@@ -65,13 +66,17 @@ const Wishboard = () => {
           <WishboardContainer>
             <Box sx={{ overflowY: "scroll" }}>
               {newWishImageId ?? newWishImageId}
-              <ImageList variant="masonry" cols={2} gap={8}>
+              <ImageList variant="masonry" cols={2} gap={0}>
                 {wishes.map((wish) => (
                   <ImageListItem key={wish.key}>
                     <img
                       src={getAuthImgUrl(wish.imageId)}
                       alt={wish.imageId}
                       loading="lazy"
+                    />
+                    <ImageListItemBar
+                      title={wish.description}
+                      //   position="below"
                     />
                   </ImageListItem>
                 ))}
