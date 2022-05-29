@@ -3,10 +3,12 @@ import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
+import { useEffect, useState } from "react";
 import useSound from "use-sound";
 import addWishPng from "../assets/images/add.png";
 import buttonMp3 from "../assets/sounds/button.mp3";
 import useFilestack from "../hooks/useFilestack";
+import { addWish } from "../services/airtable/wishboardService";
 
 const WishboardContainer = styled("div")({
   display: "flex",
@@ -23,13 +25,32 @@ const AddNewWishImageButton = styled(Fab)({
 });
 
 const Wishboard = () => {
-  const { fileMetadata, openFilePicker } = useFilestack();
+  const { fileMetadata, openWishImagePicker, getAuthImgUrl } = useFilestack();
+
+  const [newWishImageId, setNewWishImageId] = useState(null);
   const [play] = useSound(buttonMp3, {
     volume: 0.5,
   });
+
+  const addWishImage = async () => {
+    await openWishImagePicker(() => {
+      setNewWishImageId(fileMetadata.handle);
+    });
+  };
+
+  useEffect(() => {
+    (async () => {
+      if (newWishImageId) {
+        const newWish = { imageId: newWishImageId };
+        await addWish(newWish);
+      }
+    })();
+  }, [newWishImageId]);
+
   return (
     <WishboardContainer>
       <Box sx={{ overflowY: "scroll" }}>
+        {newWishImageId ?? newWishImageId}
         <ImageList variant="masonry" cols={2} gap={8}>
           {itemData.map((item) => (
             <ImageListItem key={item.img}>
@@ -48,9 +69,7 @@ const Wishboard = () => {
         aria-label="edit"
         onClick={() => {
           play();
-          openFilePicker(() => {
-            console.log("opened");
-          });
+          addWishImage();
         }}
       >
         <img src={addWishPng} height={30} width={30} alt="writing-icon" />

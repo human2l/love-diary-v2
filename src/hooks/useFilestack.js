@@ -76,7 +76,7 @@ const useFilestack = () => {
       },
       onUploadDone: (response) => {
         setFileMetadata(response.filesUploaded[0]);
-        fileUploadedCallback(response.filesUploaded[0]);
+        fileUploadedCallback();
       },
     };
     await client.picker(options).open();
