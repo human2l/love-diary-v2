@@ -1,4 +1,4 @@
-import Box from "@mui/material/Box";
+import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
@@ -7,12 +7,16 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
 import { styled } from "@mui/material/styles";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
+import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../app";
 import addImagePng from "../assets/images/add-image.png";
 import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
 import useFilestack from "../hooks/useFilestack";
+import useLocalStorage from "../hooks/useLocalStorage";
+import useTypingSound from "../hooks/useTypingSound";
+import { addWish } from "../services/airtable/wishboardService";
 
 const steps = ["选择图片", "写点啥"];
 
@@ -34,6 +38,15 @@ const StepperContainer = styled("div")({
   borderBottomRightRadius: "10px",
 });
 
+const ContentContainer = styled("div")({
+  marginTop: "10px",
+  flex: "auto",
+  width: "100%",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+});
+
 const AddImageIcon = styled("img")({
   maxHeight: 30,
   aspectRatio: "1/1",
@@ -45,9 +58,25 @@ const NewWish = () => {
   const { t } = useContext(settingsContext);
   const [imageUploaded, setImageUploaded] = useState(false);
   const { fileMetadata, openFilePicker, getAuthImgUrl } = useFilestack();
+  const [description, setDescription] = useLocalStorage("newWishDraft", "");
+  const [playTypingSound] = useTypingSound();
+  const queryClient = useQueryClient();
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  const nextAvailable = () => {
+    if (activeStep === 0) return imageUploaded;
+    return true;
+  };
+
+  const handleNext = async () => {
+    if (activeStep === 1) {
+      const newWish = { imageId: fileMetadata.handle, description };
+      await addWish(newWish);
+      queryClient.invalidateQueries("getAllWishes");
+      navigate("/wishboard");
+      setDescription("");
+    } else {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
   };
 
   const selectImageFile = async (e) => {
@@ -57,9 +86,11 @@ const NewWish = () => {
     });
   };
 
-  useEffect(() => {
-    activeStep === steps.length && navigate("/wishboard");
-  }, [activeStep, navigate]);
+  const handleChange = (e) => {
+    e.preventDefault();
+    setDescription(e.target.value);
+    playTypingSound();
+  };
 
   let selectImageStep;
   if (!imageUploaded) {
@@ -90,6 +121,25 @@ const NewWish = () => {
     );
   }
 
+  const addDescriptionStep = (
+    <TextField
+      inputProps={{
+        autoComplete: "off",
+      }}
+      value={description}
+      label="愿景描述"
+      variant="outlined"
+      size="small"
+      sx={{
+        width: "90%",
+        backgroundColor: "white",
+        borderRadius: 2,
+        border: "8px solid white",
+      }}
+      onChange={(e) => handleChange(e)}
+    />
+  );
+
   return (
     <GlassFullContainer>
       <NewWishContainer>
@@ -102,11 +152,15 @@ const NewWish = () => {
             ))}
           </Stepper>
         </StepperContainer>
-        <Box sx={{ mt: "10px", flex: "auto" }}>
-          {activeStep === 0 ? selectImageStep : <div>asdf</div>}
-        </Box>
+        <ContentContainer>
+          {activeStep === 0 ? selectImageStep : addDescriptionStep}
+        </ContentContainer>
 
-        <Button variant="contained" onClick={handleNext}>
+        <Button
+          variant="contained"
+          onClick={handleNext}
+          disabled={!nextAvailable}
+        >
           {activeStep === steps.length - 1 ? "保存" : "下一步"}
         </Button>
       </NewWishContainer>
