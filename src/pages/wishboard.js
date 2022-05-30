@@ -6,6 +6,7 @@ import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
 import useSound from "use-sound";
 import addWishPng from "../assets/images/add.png";
 import buttonMp3 from "../assets/sounds/button.mp3";
@@ -31,14 +32,14 @@ const AddNewWishImageButton = styled(Fab)({
 });
 
 const Wishboard = () => {
+  const queryClient = useQueryClient();
   const { openWishImagePicker, getAuthImgUrl } = useFilestack();
   const { isLoading, data: wishes } = useQuery("getAllWishes", getAllWishes);
-
   const [newWishImageId, setNewWishImageId] = useState(null);
   const [play] = useSound(buttonMp3, {
     volume: 0.5,
   });
-  const queryClient = useQueryClient();
+  let navigate = useNavigate();
 
   const addWishImage = async () => {
     await openWishImagePicker((imageId) => {
@@ -50,7 +51,7 @@ const Wishboard = () => {
   useEffect(() => {
     (async () => {
       if (newWishImageId) {
-        const newWish = { imageId: newWishImageId };
+        const newWish = { imageId: newWishImageId, description: "" };
         await addWish(newWish);
         queryClient.invalidateQueries("getAllWishes");
       }
@@ -74,10 +75,7 @@ const Wishboard = () => {
                       alt={wish.imageId}
                       loading="lazy"
                     />
-                    <ImageListItemBar
-                      title={wish.description}
-                      //   position="below"
-                    />
+                    <ImageListItemBar title={wish.description} />
                   </ImageListItem>
                 ))}
               </ImageList>
@@ -87,7 +85,8 @@ const Wishboard = () => {
               aria-label="edit"
               onClick={() => {
                 play();
-                addWishImage();
+                // addWishImage();
+                navigate("/newWish");
               }}
             >
               <img src={addWishPng} height={30} width={30} alt="writing-icon" />

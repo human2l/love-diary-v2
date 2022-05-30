@@ -5,6 +5,7 @@ import Diarys from "./pages/diarys";
 import Login from "./pages/login";
 import MusicCollection from "./pages/musicCollection";
 import NewDiary from "./pages/newDiary";
+import NewWish from "./pages/newWish";
 import Settings from "./pages/settings";
 import TodoList from "./pages/todoList";
 import TodoListHistory from "./pages/todoListHistory.js";
@@ -28,6 +29,7 @@ const Router = (props) => {
             <Route path="/toDoListHistory" element={<TodoListHistory />} />
             <Route path="/musicCollection" element={<MusicCollection />} />
             <Route path="/wishboard" element={<Wishboard />} />
+            <Route path="/newWish" element={<NewWish />} />
           </>
         )}
         <Route path="*" element={<Login login={loginMethod} />} />
