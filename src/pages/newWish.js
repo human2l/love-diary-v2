@@ -159,7 +159,7 @@ const NewWish = () => {
         <Button
           variant="contained"
           onClick={handleNext}
-          disabled={!nextAvailable}
+          disabled={!nextAvailable()}
         >
           {activeStep === steps.length - 1 ? "保存" : "下一步"}
         </Button>
