@@ -4,8 +4,7 @@ import Fab from "@mui/material/Fab";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
-import { useEffect, useState } from "react";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import useSound from "use-sound";
 import addWishPng from "../assets/images/add.png";
@@ -13,7 +12,7 @@ import buttonMp3 from "../assets/sounds/button.mp3";
 import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
 import PageLoading from "../components/pageLoading";
 import useFilestack from "../hooks/useFilestack";
-import { addWish, getAllWishes } from "../services/airtable/wishboardService";
+import { getAllWishes } from "../services/airtable/wishboardService";
 
 const WishboardContainer = styled("div")({
   marginLeft: "5px",
@@ -32,31 +31,12 @@ const AddNewWishImageButton = styled(Fab)({
 });
 
 const Wishboard = () => {
-  const queryClient = useQueryClient();
-  const { openWishImagePicker, getAuthImgUrl } = useFilestack();
+  const { getAuthImgUrl } = useFilestack();
   const { isLoading, data: wishes } = useQuery("getAllWishes", getAllWishes);
-  const [newWishImageId, setNewWishImageId] = useState(null);
   const [play] = useSound(buttonMp3, {
     volume: 0.5,
   });
   let navigate = useNavigate();
-
-  const addWishImage = async () => {
-    await openWishImagePicker((imageId) => {
-      console.log(imageId);
-      setNewWishImageId(imageId);
-    });
-  };
-
-  useEffect(() => {
-    (async () => {
-      if (newWishImageId) {
-        const newWish = { imageId: newWishImageId, description: "" };
-        await addWish(newWish);
-        queryClient.invalidateQueries("getAllWishes");
-      }
-    })();
-  }, [newWishImageId, queryClient]);
 
   return (
     <>
@@ -66,8 +46,7 @@ const Wishboard = () => {
         <GlassFullContainer>
           <WishboardContainer>
             <Box sx={{ overflowY: "scroll" }}>
-              {newWishImageId ?? newWishImageId}
-              <ImageList variant="masonry" cols={2} gap={0}>
+              <ImageList variant="masonry" cols={1} gap={2}>
                 {wishes.map((wish) => (
                   <ImageListItem key={wish.key}>
                     <img
@@ -85,7 +64,6 @@ const Wishboard = () => {
               aria-label="edit"
               onClick={() => {
                 play();
-                // addWishImage();
                 navigate("/newWish");
               }}
             >
