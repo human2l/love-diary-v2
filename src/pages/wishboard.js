@@ -48,7 +48,7 @@ const Wishboard = () => {
             <Box sx={{ overflowY: "scroll" }}>
               <ImageList variant="masonry" cols={1} gap={0}>
                 {wishes.map((wish) => (
-                  <ImageListItem key={wish.key}>
+                  <ImageListItem key={wish.key} sx={{ width: "100%" }}>
                     <img
                       src={getAuthImgUrl(wish.imageId)}
                       alt={wish.imageId}
