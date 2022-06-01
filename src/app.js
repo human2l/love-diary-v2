@@ -35,7 +35,7 @@ export const settingsContext = React.createContext({
 const AppContainer = styled("div")({
   margin: "auto",
   height: "100vh",
-  maxWidth: "700px",
+  width: "100%",
 });
 
 const LoadingBackground = styled("div")({
