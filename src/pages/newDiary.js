@@ -64,9 +64,10 @@ const NewDiary = () => {
   const [imageUploaded, setImageUploaded] = useState(false);
   let navigate = useNavigate();
 
-  const handleChange = (event) => {
+  const handleChange = (e) => {
+    e.preventDefault();
     playTypingSound();
-    setDiaryContent(event.target.value);
+    setDiaryContent(e.target.value);
   };
 
   const selectImageFile = async (e) => {

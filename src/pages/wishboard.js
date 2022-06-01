@@ -46,7 +46,7 @@ const Wishboard = () => {
         <GlassFullContainer>
           <WishboardContainer>
             <Box sx={{ overflowY: "scroll" }}>
-              <ImageList variant="masonry" cols={1} gap={2}>
+              <ImageList variant="masonry" cols={1} gap={0}>
                 {wishes.map((wish) => (
                   <ImageListItem key={wish.key}>
                     <img
