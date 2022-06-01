@@ -36,10 +36,12 @@ const AppContainer = styled("div")({
   margin: "auto",
   height: "100vh",
   width: "100%",
+  maxWidth: "700px",
 });
 
 const LoadingBackground = styled("div")({
   position: "fixed",
+  left: 0,
   height: "100%",
   width: "100%",
   backgroundColor: "pink",
