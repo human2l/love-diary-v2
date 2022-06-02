@@ -4,7 +4,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { QueryClient, QueryClientProvider } from "react-query";
 import styled from "styled-components";
-import loadingHeartsSvg from "./assets/images/loadingHearts.svg";
 import Background from "./components/background";
 import useSoundLibrary from "./hooks/useSoundLibrary";
 import Router from "./routes";
@@ -65,7 +64,6 @@ function App() {
   // const [partnerSettings, setPartnerSettings] = useState({});
   // const [appSettings, setAppSettings] = useState({});
   const [user, setUser] = useState("");
-  // const [isLoading, setIsLoading] = useState(true);
   const { musicPlayer, setMusic } = useSoundLibrary();
 
   const userSettings = useMemo(() => settings[user], [settings, user]);
@@ -137,41 +135,30 @@ function App() {
   return (
     <>
       <AppContainer>
-        {false ? (
-          <LoadingBackground>
-            <LoadingImgWrapper>
-              <img src={loadingHeartsSvg} alt="loading" height="500px" />
-            </LoadingImgWrapper>
-          </LoadingBackground>
-        ) : (
-          <>
-            <QueryClientProvider client={queryClient}>
-              {/* {process.env.NODE_ENV === "development" && (
+        <QueryClientProvider client={queryClient}>
+          {/* {process.env.NODE_ENV === "development" && (
                 <ReactQueryDevtoolsPanel style={{ paddingBottom: "70px" }} />
               )} */}
-              <settingsContext.Provider
-                value={{
-                  t,
-                  user,
-                  getPartner,
-                  settings,
-                  updateSettings,
-                  musicPlayer,
-                  setMusic,
-                }}
-              >
-                <ThemeProvider theme={theme}>
-                  <Router authenticated={authenticated} loginMethod={login} />
-                </ThemeProvider>
-              </settingsContext.Provider>
-            </QueryClientProvider>
-            <Background
-              imgId={settings[user]?.backgroundImage}
-              mobileDefaultImgId={"1lfa1k0GQGS1EinogSGJ"}
-              defaultImgId={"1lfa1k0GQGS1EinogSGJ"}
-            />
-          </>
-        )}
+          <settingsContext.Provider
+            value={{
+              t,
+              user,
+              getPartner,
+              settings,
+              updateSettings,
+              musicPlayer,
+              setMusic,
+            }}
+          >
+            <ThemeProvider theme={theme}>
+              <Router authenticated={authenticated} loginMethod={login} />
+            </ThemeProvider>
+          </settingsContext.Provider>
+        </QueryClientProvider>
+        <Background
+          imgId={settings[user]?.backgroundImage}
+          defaultImgId={"1lfa1k0GQGS1EinogSGJ"}
+        />
       </AppContainer>
       {/* <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> */}
     </>

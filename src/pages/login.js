@@ -38,7 +38,7 @@ const PasswordButtonText = styled(Typography)``;
 
 const Login = (props) => {
   const { t } = useContext(settingsContext);
-
+  const [loggingIn, setLoggingIn] = useState(false);
   const [password, setPassword] = useState("");
 
   const [playActive] = useSound(popDownSound, { volume: 0.25 });
@@ -46,12 +46,25 @@ const Login = (props) => {
   const [playOff] = useSound(popUpOffSound, { volume: 0.25 });
 
   const login = () => {
-    password === process.env.REACT_APP_LOGIN_PASSWORD_DAN && props.login("Dan");
-    password === process.env.REACT_APP_LOGIN_PASSWORD_KAI && props.login("Kai");
-    password === process.env.REACT_APP_LOGIN_PASSWORD_ALICE &&
-      props.login("Alice");
-    password === process.env.REACT_APP_LOGIN_PASSWORD_BOB && props.login("Bob");
-    setPassword("");
+    setLoggingIn(true);
+    switch (password) {
+      case process.env.REACT_APP_LOGIN_PASSWORD_DAN:
+        props.login("Dan");
+        break;
+      case process.env.REACT_APP_LOGIN_PASSWORD_KAI:
+        props.login("Kai");
+        break;
+      case process.env.REACT_APP_LOGIN_PASSWORD_ALICE:
+        props.login("Alice");
+        break;
+      case process.env.REACT_APP_LOGIN_PASSWORD_BOB:
+        props.login("Bob");
+        break;
+      default:
+        setLoggingIn(false);
+        setPassword("");
+        break;
+    }
   };
   const onPasswordButtonClick = (buttonValue) => {
     setPassword(password + buttonValue);
@@ -129,7 +142,7 @@ const Login = (props) => {
             playOn();
           }}
         >
-          {t("login.label")}
+          {loggingIn ? "Logging In..." : t("login.label")}
         </Button>
       </LoginControlContainer>
     </LoginContainer>
