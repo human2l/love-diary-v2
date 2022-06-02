@@ -1,3 +1,4 @@
+import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -5,6 +6,7 @@ import { useContext, useState } from "react";
 import styled from "styled-components";
 import useSound from "use-sound";
 import { settingsContext } from "../app";
+import ahOhSound from "../assets/sounds/ah-oh.mp3";
 import popDownSound from "../assets/sounds/pop-down.mp3";
 import popUpOffSound from "../assets/sounds/pop-up-off.mp3";
 import popUpOnSound from "../assets/sounds/pop-up-on.mp3";
@@ -46,28 +48,35 @@ const Login = (props) => {
   const { t } = useContext(settingsContext);
   const [loggingIn, setLoggingIn] = useState(false);
   const [password, setPassword] = useState("");
-
+  const [incorrectPasswordAlert, setIncorrectPasswordAlert] = useState(false);
   const [playActive] = useSound(popDownSound, { volume: 0.25 });
   const [playOn] = useSound(popUpOnSound, { volume: 0.25 });
   const [playOff] = useSound(popUpOffSound, { volume: 0.25 });
+  const [playAhOhSound] = useSound(ahOhSound, { volume: 0.1 });
 
   const login = () => {
     setLoggingIn(true);
     switch (password) {
       case process.env.REACT_APP_LOGIN_PASSWORD_DAN:
+        setIncorrectPasswordAlert(false);
         props.login("Dan");
         break;
       case process.env.REACT_APP_LOGIN_PASSWORD_KAI:
+        setIncorrectPasswordAlert(false);
         props.login("Kai");
         break;
       case process.env.REACT_APP_LOGIN_PASSWORD_ALICE:
+        setIncorrectPasswordAlert(false);
         props.login("Alice");
         break;
       case process.env.REACT_APP_LOGIN_PASSWORD_BOB:
+        setIncorrectPasswordAlert(false);
         props.login("Bob");
         break;
       default:
         setLoggingIn(false);
+        setIncorrectPasswordAlert(true);
+        playAhOhSound();
         setPassword("");
         break;
     }
@@ -139,7 +148,7 @@ const Login = (props) => {
               })}
             </Grid>
           </PasswordPad>
-          <Button
+          <LoadingButton
             variant="contained"
             color="primary"
             size="large"
@@ -149,9 +158,15 @@ const Login = (props) => {
               playOn();
             }}
             sx={{ mb: "10px", borderRadius: "20px" }}
+            loading={loggingIn}
           >
-            {loggingIn ? "Logging In..." : t("login.label")}
-          </Button>
+            {t("login.label")}
+          </LoadingButton>
+          {incorrectPasswordAlert && (
+            <Typography variant="h6" sx={{ m: "auto" }}>
+              Wrong password.🌚
+            </Typography>
+          )}
         </LoginControlContainer>
       </GlassRoundContainer>
     </LoginContainer>
