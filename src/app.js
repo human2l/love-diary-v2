@@ -9,16 +9,20 @@ import Background from "./components/background";
 import useSoundLibrary from "./hooks/useSoundLibrary";
 import Router from "./routes";
 import {
-  getAppSettings,
-  updateAppSettingsDB,
-} from "./services/airtable/appSettingsService";
-import {
-  getUserSettings,
+  getCoupleSettingsByUserId,
   updateSettingsDB,
 } from "./services/airtable/settingsService";
 import "./services/i18next";
 
 const queryClient = new QueryClient();
+
+//! hardcode for now
+const USER_ID_RELATIONSHIP = {
+  Dan: "recISybotETJtZOaI",
+  Kai: "recW7reKMhDGMg8AV",
+  Alice: "recGvx4sVJTirnLjN",
+  Bob: "recxhOgxeKaYMdbGI",
+};
 
 export const settingsContext = React.createContext({
   t: () => {},
@@ -57,9 +61,11 @@ function App() {
   const { t, i18n } = useTranslation();
   const [authenticated, setAuthenticated] = useState(false);
   const [settings, setSettings] = useState({});
-  const [appSettings, setAppSettings] = useState({});
+  // const [userSettings, setUserSettings] = useState({});
+  // const [partnerSettings, setPartnerSettings] = useState({});
+  // const [appSettings, setAppSettings] = useState({});
   const [user, setUser] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   const { musicPlayer, setMusic } = useSoundLibrary();
 
   const userSettings = useMemo(() => settings[user], [settings, user]);
@@ -100,30 +106,17 @@ function App() {
     setSettings(newSettings);
   };
 
-  const updateAppSettings = async (newAppSettings) => {
-    console.log("updateAppSettings");
-    await updateAppSettingsDB(newAppSettings);
-    setAppSettings(newAppSettings);
-  };
-
-  const login = (user) => {
+  const login = async (user) => {
     console.log("login");
+    await fetchSettings(user);
     setAuthenticated(true);
     setUser(user);
   };
 
-  const fetchSettings = async () => {
+  const fetchSettings = async (user) => {
     console.log("fetchSettings");
-    setSettings(await getUserSettings());
-    setAppSettings(await getAppSettings());
-    setIsLoading(false);
+    setSettings(await getCoupleSettingsByUserId(USER_ID_RELATIONSHIP[user]));
   };
-
-  useEffect(() => {
-    (async () => {
-      await fetchSettings();
-    })();
-  }, []);
 
   const userMusic = useMemo(() => userSettings?.music, [userSettings?.music]);
 
@@ -144,7 +137,7 @@ function App() {
   return (
     <>
       <AppContainer>
-        {isLoading ? (
+        {false ? (
           <LoadingBackground>
             <LoadingImgWrapper>
               <img src={loadingHeartsSvg} alt="loading" height="500px" />
@@ -163,8 +156,6 @@ function App() {
                   getPartner,
                   settings,
                   updateSettings,
-                  appSettings,
-                  updateAppSettings,
                   musicPlayer,
                   setMusic,
                 }}
@@ -175,8 +166,9 @@ function App() {
               </settingsContext.Provider>
             </QueryClientProvider>
             <Background
-              imgId={appSettings.backgroundImage}
-              defaultImgId={appSettings.defaultBackgroundImage}
+              imgId={settings[user]?.backgroundImage}
+              mobileDefaultImgId={"1lfa1k0GQGS1EinogSGJ"}
+              defaultImgId={"1lfa1k0GQGS1EinogSGJ"}
             />
           </>
         )}
