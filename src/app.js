@@ -143,7 +143,7 @@ function App() {
         </QueryClientProvider>
         <Background
           imgId={settings[user]?.backgroundImage}
-          defaultImgId={"1lfa1k0GQGS1EinogSGJ"}
+          defaultImgId={"Kqwt7tNSTCYJXKKNJnl7"}
         />
       </AppContainer>
     </>
