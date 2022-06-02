@@ -48,6 +48,9 @@ const Login = (props) => {
   const login = () => {
     password === process.env.REACT_APP_LOGIN_PASSWORD_DAN && props.login("Dan");
     password === process.env.REACT_APP_LOGIN_PASSWORD_KAI && props.login("Kai");
+    password === process.env.REACT_APP_LOGIN_PASSWORD_ALICE &&
+      props.login("Alice");
+    password === process.env.REACT_APP_LOGIN_PASSWORD_BOB && props.login("Bob");
     setPassword("");
   };
   const onPasswordButtonClick = (buttonValue) => {
