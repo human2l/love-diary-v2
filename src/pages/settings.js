@@ -89,6 +89,7 @@ const Settings = () => {
     updateSettings(newSettings);
   };
 
+  //TODO: update both user and partner settings
   const changeBackgroundImage = async () => {
     await openBackgroundImagePicker((metadata) => {
       updateAppSettings({
