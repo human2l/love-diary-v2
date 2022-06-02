@@ -51,6 +51,11 @@ const LanguageSelectorContainer = styled("div")({
   alignItems: "center",
 });
 
+const AtrributeContainer = styled("div")({
+  marginTop: "10px",
+  flex: "auto",
+});
+
 const Settings = () => {
   const { t, user, settings, updateSettings, appSettings, updateAppSettings } =
     useContext(settingsContext);
@@ -152,6 +157,16 @@ const Settings = () => {
             {t("save.label")}
           </Button>
         </ItemContainer>
+        <AtrributeContainer>
+          Icons made by{" "}
+          <a href="https://www.freepik.com" title="Freepik">
+            Freepik
+          </a>{" "}
+          from{" "}
+          <a href="https://www.flaticon.com/" title="Flaticon">
+            www.flaticon.com
+          </a>
+        </AtrributeContainer>
       </SettingsContainer>
     </GlassFullContainer>
   );

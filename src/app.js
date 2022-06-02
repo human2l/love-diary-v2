@@ -42,20 +42,6 @@ const AppContainer = styled("div")({
   maxWidth: "700px",
 });
 
-const LoadingBackground = styled("div")({
-  position: "fixed",
-  left: 0,
-  height: "100%",
-  width: "100%",
-  backgroundColor: "pink",
-});
-
-const LoadingImgWrapper = styled("div")({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-});
-
 function App() {
   const { t, i18n } = useTranslation();
   const [authenticated, setAuthenticated] = useState(false);
@@ -160,7 +146,6 @@ function App() {
           defaultImgId={"1lfa1k0GQGS1EinogSGJ"}
         />
       </AppContainer>
-      {/* <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> */}
     </>
   );
 }
