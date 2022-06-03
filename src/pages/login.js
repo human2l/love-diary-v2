@@ -56,6 +56,7 @@ const Login = (props) => {
 
   const login = () => {
     setLoggingIn(true);
+    //! hardcoded, change later
     switch (password) {
       case process.env.REACT_APP_LOGIN_PASSWORD_DAN:
         setIncorrectPasswordAlert(false);
@@ -159,11 +160,14 @@ const Login = (props) => {
             }}
             sx={{ mb: "10px", borderRadius: "20px" }}
             loading={loggingIn}
+            loadingIndicator={
+              <Typography color="primary">Logging in...</Typography>
+            }
           >
             {t("login.label")}
           </LoadingButton>
           {incorrectPasswordAlert && (
-            <Typography variant="h6" sx={{ m: "auto" }}>
+            <Typography variant="h6" sx={{ m: "auto", mb: "5px" }}>
               Wrong password.🌚
             </Typography>
           )}
