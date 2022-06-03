@@ -2,9 +2,10 @@ import base from "./airtable";
 
 const diaryBase = base("diary");
 
-const getAllDiarys = async () => {
+const getAllDiarys = async (coupleIds) => {
   const response = await diaryBase
     .select({
+      filterByFormula: `OR({authorId}="${coupleIds[0]}",{authorId}="${coupleIds[1]}")`,
       sort: [{ field: "time", direction: "desc" }],
     })
     .all();

@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import Fab from "@mui/material/Fab";
 import { styled } from "@mui/material/styles";
 import { t } from "i18next";
@@ -32,15 +33,15 @@ const AddNewDiaryButton = styled(Fab)({
 });
 
 const Diarys = () => {
-  const { settings } = useContext(settingsContext);
+  const { user, getPartner, settings } = useContext(settingsContext);
   let navigate = useNavigate();
   const [play] = useSound(buttonMp3, {
     volume: 0.5,
   });
 
   const fetchAllDiarys = async () => {
-    const allDiarys = await getAllDiarys();
-
+    const coupleIds = [settings[user].id, settings[getPartner()].id];
+    const allDiarys = await getAllDiarys(coupleIds);
     return allDiarys;
   };
 
@@ -64,26 +65,43 @@ const Diarys = () => {
             {isFetching && (
               <TopSnackbar message={t("updating_new_diary.label")} />
             )}
-            {diarys.map((diary) => {
-              const { key, author, content = "", time, reply, photos } = diary;
+            {diarys.length ? (
+              diarys.map((diary) => {
+                const {
+                  key,
+                  author,
+                  content = "",
+                  time,
+                  reply,
+                  photos,
+                } = diary;
 
-              const diaryDate = getCountryDateFromTimestamp(
-                time,
-                settings[author].country
-              );
+                const diaryDate = getCountryDateFromTimestamp(
+                  time,
+                  settings[author].country
+                );
 
-              return (
-                <Diary
-                  key={key}
-                  diaryKey={key}
-                  diaryAuthor={author}
-                  diaryDate={diaryDate}
-                  diaryContent={content}
-                  diaryReplies={reply}
-                  diaryPhotos={photos}
-                />
-              );
-            })}
+                return (
+                  <Diary
+                    key={key}
+                    diaryKey={key}
+                    diaryAuthor={author}
+                    diaryDate={diaryDate}
+                    diaryContent={content}
+                    diaryReplies={reply}
+                    diaryPhotos={photos}
+                  />
+                );
+              })
+            ) : (
+              <Typography
+                variant="h5"
+                color="secondary"
+                sx={{ mt: "20%", textAlign: "center" }}
+              >
+                You haven't written any diary.
+              </Typography>
+            )}
           </DiarysContainer>
         </LoveDiaryContainer>
       )}
