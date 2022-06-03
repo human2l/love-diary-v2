@@ -2,11 +2,17 @@ import base from "./airtable";
 
 const todosBase = base("todos");
 
-const getAllTodos = async () => {
-  const response = await todosBase.select({}).all();
+const getAllTodos = async (coupleIds) => {
+  console.log(coupleIds);
+  const response = await todosBase
+    .select({
+      filterByFormula: `OR({createrId}="${coupleIds[0]}",{createrId}="${coupleIds[1]}")`,
+    })
+    .all();
   const allTodos = response.map((todo) => {
     return {
       id: todo.id,
+      createrId: todo.fields.createrId,
       user: todo.fields.user,
       name: todo.fields.name,
       done: !!todo.fields.done,

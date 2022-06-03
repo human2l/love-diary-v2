@@ -42,7 +42,7 @@ const FinishedRateGroup = styled("div")({
 });
 
 const TodoListDashboard = ({ todosHistory }) => {
-  const { t, user, settings } = useContext(settingsContext);
+  const { t, user, getPartner, settings } = useContext(settingsContext);
 
   const userTodos = (user) => {
     return todosHistory
@@ -77,69 +77,69 @@ const TodoListDashboard = ({ todosHistory }) => {
         <Box sx={{ flex: 1 }}>
           <Typography
             variant="h4"
-            color={settings["Dan"].primaryColor}
+            color={settings[user].primaryColor}
             align="right"
           >
-            {settings["Dan"].nickname}
+            {settings[user].nickname}
           </Typography>
         </Box>
         <Typography variant="h5" sx={{ ml: "10px", mr: "10px" }}>
           vs
         </Typography>
         <Box sx={{ flex: 1 }}>
-          <Typography variant="h4" color={settings["Kai"].primaryColor}>
-            {settings["Kai"].nickname}
+          <Typography variant="h4" color={settings[getPartner()].primaryColor}>
+            {settings[getPartner()].nickname}
           </Typography>
         </Box>
       </TitleContainer>
       <ItemsContainer>
         <FinishedRateGroup>
-          <Typography variant="h0" color={settings["Dan"].primaryColor}>
+          <Typography variant="h0" color={settings[user].primaryColor}>
             {t("finished_rate.label")}
           </Typography>
           <Typography
             variant="h0"
-            color={settings["Dan"].secondaryColor}
+            color={settings[user].secondaryColor}
             sx={{ mt: "5px" }}
           >
-            {userTodosDoneRate("Dan")}%
+            {userTodosDoneRate(user)}%
           </Typography>
         </FinishedRateGroup>
         <AchievedGroup>
-          <Typography variant="h0" color={settings["Dan"].primaryColor}>
+          <Typography variant="h0" color={settings[user].primaryColor}>
             {t("achieved.label")}
           </Typography>
           <Typography
             variant="h0"
-            color={settings["Dan"].secondaryColor}
+            color={settings[user].secondaryColor}
             sx={{ mt: "5px" }}
           >
-            {userAchieved("Dan").length}
+            {userAchieved(user).length}
           </Typography>
         </AchievedGroup>
 
         <AchievedGroup>
-          <Typography variant="h0" color={settings["Kai"].primaryColor}>
+          <Typography variant="h0" color={settings[getPartner()].primaryColor}>
             {t("achieved.label")}
           </Typography>
           <Typography
             variant="h0"
-            color={settings["Kai"].secondaryColor}
+            color={settings[getPartner()].secondaryColor}
             sx={{ mt: "5px" }}
           >
-            {userAchieved("Kai").length}
+            {userAchieved(getPartner()).length}
           </Typography>
         </AchievedGroup>
         <FinishedRateGroup>
-          <Typography variant="h0" color={settings["Kai"].primaryColor}>
+          <Typography variant="h0" color={settings[getPartner()].primaryColor}>
             {t("finished_rate.label")}
           </Typography>
           <Typography
             variant="h0"
-            color={settings["Kai"].secondaryColor}
+            color={settings[getPartner()].secondaryColor}
             sx={{ mt: "5px" }}
           >
-            {userTodosDoneRate("Kai")}%
+            {userTodosDoneRate(getPartner())}%
           </Typography>
         </FinishedRateGroup>
       </ItemsContainer>

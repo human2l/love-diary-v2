@@ -68,12 +68,14 @@ const TodoList = () => {
   const [play] = useSound(cashierMp3, {
     volume: 0.5,
   });
-  const { t, user } = useContext(settingsContext);
+  const { t, user, getPartner, settings } = useContext(settingsContext);
   const [todo, setTodo] = useLocalStorage("todoDraft", "");
   const [archiveAlertState, setArchiveAlertState] = useState(false);
 
   const queryClient = useQueryClient();
-  const fetchAllTodos = getAllTodos;
+  const userId = settings[user].id;
+  const partnerId = settings[getPartner()].id;
+  const fetchAllTodos = async () => await getAllTodos([userId, partnerId]);
   const { isLoading, data: todosArray } = useQuery(
     "fetchAllTodos",
     fetchAllTodos
@@ -87,6 +89,7 @@ const TodoList = () => {
 
   const handleAdd = useMutation(() => {
     const newTodo = {
+      createrId: userId,
       name: todo,
       user,
     };
@@ -110,7 +113,7 @@ const TodoList = () => {
     play();
     setArchiveAlertState(false);
     const userTodosArray = todosArray.filter((todo) => {
-      return todo.user === user;
+      return todo.createrId === settings[user].id;
     });
     const deleteTodosArray = userTodosArray.map((todo) => {
       // add money: 0.01--0.05

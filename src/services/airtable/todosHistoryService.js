@@ -12,8 +12,12 @@ const addTodosHistory = async (todosHistory, callback) => {
   });
 };
 
-const getAllTodosHistory = async () => {
-  const response = await todosHistoryBase.select({}).all();
+const getAllTodosHistory = async (coupleIds) => {
+  const response = await todosHistoryBase
+    .select({
+      filterByFormula: `OR({userId}="${coupleIds[0]}",{userId}="${coupleIds[1]}")`,
+    })
+    .all();
   const allTodosHistory = response.map((todosHistory) => {
     return {
       id: todosHistory.id,

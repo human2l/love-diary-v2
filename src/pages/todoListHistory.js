@@ -44,11 +44,13 @@ const TotalMoneyContainer = styled("div")({
 });
 
 const TodoListHistory = () => {
-  const { settings } = useContext(settingsContext);
+  const { user, getPartner, settings } = useContext(settingsContext);
+  const coupleIds = [settings[user].id, settings[getPartner()].id];
+  const fetchAllTodosHistory = async () => await getAllTodosHistory(coupleIds);
 
   const { isLoading, data: todosHistory } = useQuery(
-    "getAllTodosHistory",
-    getAllTodosHistory
+    "fetchAllTodosHistory",
+    fetchAllTodosHistory
   );
 
   return (
@@ -60,71 +62,81 @@ const TodoListHistory = () => {
           <TodoListDashboard todosHistory={todosHistory} />
 
           <TodoListHistoryCardsContainer>
-            {todosHistory.map((history) => {
-              return (
-                <CardContainer key={history.id}>
-                  <Card>
-                    <CardContent>
-                      <TitleContainer>
-                        <Typography
-                          variant="h4"
-                          color={settings[history.user].primaryColor}
-                          gutterBottom
-                        >
-                          {history.user}
-                        </Typography>
-                        <TodosMetaContainer>
-                          <Typography color="textSecondary">
-                            {getCountryDateFromTimestamp(
-                              history.time,
-                              settings[history.user].country
-                            )}
+            {todosHistory.length ? (
+              todosHistory.map((history) => {
+                return (
+                  <CardContainer key={history.id}>
+                    <Card>
+                      <CardContent>
+                        <TitleContainer>
+                          <Typography
+                            variant="h4"
+                            color={settings[history.user].primaryColor}
+                            gutterBottom
+                          >
+                            {history.user}
                           </Typography>
-                        </TodosMetaContainer>
-                      </TitleContainer>
+                          <TodosMetaContainer>
+                            <Typography color="textSecondary">
+                              {getCountryDateFromTimestamp(
+                                history.time,
+                                settings[history.user].country
+                              )}
+                            </Typography>
+                          </TodosMetaContainer>
+                        </TitleContainer>
 
-                      {history.todos.map((todo) => {
-                        return (
-                          <TodoContainer key={todo.id}>
-                            {todo.done ? (
-                              <CheckCircleIcon color="success" />
-                            ) : (
-                              <WarningIcon color="error" />
-                            )}
-                            <Typography
-                              color={settings[todo.user].primaryColor}
-                              sx={{ ml: 1, flex: "1" }}
-                            >
-                              {todo.name}
-                            </Typography>
-                            <Typography
-                              color={settings[todo.user].primaryColor}
-                              sx={{ ml: 1 }}
-                            >
-                              {todo.money}
-                            </Typography>
-                          </TodoContainer>
-                        );
-                      })}
-                      <TotalMoneyContainer>
-                        <Typography
-                          color={settings[history.user].secondaryColor}
-                          variant="h5"
-                        >
-                          合计
-                        </Typography>
-                        <Typography
-                          color={settings[history.user].secondaryColor}
-                          variant="h5"
-                        >
-                          {history.money}
-                        </Typography>
-                      </TotalMoneyContainer>
-                    </CardContent>
-                  </Card>
-                </CardContainer>
-              );
-            })}
+                        {history.todos.map((todo) => {
+                          return (
+                            <TodoContainer key={todo.id}>
+                              {todo.done ? (
+                                <CheckCircleIcon color="success" />
+                              ) : (
+                                <WarningIcon color="error" />
+                              )}
+                              <Typography
+                                color={settings[todo.user].primaryColor}
+                                sx={{ ml: 1, flex: "1" }}
+                              >
+                                {todo.name}
+                              </Typography>
+                              <Typography
+                                color={settings[todo.user].primaryColor}
+                                sx={{ ml: 1 }}
+                              >
+                                {todo.money}
+                              </Typography>
+                            </TodoContainer>
+                          );
+                        })}
+                        <TotalMoneyContainer>
+                          <Typography
+                            color={settings[history.user].secondaryColor}
+                            variant="h5"
+                          >
+                            合计
+                          </Typography>
+                          <Typography
+                            color={settings[history.user].secondaryColor}
+                            variant="h5"
+                          >
+                            {history.money}
+                          </Typography>
+                        </TotalMoneyContainer>
+                      </CardContent>
+                    </Card>
+                  </CardContainer>
+                );
+              })
+            ) : (
+              <Typography
+                variant="h5"
+                color="secondary"
+                sx={{ margin: "auto" }}
+              >
+                You have no archived todo yet.
+              </Typography>
+            )}
           </TodoListHistoryCardsContainer>
         </>
       )}
