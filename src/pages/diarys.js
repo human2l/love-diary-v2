@@ -97,7 +97,7 @@ const Diarys = () => {
               <Typography
                 variant="h5"
                 color="secondary"
-                sx={{ mt: "20%", textAlign: "center" }}
+                sx={{ pt: "50%", textAlign: "center" }}
               >
                 You haven't written any diary.
               </Typography>
