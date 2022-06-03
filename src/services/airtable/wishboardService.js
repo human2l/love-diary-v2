@@ -1,9 +1,13 @@
 import base from "./airtable";
 
-const wishboardBase = base("wishboard");
+const wishboardBase = base("wishes");
 
-const getAllWishes = async () => {
-  const response = await wishboardBase.select({}).all();
+const getAllWishes = async (coupleIds) => {
+  const response = await wishboardBase
+    .select({
+      filterByFormula: `OR({createrId}="${coupleIds[0]}",{partnerId}="${coupleIds[0]}",{createrId}="${coupleIds[1]}",{partnerId}="${coupleIds[1]}")`,
+    })
+    .all();
   const allWishes = response.map(({ fields, id }) => {
     return {
       ...fields,

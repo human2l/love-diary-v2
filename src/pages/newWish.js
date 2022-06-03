@@ -1,8 +1,5 @@
 import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardActionArea from "@mui/material/CardActionArea";
-import CardMedia from "@mui/material/CardMedia";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
@@ -55,7 +52,7 @@ const AddImageIcon = styled("img")({
 const NewWish = () => {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
-  const { t } = useContext(settingsContext);
+  const { t, user, getPartner, settings } = useContext(settingsContext);
   const [imageUploaded, setImageUploaded] = useState(false);
   const { fileMetadata, openFilePicker, getAuthImgUrl } = useFilestack();
   const [description, setDescription] = useLocalStorage("newWishDraft", "");
@@ -69,9 +66,16 @@ const NewWish = () => {
 
   const handleNext = async () => {
     if (activeStep === 1) {
-      const newWish = { imageId: fileMetadata.handle, description };
+      const createrId = settings[user].id;
+      const partnerId = settings[getPartner()].id;
+      const newWish = {
+        imageId: fileMetadata.handle,
+        description,
+        createrId,
+        partnerId,
+      };
       await addWish(newWish);
-      queryClient.invalidateQueries("getAllWishes");
+      queryClient.invalidateQueries("fetchAllWishes");
       navigate("/wishboard");
       setDescription("");
     } else {
@@ -110,14 +114,14 @@ const NewWish = () => {
     );
   } else {
     selectImageStep = (
-      <Card>
-        <CardActionArea>
-          <CardMedia
-            component="img"
-            image={getAuthImgUrl(fileMetadata.handle)}
-          />
-        </CardActionArea>
-      </Card>
+      <img
+        src={getAuthImgUrl(fileMetadata.handle)}
+        alt="preview"
+        style={{
+          maxHeight: "70vh",
+          objectFit: "contain",
+        }}
+      />
     );
   }
 
