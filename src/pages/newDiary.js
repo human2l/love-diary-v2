@@ -1,7 +1,4 @@
 import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardActionArea from "@mui/material/CardActionArea";
-import CardMedia from "@mui/material/CardMedia";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import { useContext, useState } from "react";
@@ -86,14 +83,15 @@ const NewDiary = () => {
       if (fileMetadata && imageType.includes(fileMetadata.mimetype)) {
         photos.push(fileMetadata.handle);
       }
+      const authorId = settings[user].id;
       const newDiary = {
+        authorId,
         content: diaryContent,
         time,
         author: user,
         photos,
         reply: [],
       };
-
       await addNewDiary(newDiary);
       setWarningMessage(t("saved.label"));
       setDiaryContent("");
@@ -141,14 +139,14 @@ const NewDiary = () => {
           </ImageControlContainer>
 
           {imageUploaded && (
-            <Card>
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  image={getAuthImgUrl(fileMetadata.handle)}
-                />
-              </CardActionArea>
-            </Card>
+            <img
+              src={getAuthImgUrl(fileMetadata.handle)}
+              alt="preview"
+              style={{
+                maxHeight: "60vh",
+                objectFit: "contain",
+              }}
+            />
           )}
           <ControlContainer>
             <Button
