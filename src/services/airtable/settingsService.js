@@ -5,12 +5,6 @@ const settingsBase = base("settings");
 const getSettingsByUserId = async (userId) => {
   const record = await settingsBase.find(userId);
   return { ...record.fields, id: record.id };
-  // const response = await settingsBase.select({}).all();
-  // const userSettings = {};
-  // for (let record of response) {
-  //   userSettings[record.fields.name] = { ...record.fields, id: record.id };
-  // }
-  // return userSettings;
 };
 
 const getCoupleSettingsByUserId = async (userId) => {
@@ -25,7 +19,8 @@ const getCoupleSettingsByUserId = async (userId) => {
 };
 
 const updateSettingsDB = async (settings) => {
-  const settingsArray = [settings.Dan, settings.Kai];
+  const settingsArray = Object.values(settings);
+  console.log(settingsArray);
   const updateData = settingsArray.map((setting) => {
     const { id, ...fields } = setting;
     return {
