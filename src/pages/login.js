@@ -18,13 +18,12 @@ const LoginLabel = styled(Typography)`
 `;
 
 const LoginContainer = styled.div`
-  margin-top: 20%;
   height: 100%;
   width: 95%;
   margin-left: auto;
   margin-right: auto;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
 `;
 
