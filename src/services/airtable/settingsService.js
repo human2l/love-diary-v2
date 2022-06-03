@@ -14,13 +14,11 @@ const getCoupleSettingsByUserId = async (userId) => {
     [userSettings.name]: { ...userSettings },
     [partnerSettings.name]: { ...partnerSettings },
   };
-  console.log(settings);
   return settings;
 };
 
 const updateSettingsDB = async (settings) => {
   const settingsArray = Object.values(settings);
-  console.log(settingsArray);
   const updateData = settingsArray.map((setting) => {
     const { id, ...fields } = setting;
     return {

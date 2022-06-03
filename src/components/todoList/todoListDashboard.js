@@ -62,9 +62,10 @@ const TodoListDashboard = ({ todosHistory }) => {
   };
 
   const userTodosDoneRate = (user) => {
-    return Math.floor(
+    const doneRate = Math.floor(
       (userAchieved(user).length / userTodos(user).length) * 100
     );
+    return isNaN(doneRate) ? 0 : doneRate;
   };
 
   return (

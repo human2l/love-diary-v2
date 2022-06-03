@@ -3,7 +3,6 @@ import base from "./airtable";
 const todosBase = base("todos");
 
 const getAllTodos = async (coupleIds) => {
-  console.log(coupleIds);
   const response = await todosBase
     .select({
       filterByFormula: `OR({createrId}="${coupleIds[0]}",{createrId}="${coupleIds[1]}")`,
