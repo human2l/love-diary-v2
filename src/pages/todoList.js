@@ -133,6 +133,7 @@ const TodoList = () => {
     const money = addedMoney(deleteTodosArray);
     const todosHistory = {
       user,
+      userId: settings[user].id,
       todos: JSON.stringify(deleteTodosArray),
       time,
       money,
