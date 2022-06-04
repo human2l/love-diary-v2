@@ -57,7 +57,7 @@ const AtrributeContainer = styled("div")({
 });
 
 const Settings = () => {
-  const { t, user, settings, updateSettings, appSettings, updateAppSettings } =
+  const { t, user, getPartner, settings, updateSettings } =
     useContext(settingsContext);
   const [playTypingSound] = useTypingSound();
   const [language, setLanguage] = useState(settings[user].language);
@@ -89,13 +89,19 @@ const Settings = () => {
     updateSettings(newSettings);
   };
 
-  //TODO: update both user and partner settings
   const changeBackgroundImage = async () => {
     await openBackgroundImagePicker((metadata) => {
-      updateAppSettings({
-        id: appSettings.id,
-        backgroundImage: metadata.handle,
-      });
+      const newSettings = {
+        [user]: {
+          ...settings[user],
+          backgroundImage: metadata.handle,
+        },
+        [getPartner()]: {
+          ...settings[getPartner()],
+          backgroundImage: metadata.handle,
+        },
+      };
+      updateSettings(newSettings);
     });
   };
 
