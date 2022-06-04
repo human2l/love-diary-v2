@@ -76,10 +76,10 @@ const updateDiaryReply = async (diaryId, reply, successCallback) => {
   );
 };
 
-const getDiaryCountByUser = async (username) => {
+const getDiaryCountByUser = async (userId) => {
   const response = await diaryBase
     .select({
-      filterByFormula: `{author}="${username}"`,
+      filterByFormula: `{authorId}="${userId}"`,
     })
     .all();
   return response.length;

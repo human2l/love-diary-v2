@@ -63,24 +63,30 @@ const RedTypography = styled(Typography)({
 });
 
 const Dashboard = () => {
-  const { t, settings } = useContext(settingsContext);
-  const personASettings = Object.values(settings)[0];
-  const personBSettings = Object.values(settings)[1];
+  const { t, user, getPartner, settings } = useContext(settingsContext);
 
-  const { isLoading: isLoadingPersonADiaryCount, data: personADiaryCount } =
-    useQuery("updatePersonADiaryCount", () =>
-      getDiaryCountByUser(personASettings.name)
+  const { isLoading: isLoadinguserDiaryCount, data: userDiaryCount } = useQuery(
+    "updateuserDiaryCount",
+    () => getDiaryCountByUser(settings[user].id)
+  );
+  const { isLoading: isLoadingpartnerDiaryCount, data: partnerDiaryCount } =
+    useQuery("updatepartnerDiaryCount", () =>
+      getDiaryCountByUser(settings[getPartner()].id)
     );
-  const { isLoading: isLoadingPersonBDiaryCount, data: personBDiaryCount } =
-    useQuery("updatePersonBDiaryCount", () =>
-      getDiaryCountByUser(personBSettings.name)
-    );
+
+  const userDiaryRate = Math.floor(
+    (userDiaryCount / (userDiaryCount + partnerDiaryCount)) * 100
+  );
+
+  const partnerDiaryRate = Math.floor(
+    (partnerDiaryCount / (userDiaryCount + partnerDiaryCount)) * 100
+  );
 
   let res = timeDiff(new Date(), new Date("2020-02-14 00:00:00"));
 
   return (
     <>
-      {isLoadingPersonBDiaryCount || isLoadingPersonADiaryCount ? (
+      {isLoadingpartnerDiaryCount || isLoadinguserDiaryCount ? (
         <PageLoading />
       ) : (
         <DashboardContainer>
@@ -93,9 +99,9 @@ const Dashboard = () => {
                 variant="h5"
                 sx={{ textAlign: "center" }}
               >
-                {personASettings.nickname}
+                {settings[user].nickname}
                 {t("and.label")}
-                {personBSettings.nickname}
+                {settings[getPartner()].nickname}
               </Typography>
               <DaysCounterContainer>
                 <Typography color="textPrimary" variant="h5">
@@ -113,34 +119,32 @@ const Dashboard = () => {
                 </Typography>
               </DaysCounterContainer>
               <DiaryCounterContainer>
-                <Typography color={personASettings.primaryColor} variant="h5">
-                  {personASettings.nickname}
+                <Typography color={settings[user].primaryColor} variant="h5">
+                  {settings[user].nickname}
                   {t("wrote.label")}
-                  {Math.floor(
-                    (personADiaryCount /
-                      (personADiaryCount + personBDiaryCount)) *
-                      100
-                  )}
-                  % {t("of_diaries.label")}
+                  {isNaN(userDiaryRate) ? 0 : userDiaryRate}%{" "}
+                  {t("of_diaries.label")}
                 </Typography>
-                <Typography color={personASettings.primaryColor} variant="h5">
+                <Typography color={settings[user].primaryColor} variant="h5">
                   {t("total.label.omit")}
-                  {personADiaryCount}
+                  {userDiaryCount}
                   {t("total.label")}
                 </Typography>
-                <Typography color={personBSettings.primaryColor} variant="h5">
-                  {personBSettings.nickname}
+                <Typography
+                  color={settings[getPartner()].primaryColor}
+                  variant="h5"
+                >
+                  {settings[getPartner()].nickname}
                   {t("wrote.label")}
-                  {Math.floor(
-                    (personBDiaryCount /
-                      (personADiaryCount + personBDiaryCount)) *
-                      100
-                  )}
-                  % {t("of_diaries.label")}
+                  {isNaN(partnerDiaryRate) ? 0 : partnerDiaryRate}%{" "}
+                  {t("of_diaries.label")}
                 </Typography>
-                <Typography color={personBSettings.primaryColor} variant="h5">
+                <Typography
+                  color={settings[getPartner()].primaryColor}
+                  variant="h5"
+                >
                   {t("total.label.omit")}
-                  {personBDiaryCount}
+                  {partnerDiaryCount}
                   {t("total.label")}
                 </Typography>
               </DiaryCounterContainer>
