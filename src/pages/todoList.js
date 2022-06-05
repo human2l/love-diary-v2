@@ -217,7 +217,11 @@ const TodoList = () => {
             />
             <BottomControlContainer>
               <Button
-                disabled={!todosArray.length}
+                disabled={
+                  !todosArray.filter((todo) => {
+                    return todo.createrId === settings[user].id;
+                  }).length
+                }
                 color="error"
                 variant="contained"
                 onClick={onClickArchiveButton}
