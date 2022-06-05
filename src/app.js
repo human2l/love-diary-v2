@@ -29,8 +29,6 @@ export const settingsContext = React.createContext({
   partner: "",
   settings: {},
   updateSettings: () => {},
-  appSettings: {},
-  updateAppSettings: () => {},
   musicPlayer: {},
   setMusic: () => {},
 });
@@ -46,9 +44,6 @@ function App() {
   const { t, i18n } = useTranslation();
   const [authenticated, setAuthenticated] = useState(false);
   const [settings, setSettings] = useState({});
-  // const [userSettings, setUserSettings] = useState({});
-  // const [partnerSettings, setPartnerSettings] = useState({});
-  // const [appSettings, setAppSettings] = useState({});
   const [user, setUser] = useState("");
   const [partner, setPartner] = useState("");
   const { musicPlayer, setMusic } = useSoundLibrary();
