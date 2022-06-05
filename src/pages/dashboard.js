@@ -63,7 +63,7 @@ const RedTypography = styled(Typography)({
 });
 
 const Dashboard = () => {
-  const { t, user, getPartner, settings } = useContext(settingsContext);
+  const { t, user, partner, settings } = useContext(settingsContext);
 
   const { isLoading: isLoadinguserDiaryCount, data: userDiaryCount } = useQuery(
     "updateuserDiaryCount",
@@ -71,7 +71,7 @@ const Dashboard = () => {
   );
   const { isLoading: isLoadingpartnerDiaryCount, data: partnerDiaryCount } =
     useQuery("updatepartnerDiaryCount", () =>
-      getDiaryCountByUser(settings[getPartner()].id)
+      getDiaryCountByUser(settings[partner].id)
     );
 
   const userDiaryRate = Math.floor(
@@ -101,7 +101,7 @@ const Dashboard = () => {
               >
                 {settings[user].nickname}
                 {t("and.label")}
-                {settings[getPartner()].nickname}
+                {settings[partner].nickname}
               </Typography>
               <DaysCounterContainer>
                 <Typography color="textPrimary" variant="h5">
@@ -130,19 +130,13 @@ const Dashboard = () => {
                   {userDiaryCount}
                   {t("total.label")}
                 </Typography>
-                <Typography
-                  color={settings[getPartner()].primaryColor}
-                  variant="h5"
-                >
-                  {settings[getPartner()].nickname}
+                <Typography color={settings[partner].primaryColor} variant="h5">
+                  {settings[partner].nickname}
                   {t("wrote.label")}
                   {isNaN(partnerDiaryRate) ? 0 : partnerDiaryRate}%{" "}
                   {t("of_diaries.label")}
                 </Typography>
-                <Typography
-                  color={settings[getPartner()].primaryColor}
-                  variant="h5"
-                >
+                <Typography color={settings[partner].primaryColor} variant="h5">
                   {t("total.label.omit")}
                   {partnerDiaryCount}
                   {t("total.label")}

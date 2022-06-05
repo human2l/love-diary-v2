@@ -44,8 +44,8 @@ const TotalMoneyContainer = styled("div")({
 });
 
 const TodoListHistory = () => {
-  const { user, getPartner, settings } = useContext(settingsContext);
-  const coupleIds = [settings[user].id, settings[getPartner()].id];
+  const { user, partner, settings } = useContext(settingsContext);
+  const coupleIds = [settings[user].id, settings[partner].id];
   const fetchAllTodosHistory = async () => await getAllTodosHistory(coupleIds);
 
   const { isLoading, data: todosHistory } = useQuery(

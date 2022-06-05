@@ -52,7 +52,7 @@ const canCheckIn = (date1, date2) => {
 const Wallet = () => {
   const queryClient = useQueryClient();
 
-  const { t, user, getPartner, settings } = useContext(settingsContext);
+  const { t, user, partner, settings } = useContext(settingsContext);
   const [warningMessages, setWarningMessages] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [playMoneySound] = useSound(moneySound, { volume: 0.5 });
@@ -70,7 +70,7 @@ const Wallet = () => {
   if (isSuccess) {
     userWalletId = data[user].id;
     userMoney = data[user].number.toFixed(2);
-    partnerMoney = data[getPartner()].number.toFixed(2);
+    partnerMoney = data[partner].number.toFixed(2);
     lastCheckInDate = data[user].lastCheckInDate;
   }
 
@@ -115,17 +115,11 @@ const Wallet = () => {
                 width="100px"
               />
               <ItemContainer>
-                <Typography
-                  color={settings[getPartner()].primaryColor}
-                  variant="h5"
-                >
-                  {settings[getPartner()].nickname}
+                <Typography color={settings[partner].primaryColor} variant="h5">
+                  {settings[partner].nickname}
                   {t("account_balance.label")}
                 </Typography>
-                <Typography
-                  color={settings[getPartner()].primaryColor}
-                  variant="h5"
-                >
+                <Typography color={settings[partner].primaryColor} variant="h5">
                   $ {partnerMoney}
                 </Typography>
                 <Typography color={settings[user].primaryColor} variant="h5">

@@ -26,7 +26,7 @@ const USER_ID_RELATIONSHIP = {
 export const settingsContext = React.createContext({
   t: () => {},
   user: "",
-  getPartner: () => {},
+  partner: "",
   settings: {},
   updateSettings: () => {},
   appSettings: {},
@@ -50,6 +50,7 @@ function App() {
   // const [partnerSettings, setPartnerSettings] = useState({});
   // const [appSettings, setAppSettings] = useState({});
   const [user, setUser] = useState("");
+  const [partner, setPartner] = useState("");
   const { musicPlayer, setMusic } = useSoundLibrary();
 
   const userSettings = useMemo(() => settings[user], [settings, user]);
@@ -79,11 +80,6 @@ function App() {
     });
   }, [userSettings?.primaryColor, userSettings?.secondaryColor]);
 
-  const getPartner = () => {
-    const users = Object.keys(settings);
-    return users.find((currentUser) => currentUser !== user);
-  };
-
   const updateSettings = async (newSettings) => {
     console.log("updateSettings");
     await updateSettingsDB(newSettings);
@@ -94,12 +90,17 @@ function App() {
     console.log("login");
     await fetchSettings(user);
     setAuthenticated(true);
-    setUser(user);
   };
 
   const fetchSettings = async (user) => {
     console.log("fetchSettings");
-    setSettings(await getCoupleSettingsByUserId(USER_ID_RELATIONSHIP[user]));
+    const fetchedSettings = await getCoupleSettingsByUserId(
+      USER_ID_RELATIONSHIP[user]
+    );
+    const users = Object.keys(fetchedSettings);
+    setUser(user);
+    setPartner(users.find((currentUser) => currentUser !== user));
+    setSettings(fetchedSettings);
   };
 
   const userMusic = useMemo(() => userSettings?.music, [userSettings?.music]);
@@ -129,7 +130,7 @@ function App() {
             value={{
               t,
               user,
-              getPartner,
+              partner,
               settings,
               updateSettings,
               musicPlayer,

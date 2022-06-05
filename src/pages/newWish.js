@@ -50,7 +50,7 @@ const AddImageIcon = styled("img")({
 const NewWish = () => {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
-  const { t, user, getPartner, settings } = useContext(settingsContext);
+  const { t, user, partner, settings } = useContext(settingsContext);
   const [imageUploaded, setImageUploaded] = useState(false);
   const { fileMetadata, openFilePicker, getAuthImgUrl } = useFilestack();
   const [description, setDescription] = useLocalStorage("newWishDraft", "");
@@ -67,7 +67,7 @@ const NewWish = () => {
   const handleNext = async () => {
     if (activeStep === 1) {
       const createrId = settings[user].id;
-      const partnerId = settings[getPartner()].id;
+      const partnerId = settings[partner].id;
       const newWish = {
         imageId: fileMetadata.handle,
         description,

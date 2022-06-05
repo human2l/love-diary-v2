@@ -68,13 +68,13 @@ const TodoList = () => {
   const [play] = useSound(cashierMp3, {
     volume: 0.5,
   });
-  const { t, user, getPartner, settings } = useContext(settingsContext);
+  const { t, user, partner, settings } = useContext(settingsContext);
   const [todo, setTodo] = useLocalStorage("todoDraft", "");
   const [archiveAlertState, setArchiveAlertState] = useState(false);
 
   const queryClient = useQueryClient();
   const userId = settings[user].id;
-  const partnerId = settings[getPartner()].id;
+  const partnerId = settings[partner].id;
   const fetchAllTodos = async () => await getAllTodos([userId, partnerId]);
   const { isLoading, data: todosArray } = useQuery(
     "fetchAllTodos",

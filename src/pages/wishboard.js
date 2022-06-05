@@ -34,10 +34,10 @@ const AddNewWishImageButton = styled(Fab)({
 });
 
 const Wishboard = () => {
-  const { user, getPartner, settings } = useContext(settingsContext);
+  const { user, partner, settings } = useContext(settingsContext);
   const { getAuthImgUrl } = useFilestack();
   const fetchAllWishes = async () => {
-    const coupleIds = [settings[user].id, settings[getPartner()].id];
+    const coupleIds = [settings[user].id, settings[partner].id];
     const allWishes = getAllWishes(coupleIds);
     return allWishes;
   };

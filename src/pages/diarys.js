@@ -33,14 +33,14 @@ const AddNewDiaryButton = styled(Fab)({
 });
 
 const Diarys = () => {
-  const { user, getPartner, settings } = useContext(settingsContext);
+  const { user, partner, settings } = useContext(settingsContext);
   let navigate = useNavigate();
   const [play] = useSound(buttonMp3, {
     volume: 0.5,
   });
 
   const fetchAllDiarys = async () => {
-    const coupleIds = [settings[user].id, settings[getPartner()].id];
+    const coupleIds = [settings[user].id, settings[partner].id];
     const allDiarys = await getAllDiarys(coupleIds);
     return allDiarys;
   };

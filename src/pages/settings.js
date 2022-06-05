@@ -57,7 +57,7 @@ const AtrributeContainer = styled("div")({
 });
 
 const Settings = () => {
-  const { t, user, getPartner, settings, updateSettings } =
+  const { t, user, partner, settings, updateSettings } =
     useContext(settingsContext);
   const [playTypingSound] = useTypingSound();
   const [language, setLanguage] = useState(settings[user].language);
@@ -96,8 +96,8 @@ const Settings = () => {
           ...settings[user],
           backgroundImage: metadata.handle,
         },
-        [getPartner()]: {
-          ...settings[getPartner()],
+        [partner]: {
+          ...settings[partner],
           backgroundImage: metadata.handle,
         },
       };

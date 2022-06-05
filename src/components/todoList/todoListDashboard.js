@@ -42,7 +42,7 @@ const FinishedRateGroup = styled("div")({
 });
 
 const TodoListDashboard = ({ todosHistory }) => {
-  const { t, user, getPartner, settings } = useContext(settingsContext);
+  const { t, user, partner, settings } = useContext(settingsContext);
 
   const userTodos = (user) => {
     return todosHistory
@@ -88,8 +88,8 @@ const TodoListDashboard = ({ todosHistory }) => {
           vs
         </Typography>
         <Box sx={{ flex: 1 }}>
-          <Typography variant="h4" color={settings[getPartner()].primaryColor}>
-            {settings[getPartner()].nickname}
+          <Typography variant="h4" color={settings[partner].primaryColor}>
+            {settings[partner].nickname}
           </Typography>
         </Box>
       </TitleContainer>
@@ -120,27 +120,27 @@ const TodoListDashboard = ({ todosHistory }) => {
         </AchievedGroup>
 
         <AchievedGroup>
-          <Typography variant="h0" color={settings[getPartner()].primaryColor}>
+          <Typography variant="h0" color={settings[partner].primaryColor}>
             {t("achieved.label")}
           </Typography>
           <Typography
             variant="h0"
-            color={settings[getPartner()].secondaryColor}
+            color={settings[partner].secondaryColor}
             sx={{ mt: "5px" }}
           >
-            {userAchieved(getPartner()).length}
+            {userAchieved(partner).length}
           </Typography>
         </AchievedGroup>
         <FinishedRateGroup>
-          <Typography variant="h0" color={settings[getPartner()].primaryColor}>
+          <Typography variant="h0" color={settings[partner].primaryColor}>
             {t("finished_rate.label")}
           </Typography>
           <Typography
             variant="h0"
-            color={settings[getPartner()].secondaryColor}
+            color={settings[partner].secondaryColor}
             sx={{ mt: "5px" }}
           >
-            {userTodosDoneRate(getPartner())}%
+            {userTodosDoneRate(partner)}%
           </Typography>
         </FinishedRateGroup>
       </ItemsContainer>
