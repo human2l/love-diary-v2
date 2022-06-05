@@ -38,7 +38,7 @@ const TodoListItem = (props) => {
       <Avatar variant="rounded" sx={{ bgcolor: "primary.main" }}>
         <ChecklistIcon src={wishboardPng} />
       </Avatar>
-      <Typography>愿景板</Typography>
+      <Typography>{t("wishboard.label")}</Typography>
     </ItemContainer>
   );
 };

@@ -52,5 +52,10 @@
   "music_collection.label": "Music List",
   "finished_rate.label": "Finished Rate",
   "achieved.label": "Achieved",
-  "background-image.label": "Background Image"
+  "background-image.label": "Background Image",
+  "wishboard.label": "Wishboard",
+  "add_image.label": "Add image",
+  "write_something.label": "Write something",
+  "wish_discription.label": "Wish Description",
+  "next_step.label": "Next Step"
 }

@@ -15,8 +15,6 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import useTypingSound from "../hooks/useTypingSound";
 import { addWish } from "../services/airtable/wishboardService";
 
-const steps = ["选择图片", "写点啥"];
-
 const NewWishContainer = styled("div")({
   boxSizing: "border-box",
   width: "100%",
@@ -58,6 +56,8 @@ const NewWish = () => {
   const [description, setDescription] = useLocalStorage("newWishDraft", "");
   const [playTypingSound] = useTypingSound();
   const queryClient = useQueryClient();
+
+  const steps = [t("add_image.label"), t("write_something.label")];
 
   const nextAvailable = () => {
     if (activeStep === 0) return imageUploaded;
@@ -131,7 +131,7 @@ const NewWish = () => {
         autoComplete: "off",
       }}
       value={description}
-      label="愿景描述"
+      label={t("wish_discription.label")}
       variant="outlined"
       size="small"
       sx={{
@@ -165,7 +165,9 @@ const NewWish = () => {
           onClick={handleNext}
           disabled={!nextAvailable()}
         >
-          {activeStep === steps.length - 1 ? "保存" : "下一步"}
+          {activeStep === steps.length - 1
+            ? t("save.label")
+            : t("next_step.label")}
         </Button>
       </NewWishContainer>
     </GlassFullContainer>
