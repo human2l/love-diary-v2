@@ -41,19 +41,55 @@ It will serve on http://localhost:3000
 
 ### Diary book
 
+* Write diary
+
+* Add photos
+
+* View partner's diary
+
+* Comment and reply
+
 ### Wallet
 
-### Background music list
+* Check in to get daily coin
 
-### Todo list
+### Magic Box
 
-### Wishboard
+#### Background music list
+
+* select favourite background music from list
+
+#### Todo list
+
+* set up todos
+* view partner's todos
+* archive today's todos
+* show todos history
+* get coin for each complete todo
+
+#### Wishboard
+
+* Add photos
+* Write description
 
 ### Love dashboard
 
+* Show the days we've been together
+* Show diaries summary
+
 ### Settings
 
+* Localization(English/Chinese)
+
+* Nickname editing
+
+* Theme color picker(primary/secondary)
+
+* App background image
+
 ### Sounds and animation effects
+
+* Applied rich sound and animation effects on user interactivation
 
 ## About us
 
