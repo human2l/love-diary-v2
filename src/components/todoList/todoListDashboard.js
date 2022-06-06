@@ -6,8 +6,9 @@ import { settingsContext } from "../../app";
 
 const TodoListDashboardContainer = styled("div")({
   position: "fixed",
-  paddingBottom: "5px",
   width: "100%",
+  maxWidth: "700px",
+  paddingBottom: "5px",
   background: `rgba(255,255,255,1)`,
   borderBottomLeftRadius: 10,
   borderBottomRightRadius: 10,
@@ -71,7 +72,7 @@ const TodoListDashboard = ({ todosHistory }) => {
   return (
     <TodoListDashboardContainer
       sx={{
-        boxShadow: `0 -15px 30px ${settings[user].primaryColor}`,
+        boxShadow: `0 -5px 20px ${settings[user].primaryColor}`,
       }}
     >
       <TitleContainer>
