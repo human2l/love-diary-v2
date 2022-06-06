@@ -44,7 +44,7 @@ const TotalMoneyContainer = styled("div")({
 });
 
 const TodoListHistory = () => {
-  const { user, partner, settings } = useContext(settingsContext);
+  const { t, user, partner, settings } = useContext(settingsContext);
   const coupleIds = [settings[user].id, settings[partner].id];
   const fetchAllTodosHistory = async () => await getAllTodosHistory(coupleIds);
 
@@ -114,7 +114,7 @@ const TodoListHistory = () => {
                             color={settings[history.user].secondaryColor}
                             variant="h5"
                           >
-                            合计
+                            {t("total_money.label")}
                           </Typography>
                           <Typography
                             color={settings[history.user].secondaryColor}

@@ -57,5 +57,6 @@
   "add.label": "选择图片",
   "write_something.label": "写点啥",
   "wish_discription.label": "愿景描述",
-  "next_step.label": "下一步"
+  "next_step.label": "下一步",
+  "total_money.label": "合计"
 }
