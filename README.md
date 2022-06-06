@@ -1,5 +1,6 @@
 # Love Diary
 > A social app I made for me and my love.
+
 [![NPM Version][npm-image]][npm-url]
 [![Node Version][node-image]][node-url]
 [![React Version][react-image]][react-url]
