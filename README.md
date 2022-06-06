@@ -14,7 +14,7 @@ Obviously for now the only users are me and her.
 
 https://dankai.vercel.app/
 
-Try login with following users:
+Try login with following users (password harcoded for testing purpose):
 
 | Username | Password |
 | -------- | -------- |
