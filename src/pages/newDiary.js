@@ -16,6 +16,7 @@ import { getCurrentTimestamp } from "../utils/date_utils";
 
 const NewDiaryContainer = styled("div")({
   width: "90vw",
+  maxWidth: "700px",
   marginLeft: 10,
   marginRight: 10,
   paddingTop: 20,
