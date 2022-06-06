@@ -1,9 +1,10 @@
 # Love Diary
 > A social app I made for me and my love.
 
-[![NPM Version][npm-image]][npm-url]
-[![Node Version][node-image]][node-url]
-[![React Version][react-image]][react-url]
+![NPM Version][npm-image]
+![Node Version][node-image]
+![React Version][react-image]
+
 
 This is the version 2.0 of love-diary. Main change is migrate data from Deta to airtable.
 
@@ -63,7 +64,7 @@ It will serve on http://localhost:3000
 
 <!-- Markdown link & img dfn's -->
 
-[npm-image]: https://img.shields.io/badge/npm-v8.5.0-orange
-[node-image]: https://img.shields.io/badge/node-v16.14.2-green
-[react-image]: https://img.shields.io/badge/react-v18.0.0-yellow
+[npm-image]: https://img.shields.io/badge/npm-v8.5.0-success
+[node-image]: https://img.shields.io/badge/node-v16.14.2-success
+[react-image]: https://img.shields.io/badge/react-v18.0.0-success
 
