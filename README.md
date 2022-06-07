@@ -41,7 +41,7 @@ It will serve on http://localhost:3000
 
 ### Diary book
 
-
+<img src="README.assets/diary.gif" alt="diary" height="500" />
 
 * Write diary
 
@@ -53,7 +53,7 @@ It will serve on http://localhost:3000
 
 ### Wallet
 
-<img src="README.assets/check_in.gif" alt="check_in" style="zoom:50%;" />
+<img src="README.assets/check_in.gif" alt="check_in" height="500" />
 
 * Check in to get daily coin
 
@@ -61,9 +61,13 @@ It will serve on http://localhost:3000
 
 #### Background music list
 
+<img src="README.assets/music.gif" alt="music" height="500"/>
+
 * select favourite background music from list
 
 #### Todo list
+
+<img src="README.assets/todo_list.gif" alt="todo_list" height="500"/>
 
 * set up todos
 * view partner's todos
@@ -73,21 +77,33 @@ It will serve on http://localhost:3000
 
 #### Wishboard
 
+<img src="README.assets/wishboard.gif" alt="wishboard" height="500"/>
+
 * Add photos
 * Write description
 
 ### Love dashboard
+
+<img src="README.assets/dashboard.gif" alt="dashboard" height="500"/>
 
 * Show the days we've been together
 * Show diaries summary
 
 ### Settings
 
+<img src="README.assets/settings-language.gif" alt="settings-language" height="500" />
+
 * Localization(English/Chinese)
+
+<img src="README.assets/settings-nickname.gif" alt="settings-nickname" height="500"/>
 
 * Nickname editing
 
+<img src="README.assets/settings-theme_color.gif" alt="settings-theme_color" height="500"/>
+
 * Theme color picker(primary/secondary)
+
+<img src="README.assets/settings-background_image.gif" alt="settings-background_image" height="500" />
 
 * App background image
 
