@@ -41,6 +41,8 @@ It will serve on http://localhost:3000
 
 ### Diary book
 
+
+
 * Write diary
 
 * Add photos
@@ -50,6 +52,8 @@ It will serve on http://localhost:3000
 * Comment and reply
 
 ### Wallet
+
+<img src="README.assets/check_in.gif" alt="check_in" style="zoom:50%;" />
 
 * Check in to get daily coin
 
