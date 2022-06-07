@@ -74,7 +74,7 @@ const TodoListHistory = () => {
                             color={settings[history.user].primaryColor}
                             gutterBottom
                           >
-                            {history.user}
+                            {settings[history.user].nickname}
                           </Typography>
                           <TodosMetaContainer>
                             <Typography color="textSecondary">
