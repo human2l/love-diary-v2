@@ -8,13 +8,13 @@
 
 This is the version 2.0 of love-diary. Main change is migrate data from Deta to airtable.
 
-Obviously for now the only users are me and her.
+<img src="README.assets/love_diary.gif" alt="diary" height="500" />
 
 ## Demo
 
 https://dankai.vercel.app/
 
-Try login with following users (password harcoded for testing purpose):
+Try login with following users (harcoded for testing purpose):
 
 | Username | Password |
 | -------- | -------- |
