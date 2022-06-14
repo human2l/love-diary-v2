@@ -114,7 +114,7 @@ It will serve on http://localhost:3000
 
 ## About us
 
-Dan and I met on the Internet in 2019, when she was in China and I was in Australia. Over time, we gradually discovered that we were just meant to be, and today we have become soul mates. However, the Covid-19 broke out in 2020, and we have not been able to meet since then, so I wrote this app, which was originally just a tool for two people to share diaries, and now it has a variety of rich content. The app has become a small base for the two of us to have an exotic relationship for several years. With the current bad situation in China, we can only continue to maintain a foreign relationship which has already been two and a half years, and she has no chance to get her Chinese passport to come to Australia, I hope we can meet in Australia soon. Kai loves Dan forever.
+Dan and I met on the Internet in 2019, when she was in China and I was in Australia. Over time, we gradually discovered that we were just meant to be, and today we have become soul mates. However, the Covid-19 broke out in 2020, and we have not been able to meet since then, so I wrote this app, which was originally just a tool for two people to share diaries, and now it has a variety of rich content. The app has become a small base for the two of us to have an exotic relationship for several years. With the current bad situation in China, we can only continue to maintain a foreign relationship which has already been two and a half years, and nowadays it is hard to get a Chinese passport to come to Australia, I hope we can meet in Australia soon. Kai loves Dan forever.
 
 <!-- Markdown link & img dfn's -->
 
