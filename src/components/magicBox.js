@@ -1,5 +1,6 @@
 import { styled } from "@mui/material/styles";
 import treasurePng from "../assets/images/treasure.png";
+import GptItem from "./magicBoxItems/gptItem";
 import MusicCollectionItem from "./magicBoxItems/musicCollectionItem";
 import MusicItem from "./magicBoxItems/musicItem";
 import TodoListItem from "./magicBoxItems/todoListItem";
@@ -40,6 +41,7 @@ const MagicBox = (props) => {
         <MusicCollectionItem onClose={props.onClose} />
         <TodoListItem onClose={props.onClose} />
         <WishboardItem onClose={props.onClose} />
+        <GptItem />
       </ItemsContainer>
     </>
   );
