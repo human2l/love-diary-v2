@@ -1,7 +1,9 @@
 import Airtable from "airtable";
 
-const base = new Airtable({
-  apiKey: process.env.REACT_APP_AIRTABLE_API_KEY,
-}).base(process.env.REACT_APP_AIRTABLE_BASE_NAME);
+Airtable.configure({
+  endpointUrl: "https://api.airtable.com",
+  apiKey: process.env.REACT_APP_AIRTABLE_PERSONAL_ACCESS_TOKEN,
+});
+var base = Airtable.base(process.env.REACT_APP_AIRTABLE_BASE_NAME);
 
 export default base;
