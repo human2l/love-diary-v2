@@ -78,6 +78,9 @@ export const Diary = (props) => {
 
   const [replyContent, setReplyContent] = useLocalStorage("replyDraft", "");
   const { getAuthImgUrl } = useFilestack();
+  const imageUrl =
+    diaryPhotos.length > 0 ? getAuthImgUrl(diaryPhotos[0]) : null;
+  const imageId = diaryPhotos.length > 0 ? diaryPhotos[0] : null;
 
   const convertToParagraph = (text) => {
     return text.split("\n").map((line, index) => {
@@ -204,7 +207,34 @@ export const Diary = (props) => {
             {diaryPhotos.length > 0 && (
               <div>
                 <Card>
-                  <CardActionArea>
+                  <CardActionArea
+                    onClick={async () => {
+                      const url = imageUrl;
+                      console.log("Download image from:", url);
+
+                      try {
+                        const response = await fetch(url, {
+                          mode: "cors",
+                        });
+                        const blob = await response.blob();
+                        const blobUrl = URL.createObjectURL(blob);
+
+                        const link = document.createElement("a");
+                        link.href = blobUrl;
+                        link.download = `${imageId}.jpg`;
+
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+
+                        // Clear blob URL
+                        URL.revokeObjectURL(blobUrl);
+                      } catch (err) {
+                        console.error("Download failed", err);
+                        alert("Image download failed, please try again later");
+                      }
+                    }}
+                  >
                     <CardMedia
                       component="img"
                       image={getAuthImgUrl(diaryPhotos[0])}
