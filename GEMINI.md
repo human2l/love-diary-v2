@@ -6,7 +6,7 @@ This is **Love Diary**, a social web application created for the author and thei
 
 *   **Frontend:** React, Material-UI, styled-components
 *   **Data Fetching & Caching:** React Query
-*   **State Management:** A mix of React Context (`settingsContext`) and Redux Toolkit (for music).
+*   **State Management:** React Query and React Context (`settingsContext`).
 *   **Backend:** Airtable is used as a lightweight database.
 *   **Internationalization:** i18next
 *   **Routing:** React Router
@@ -42,6 +42,6 @@ The application is structured as a typical Create React App project.
 
 *   **Styling:** The project uses a combination of Material-UI components and `styled-components` for custom styling.
 *   **Data Fetching:** Data fetching from Airtable is primarily handled by `react-query`. Asynchronous operations are defined in the `src/services/airtable` directory and called from components using the `useQuery` and `useMutation` hooks.
-*   **State Management:** There's a mix of state management approaches. For global user and settings information, a React Context (`settingsContext`) is used. For the music player, Redux Toolkit is used. Future development could benefit from consolidating this into a single approach.
+*   **State Management:** The project uses a combination of React Query and React Context for state management. React Query is the primary tool for managing server state (all data fetched from Airtable). React Context (`settingsContext`) is used for global client state that is not persisted on the server, such as UI state and session information.
 *   **Routing:** The application uses `react-router-dom` for client-side routing. Authenticated routes are protected and only accessible after logging in.
 *   **Internationalization:** The app supports English and Chinese, with translations managed in `public/assets/i18n/translations`.
