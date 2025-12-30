@@ -2,9 +2,10 @@ import * as colors from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import styled from "styled-components";
 import Background from "./components/background";
+import PageLoading from "./components/pageLoading";
 import useSoundLibrary from "./hooks/useSoundLibrary";
 import Router from "./routes";
 import {
@@ -12,8 +13,6 @@ import {
   updateSettingsDB,
 } from "./services/airtable/settingsService";
 import "./services/i18next";
-
-const queryClient = new QueryClient();
 
 //! hardcode for now
 const USER_ID_RELATIONSHIP = {
@@ -42,11 +41,27 @@ const AppContainer = styled("div")({
 
 function App() {
   const { t, i18n } = useTranslation();
-  const [authenticated, setAuthenticated] = useState(false);
-  const [settings, setSettings] = useState({});
-  const [user, setUser] = useState("");
-  const [partner, setPartner] = useState("");
+  const [loggedInUsername, setLoggedInUsername] = useState(null);
+  const authenticated = !!loggedInUsername;
   const { musicPlayer, setMusic } = useSoundLibrary();
+  const queryClientContext = useQueryClient();
+
+  const { data: fetchedSettings, isLoading: settingsLoading } = useQuery(
+    ["coupleSettings", loggedInUsername],
+    () => getCoupleSettingsByUserId(USER_ID_RELATIONSHIP[loggedInUsername]),
+    {
+      enabled: authenticated,
+      staleTime: Infinity, // Settings don't change often
+    }
+  );
+
+  const settings = fetchedSettings || {};
+  const user = loggedInUsername;
+  const partner = useMemo(() => {
+    if (!fetchedSettings || !user) return "";
+    const users = Object.keys(fetchedSettings);
+    return users.find((currentUser) => currentUser !== user);
+  }, [fetchedSettings, user]);
 
   const userSettings = useMemo(() => settings[user], [settings, user]);
 
@@ -78,24 +93,12 @@ function App() {
   const updateSettings = async (newSettings) => {
     console.log("updateSettings");
     await updateSettingsDB(newSettings);
-    setSettings(newSettings);
+    queryClientContext.invalidateQueries(["coupleSettings", loggedInUsername]);
   };
 
-  const login = async (user) => {
+  const login = async (username) => {
     console.log("login");
-    await fetchSettings(user);
-    setAuthenticated(true);
-  };
-
-  const fetchSettings = async (user) => {
-    console.log("fetchSettings");
-    const fetchedSettings = await getCoupleSettingsByUserId(
-      USER_ID_RELATIONSHIP[user]
-    );
-    const users = Object.keys(fetchedSettings);
-    setUser(user);
-    setPartner(users.find((currentUser) => currentUser !== user));
-    setSettings(fetchedSettings);
+    setLoggedInUsername(username);
   };
 
   const userMusic = useMemo(() => userSettings?.music, [userSettings?.music]);
@@ -114,13 +117,15 @@ function App() {
     i18n.changeLanguage(userLanguage);
   }, [i18n, userLanguage]);
 
+  // ... inside App function
+
+  if (settingsLoading && authenticated) {
+    return <PageLoading />;
+  }
+
   return (
     <>
       <AppContainer>
-        <QueryClientProvider client={queryClient}>
-          {/* {process.env.NODE_ENV === "development" && (
-                <ReactQueryDevtoolsPanel style={{ paddingBottom: "70px" }} />
-              )} */}
           <settingsContext.Provider
             value={{
               t,
@@ -136,7 +141,6 @@ function App() {
               <Router authenticated={authenticated} loginMethod={login} />
             </ThemeProvider>
           </settingsContext.Provider>
-        </QueryClientProvider>
         <Background
           imgId={settings[user]?.backgroundImage}
           defaultImgId={"Kqwt7tNSTCYJXKKNJnl7"}
