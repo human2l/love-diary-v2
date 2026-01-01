@@ -5,6 +5,15 @@ export const USER_ID_MAP = {
   Bob: "recxhOgxeKaYMdbGI",
 };
 
+export const DEFAULT_BACKGROUND_IMAGE_ID = "Kqwt7tNSTCYJXKKNJnl7";
+
+export const LOCAL_BACKGROUND_IMAGE_MAP = {
+  [DEFAULT_BACKGROUND_IMAGE_ID]: "/assets/images/backgrounds/default_bg.webp",
+  // Add more mappings here for other specific background images from Airtable
+  // Example: "filestack_id_for_dan": "/assets/images/backgrounds/dan_bg.webp",
+  // Example: "filestack_id_for_kai": "/assets/images/backgrounds/kai_bg.webp",
+};
+
 export const AIRTABLE_TABLES = {
   DIARY: "diary",
   SETTINGS: "settings",

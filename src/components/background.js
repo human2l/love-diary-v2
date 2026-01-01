@@ -1,15 +1,7 @@
-import useFilestack from "../hooks/useFilestack";
 import useWindowSize from "../hooks/useWindowSize";
 
-const Background = ({ imgId, defaultImgId }) => {
-  const { getBackgroundImgUrl } = useFilestack();
+const Background = ({ src }) => {
   const windowSize = useWindowSize("fixed");
-
-  //use fixed size imgSrc base on window size
-  const imgSrc =
-    windowSize.height &&
-    (getBackgroundImgUrl(imgId, windowSize.height, windowSize.width) ??
-      getBackgroundImgUrl(defaultImgId, windowSize.height, windowSize.width));
 
   return (
     <div
@@ -21,7 +13,8 @@ const Background = ({ imgId, defaultImgId }) => {
         height: "100vh",
         width: "100vw",
         backgroundSize: "cover",
-        backgroundImage: `url(${imgSrc})`,
+        backgroundPosition: "center center",
+        backgroundImage: `url(${src})`,
       }}
     ></div>
   );

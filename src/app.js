@@ -6,7 +6,7 @@ import { useQuery, useQueryClient } from "react-query";
 import styled from "styled-components";
 import Background from "./components/background";
 import PageLoading from "./components/pageLoading";
-import { USER_ID_MAP } from "./config/airtableConfig";
+import { USER_ID_MAP, DEFAULT_BACKGROUND_IMAGE_ID, LOCAL_BACKGROUND_IMAGE_MAP } from "./config/airtableConfig";
 import useSoundLibrary from "./hooks/useSoundLibrary";
 import Router from "./routes";
 import {
@@ -59,7 +59,6 @@ function App() {
   const userSettings = useMemo(() => settings[user], [settings, user]);
 
   const theme = useMemo(() => {
-    console.log("createNewTheme");
     return createTheme({
       palette: {
         primary: {
@@ -84,20 +83,17 @@ function App() {
   }, [userSettings?.primaryColor, userSettings?.secondaryColor]);
 
   const updateSettings = async (newSettings) => {
-    console.log("updateSettings");
     await updateSettingsDB(newSettings);
     queryClientContext.invalidateQueries(["coupleSettings", loggedInUsername]);
   };
 
   const login = async (username) => {
-    console.log("login");
     setLoggedInUsername(username);
   };
 
   const userMusic = useMemo(() => userSettings?.music, [userSettings?.music]);
 
   useEffect(() => {
-    console.log("setMusic");
     setMusic(userMusic);
   }, [setMusic, userMusic]);
 
@@ -106,11 +102,11 @@ function App() {
     [userSettings?.language]
   );
   useEffect(() => {
-    console.log("setLanguage");
     i18n.changeLanguage(userLanguage);
   }, [i18n, userLanguage]);
 
-  // ... inside App function
+  const currentBackgroundId = settings[user]?.backgroundImage || DEFAULT_BACKGROUND_IMAGE_ID;
+  const backgroundSrc = LOCAL_BACKGROUND_IMAGE_MAP[currentBackgroundId] || LOCAL_BACKGROUND_IMAGE_MAP[DEFAULT_BACKGROUND_IMAGE_ID];
 
   if (settingsLoading && authenticated) {
     return (
@@ -139,8 +135,7 @@ function App() {
           </ThemeProvider>
         </settingsContext.Provider>
         <Background
-          imgId={settings[user]?.backgroundImage}
-          defaultImgId={"Kqwt7tNSTCYJXKKNJnl7"}
+          src={backgroundSrc}
         />
       </AppContainer>
     </>
