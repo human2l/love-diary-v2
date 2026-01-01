@@ -8,19 +8,9 @@ import Background from "./components/background";
 import PageLoading from "./components/pageLoading";
 import useSoundLibrary from "./hooks/useSoundLibrary";
 import Router from "./routes";
-import {
-  getCoupleSettingsByUserId,
-  updateSettingsDB,
-} from "./services/airtable/settingsService";
+import { getCoupleSettingsByUserId, updateSettingsDB } from "./services/airtable/settingsService";
 import "./services/i18next";
-
-//! hardcode for now
-const USER_ID_RELATIONSHIP = {
-  Dan: "recISybotETJtZOaI",
-  Kai: "recW7reKMhDGMg8AV",
-  Alice: "recGvx4sVJTirnLjN",
-  Bob: "recxhOgxeKaYMdbGI",
-};
+import { USER_ID_MAP } from "./config/airtableConfig";
 
 export const settingsContext = React.createContext({
   t: () => {},
@@ -48,7 +38,7 @@ function App() {
 
   const { data: fetchedSettings, isLoading: settingsLoading } = useQuery(
     ["coupleSettings", loggedInUsername],
-    () => getCoupleSettingsByUserId(USER_ID_RELATIONSHIP[loggedInUsername]),
+    () => getCoupleSettingsByUserId(USER_ID_MAP[loggedInUsername]),
     {
       enabled: authenticated,
       staleTime: Infinity, // Settings don't change often

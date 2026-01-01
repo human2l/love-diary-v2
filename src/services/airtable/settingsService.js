@@ -1,6 +1,7 @@
+import { AIRTABLE_TABLES, AIRTABLE_FIELDS } from "../../config/airtableConfig";
 import base from "./airtable";
 
-const settingsBase = base("settings");
+const settingsBase = base(AIRTABLE_TABLES.SETTINGS);
 
 const getSettingsByUserId = async (userId) => {
   const record = await settingsBase.find(userId);
@@ -9,10 +10,10 @@ const getSettingsByUserId = async (userId) => {
 
 const getCoupleSettingsByUserId = async (userId) => {
   const userSettings = await getSettingsByUserId(userId);
-  const partnerSettings = await getSettingsByUserId(userSettings.partnerId);
+  const partnerSettings = await getSettingsByUserId(userSettings[AIRTABLE_FIELDS.SETTINGS.PARTNER_ID]);
   const settings = {
-    [userSettings.name]: { ...userSettings },
-    [partnerSettings.name]: { ...partnerSettings },
+    [userSettings[AIRTABLE_FIELDS.SETTINGS.NAME]]: { ...userSettings },
+    [partnerSettings[AIRTABLE_FIELDS.SETTINGS.NAME]]: { ...partnerSettings },
   };
   return settings;
 };
