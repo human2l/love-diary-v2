@@ -8,6 +8,7 @@ const GlassFullContainer = (props) => {
         maxWidth: "700px",
         display: "flex",
         justifyContent: "center",
+        alignItems: "center",
         background: `rgba(255,255,255,0.3)`,
         // background: `rgba(0,0,0,0.5)`,
         // backdropFilter: "blur(1px)",

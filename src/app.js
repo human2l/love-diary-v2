@@ -6,11 +6,14 @@ import { useQuery, useQueryClient } from "react-query";
 import styled from "styled-components";
 import Background from "./components/background";
 import PageLoading from "./components/pageLoading";
+import { USER_ID_MAP } from "./config/airtableConfig";
 import useSoundLibrary from "./hooks/useSoundLibrary";
 import Router from "./routes";
-import { getCoupleSettingsByUserId, updateSettingsDB } from "./services/airtable/settingsService";
+import {
+  getCoupleSettingsByUserId,
+  updateSettingsDB,
+} from "./services/airtable/settingsService";
 import "./services/i18next";
-import { USER_ID_MAP } from "./config/airtableConfig";
 
 export const settingsContext = React.createContext({
   t: () => {},
@@ -45,7 +48,7 @@ function App() {
     }
   );
 
-  const settings = fetchedSettings || {};
+  const settings = useMemo(() => fetchedSettings || {}, [fetchedSettings]);
   const user = loggedInUsername;
   const partner = useMemo(() => {
     if (!fetchedSettings || !user) return "";
@@ -110,27 +113,31 @@ function App() {
   // ... inside App function
 
   if (settingsLoading && authenticated) {
-    return <PageLoading />;
+    return (
+      <AppContainer>
+        <PageLoading />
+      </AppContainer>
+    );
   }
 
   return (
     <>
       <AppContainer>
-          <settingsContext.Provider
-            value={{
-              t,
-              user,
-              partner,
-              settings,
-              updateSettings,
-              musicPlayer,
-              setMusic,
-            }}
-          >
-            <ThemeProvider theme={theme}>
-              <Router authenticated={authenticated} loginMethod={login} />
-            </ThemeProvider>
-          </settingsContext.Provider>
+        <settingsContext.Provider
+          value={{
+            t,
+            user,
+            partner,
+            settings,
+            updateSettings,
+            musicPlayer,
+            setMusic,
+          }}
+        >
+          <ThemeProvider theme={theme}>
+            <Router authenticated={authenticated} loginMethod={login} />
+          </ThemeProvider>
+        </settingsContext.Provider>
         <Background
           imgId={settings[user]?.backgroundImage}
           defaultImgId={"Kqwt7tNSTCYJXKKNJnl7"}
