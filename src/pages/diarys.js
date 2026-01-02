@@ -1,9 +1,12 @@
 import { Typography } from "@mui/material";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 import Fab from "@mui/material/Fab";
 import { styled } from "@mui/material/styles";
+import { useInViewport } from "ahooks";
 import { t } from "i18next";
-import { useContext } from "react";
-import { useQuery } from "react-query";
+import React, { useContext, useEffect, useRef } from "react";
+import { useInfiniteQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import useSound from "use-sound";
 import { settingsContext } from "../app";
@@ -11,8 +14,7 @@ import writingPng from "../assets/images/writing.png";
 import buttonMp3 from "../assets/sounds/button.mp3";
 import { Diary } from "../components/diary";
 import PageLoading from "../components/pageLoading";
-import TopSnackbar from "../components/topSnackbar";
-import { getAllDiarys } from "../services/airtable/diaryService";
+import { getDiarysPaginated } from "../services/airtable/diaryService";
 import { getCountryDateFromTimestamp } from "../utils/date_utils";
 const LoveDiaryContainer = styled("div")({
   // boxSizing: "border-box",
@@ -39,19 +41,33 @@ const Diarys = () => {
     volume: 0.5,
   });
 
-  const fetchAllDiarys = async () => {
-    const coupleIds = [settings[user].id, settings[partner].id];
-    const allDiarys = await getAllDiarys(coupleIds);
-    return allDiarys;
-  };
-
   const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
     isLoading,
-    isFetching,
-    data: diarys,
     isError,
     error,
-  } = useQuery("fetchAllDiarys", fetchAllDiarys);
+  } = useInfiniteQuery(
+    ["fetchAllDiarys", settings[user].id, settings[partner].id],
+    async ({ pageParam = null }) => {
+      const coupleIds = [settings[user].id, settings[partner].id];
+      return await getDiarysPaginated(coupleIds, pageParam);
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextOffset || undefined,
+    }
+  );
+
+  const loaderRef = useRef(null);
+  const [inViewport] = useInViewport(loaderRef);
+
+  useEffect(() => {
+    if (inViewport && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inViewport, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   if (isError) console.error(error);
 
@@ -62,38 +78,38 @@ const Diarys = () => {
       ) : (
         <LoveDiaryContainer>
           <DiarysContainer>
-            {isFetching && (
-              <TopSnackbar message={t("updating_new_diary.label")} />
-            )}
-            {diarys.length ? (
-              diarys.map((diary) => {
-                const {
-                  key,
-                  author,
-                  content = "",
-                  time,
-                  reply,
-                  photos,
-                } = diary;
+            {data?.pages.map((group, i) => (
+              <React.Fragment key={i}>
+                {group.data.map((diary) => {
+                  const {
+                    key,
+                    author,
+                    content = "",
+                    time,
+                    reply,
+                    photos,
+                  } = diary;
 
-                const diaryDate = getCountryDateFromTimestamp(
-                  time,
-                  settings[author].country
-                );
+                  const diaryDate = getCountryDateFromTimestamp(
+                    time,
+                    settings[author].country
+                  );
 
-                return (
-                  <Diary
-                    key={key}
-                    diaryKey={key}
-                    diaryAuthor={author}
-                    diaryDate={diaryDate}
-                    diaryContent={content}
-                    diaryReplies={reply}
-                    diaryPhotos={photos}
-                  />
-                );
-              })
-            ) : (
+                  return (
+                    <Diary
+                      key={key}
+                      diaryKey={key}
+                      diaryAuthor={author}
+                      diaryDate={diaryDate}
+                      diaryContent={content}
+                      diaryReplies={reply}
+                      diaryPhotos={photos}
+                    />
+                  );
+                })}
+              </React.Fragment>
+            ))}
+            {data?.pages[0]?.data.length === 0 && (
               <Typography
                 variant="h5"
                 color="secondary"
@@ -101,6 +117,22 @@ const Diarys = () => {
               >
                 You haven't written any diary.
               </Typography>
+            )}
+            {hasNextPage && (
+              <div ref={loaderRef} style={{ marginTop: 10, paddingBottom: 20 }}>
+                 <Card>
+                  <CardContent>
+                    <Typography
+                      variant="h5"
+                      color="textSecondary"
+                      gutterBottom
+                      sx={{ textAlign: "center" }}
+                    >
+                      {t("loading.label")}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </div>
             )}
           </DiarysContainer>
         </LoveDiaryContainer>

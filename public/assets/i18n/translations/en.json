@@ -59,5 +59,6 @@
   "wish_discription.label": "Wish Description",
   "next_step.label": "Next Step",
   "total_money.label": "Total money earned",
-  "gpt.label": "GPT Chat"
+  "gpt.label": "GPT Chat",
+  "loading.label": "Loading..."
 }

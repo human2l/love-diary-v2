@@ -59,5 +59,6 @@
   "wish_discription.label": "愿景描述",
   "next_step.label": "下一步",
   "total_money.label": "合计",
-  "gpt.label": "GPT聊天"
+  "gpt.label": "GPT聊天",
+  "loading.label": "稍等..."
 }
