@@ -13,7 +13,7 @@ import { settingsContext } from "../app";
 import sayLovePng from "../assets/images/say_love.png";
 import sendPng from "../assets/images/send.png";
 import sendSound from "../assets/sounds/send.mp3";
-import useFilestack from "../hooks/useFilestack";
+import useFirebaseStorage from "../hooks/useFirebaseStorage";
 import useLocalStorage from "../hooks/useLocalStorage";
 import useTypingSound from "../hooks/useTypingSound";
 import { updateDiaryReply } from "../services/airtable/diaryService";
@@ -77,7 +77,7 @@ export const Diary = (props) => {
   const [reply, setReply] = useState(false);
 
   const [replyContent, setReplyContent] = useLocalStorage("replyDraft", "");
-  const { getAuthImgUrl } = useFilestack();
+  const { getAuthImgUrl } = useFirebaseStorage();
   const imageUrl =
     diaryPhotos.length > 0 ? getAuthImgUrl(diaryPhotos[0]) : null;
   const imageId = diaryPhotos.length > 0 ? diaryPhotos[0] : null;

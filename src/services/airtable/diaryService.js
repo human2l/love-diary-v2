@@ -1,4 +1,4 @@
-import { AIRTABLE_TABLES, AIRTABLE_FIELDS } from "../../config/airtableConfig";
+import { AIRTABLE_FIELDS, AIRTABLE_TABLES } from "../../config/airtableConfig";
 import base from "./airtable";
 
 const diaryBase = base(AIRTABLE_TABLES.DIARY);
@@ -67,11 +67,48 @@ const getDiarysPaginated = async (coupleIds, offset = null) => {
     let jsonPhotos = [];
     let jsonReply = {};
 
-    try {
-      jsonPhotos = fields.photos ? JSON.parse(fields.photos) : [];
-    } catch (e) {
-      console.warn("Failed to parse photos", e);
-    }
+      try {
+        jsonPhotos = fields.photos ? JSON.parse(fields.photos) : [];
+      } catch (e) {
+        // Recovery logic for malformed JSON (e.g. unescaped backslashes)
+        let recovered = false;
+        
+        // Attempt 1: Fix backslashes (Remove them instead of escaping)
+        // logic: invalid backslashes are likely noise. simple removal usually fixes the URL.
+        if (!recovered) {
+            try {
+                const fixedJson = fields.photos.replace(/\\/g, "");
+                jsonPhotos = JSON.parse(fixedJson);
+                recovered = true;
+            } catch (e2) { /* continue */ }
+        }
+
+        // Attempt 2: Regex extraction
+        if (!recovered) {
+             const urlRegex = /"(https?:\/\/[^"]+)"/g;
+             const matches = [];
+             let match;
+             while ((match = urlRegex.exec(fields.photos)) !== null) {
+                 matches.push(match[1]);
+             }
+             if (matches.length > 0) {
+                 jsonPhotos = matches;
+                 recovered = true;
+             }
+        }
+
+        // Attempt 3: Single URL fallback
+        if (!recovered) {
+             if (typeof fields.photos === "string" && fields.photos.startsWith("http")) {
+                jsonPhotos = [fields.photos];
+                recovered = true;
+             }
+        }
+
+        if (!recovered) {
+             console.warn("CRITICAL: Failed to parse photos field:", fields.photos);
+        }
+      }
 
     try {
       jsonReply = fields.reply ? JSON.parse(fields.reply) : {};
@@ -152,10 +189,7 @@ const getDiaryCountByUser = async (userId) => {
 };
 
 export {
-  getAllDiarys,
-  getDiarysPaginated,
-  getDiaryCountByUser,
-  addNewDiary,
-  updateDiary,
-  updateDiaryReply,
+  addNewDiary, getAllDiarys, getDiaryCountByUser, getDiarysPaginated, updateDiary,
+  updateDiaryReply
 };
+

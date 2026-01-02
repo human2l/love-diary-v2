@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { settingsContext } from "../app";
 import addImagePng from "../assets/images/add-image.png";
 import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
-import useFilestack from "../hooks/useFilestack";
+import useFirebaseStorage from "../hooks/useFirebaseStorage";
 import useLocalStorage from "../hooks/useLocalStorage";
 import useTypingSound from "../hooks/useTypingSound";
 import { addWish } from "../services/airtable/wishboardService";
@@ -52,7 +52,7 @@ const NewWish = () => {
   const [activeStep, setActiveStep] = useState(0);
   const { t, user, partner, settings } = useContext(settingsContext);
   const [imageUploaded, setImageUploaded] = useState(false);
-  const { fileMetadata, openFilePicker, getAuthImgUrl } = useFilestack();
+  const { fileMetadata, openFilePicker, getAuthImgUrl } = useFirebaseStorage();
   const [description, setDescription] = useLocalStorage("newWishDraft", "");
   const [playTypingSound] = useTypingSound();
   const queryClient = useQueryClient();

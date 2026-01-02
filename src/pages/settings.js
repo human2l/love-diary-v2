@@ -8,7 +8,7 @@ import languagesPng from "../assets/images/languages.png";
 import ColorPalette from "../components/colorPalette/colorPalette";
 import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
 import LanguageSelector from "../components/languageSelector";
-import useFilestack from "../hooks/useFilestack";
+import useFirebaseStorage from "../hooks/useFirebaseStorage";
 import useTypingSound from "../hooks/useTypingSound";
 
 const SettingsContainer = styled("div")({
@@ -67,7 +67,7 @@ const Settings = () => {
   const [secondaryColor, setSecondaryColor] = useState(
     settings[user].secondaryColor
   );
-  const { openBackgroundImagePicker } = useFilestack();
+  const { openBackgroundImagePicker } = useFirebaseStorage();
 
   const handleChange = (e) => {
     e.preventDefault();

@@ -8,7 +8,7 @@ import addImagePng from "../assets/images/add-image.png";
 import gunPng from "../assets/images/gun.png";
 import ConfirmModal from "../components/confirmModal";
 import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
-import useFilestack from "../hooks/useFilestack";
+import useFirebaseStorage from "../hooks/useFirebaseStorage";
 import useLocalStorage from "../hooks/useLocalStorage";
 import useTypingSound from "../hooks/useTypingSound";
 import { addNewDiary } from "../services/airtable/diaryService";
@@ -53,7 +53,7 @@ const AddImageIcon = styled("img")({
 const NewDiary = () => {
   const { t, user, settings } = useContext(settingsContext);
   const [playTypingSound] = useTypingSound();
-  const { fileMetadata, openFilePicker, getAuthImgUrl } = useFilestack();
+  const { fileMetadata, openFilePicker, getAuthImgUrl } = useFirebaseStorage();
   const [diaryContent, setDiaryContent] = useLocalStorage("diaryDraft", "");
 
   const [warningMessage, setWarningMessage] = useState("");

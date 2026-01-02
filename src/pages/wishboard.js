@@ -14,7 +14,7 @@ import addWishPng from "../assets/images/add.png";
 import buttonMp3 from "../assets/sounds/button.mp3";
 import GlassFullContainer from "../components/glassmorphism/glassFullContainer";
 import PageLoading from "../components/pageLoading";
-import useFilestack from "../hooks/useFilestack";
+import useFirebaseStorage from "../hooks/useFirebaseStorage";
 import { getAllWishes } from "../services/airtable/wishboardService";
 
 const WishboardContainer = styled("div")({
@@ -35,7 +35,7 @@ const AddNewWishImageButton = styled(Fab)({
 
 const Wishboard = () => {
   const { user, partner, settings } = useContext(settingsContext);
-  const { getAuthImgUrl } = useFilestack();
+  const { getAuthImgUrl } = useFirebaseStorage();
   const fetchAllWishes = async () => {
     const coupleIds = [settings[user].id, settings[partner].id];
     const allWishes = getAllWishes(coupleIds);
