@@ -1,10 +1,8 @@
 import { styled } from "@mui/material/styles";
 import treasurePng from "../assets/images/treasure.png";
-import GptItem from "./magicBoxItems/gptItem";
 import MusicCollectionItem from "./magicBoxItems/musicCollectionItem";
 import MusicItem from "./magicBoxItems/musicItem";
 import TodoListItem from "./magicBoxItems/todoListItem";
-import WishboardItem from "./magicBoxItems/wishboardItem";
 
 const ItemsContainer = styled("div")({
   display: "flex",
@@ -40,8 +38,8 @@ const MagicBox = (props) => {
         <MusicItem />
         <MusicCollectionItem onClose={props.onClose} />
         <TodoListItem onClose={props.onClose} />
-        <WishboardItem onClose={props.onClose} />
-        <GptItem />
+        {/* <WishboardItem onClose={props.onClose} /> */}
+        {/* <GptItem /> */}
       </ItemsContainer>
     </>
   );
