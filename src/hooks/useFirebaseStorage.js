@@ -29,9 +29,10 @@ const useFirebaseStorage = () => {
          throw new Error("File too big, select something smaller than 5MB");
       }
       const timestamp = new Date().getTime();
-      // Sanitize filename: remove all non-alphanumeric chars except dots, dashes, underscores
-      // This prevents issues with spaces or backslashes in filenames
-      const sanitizedFilename = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+      // Sanitize filename: remove all non-alphanumeric chars except dots
+      // This prevents issues with spaces or special characters, and ensures the URL matches what we expect
+      // We also prefix a timestamp to ensure uniqueness even if the sanitized name collides
+      const sanitizedFilename = file.name.replace(/[^a-zA-Z0-9.]/g, "");
       const storageRef = ref(storage, `${folder}/${timestamp}_${sanitizedFilename}`);
       const snapshot = await uploadBytes(storageRef, file);
       const downloadURL = await getDownloadURL(snapshot.ref);
@@ -99,22 +100,12 @@ const useFirebaseStorage = () => {
 
   const getAuthImgUrl = (handle) => {
     if (!handle) return "";
-    // If it's a full URL (Firebase), return it.
-    if (handle.startsWith("http")) {
-        return handle;
-    }
-    // Fallback for legacy Filestack handles
-    return `https://cdn.filestackcontent.com/${handle}?policy=${process.env.REACT_APP_FILESTACK_POLICY}&signature=${process.env.REACT_APP_FILESTACK_SIGNATURE}`;
+    return handle;
   };
 
-  // Note: Firebase doesn't support dynamic resizing via URL parameters like Filestack basic CDN.
-  // We will return the original image URL if it's from Firebase, or the Filestack resize URL if it's legacy.
   const getBackgroundImgUrl = (handle, height, width) => {
     if (!handle) return "";
-    if (handle.startsWith("http")) {
-        return handle; 
-    }
-    return `https://cdn.filestackcontent.com/resize=height:${height},width:${width},fit:crop/security=policy:${process.env.REACT_APP_FILESTACK_POLICY},signature:${process.env.REACT_APP_FILESTACK_SIGNATURE}/${handle}`;
+    return handle;
   };
 
   return {
