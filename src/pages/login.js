@@ -53,32 +53,29 @@ const Login = (props) => {
   const [playOff] = useSound(popUpOffSound, { volume: 0.25 });
   const [playAhOhSound] = useSound(ahOhSound, { volume: 0.1 });
 
-  const login = () => {
+  const login = async () => {
     setLoggingIn(true);
-    //! hardcoded, change later
-    switch (password) {
-      case process.env.REACT_APP_LOGIN_PASSWORD_DAN:
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password })
+      });
+      const data = await response.json();
+      if (data.success) {
         setIncorrectPasswordAlert(false);
-        props.login("Dan");
-        break;
-      case process.env.REACT_APP_LOGIN_PASSWORD_KAI:
-        setIncorrectPasswordAlert(false);
-        props.login("Kai");
-        break;
-      case process.env.REACT_APP_LOGIN_PASSWORD_ALICE:
-        setIncorrectPasswordAlert(false);
-        props.login("Alice");
-        break;
-      case process.env.REACT_APP_LOGIN_PASSWORD_BOB:
-        setIncorrectPasswordAlert(false);
-        props.login("Bob");
-        break;
-      default:
+        props.login(data.user);
+      } else {
         setLoggingIn(false);
         setIncorrectPasswordAlert(true);
         playAhOhSound();
         setPassword("");
-        break;
+      }
+    } catch (e) {
+      setLoggingIn(false);
+      setIncorrectPasswordAlert(true);
+      playAhOhSound();
+      setPassword("");
     }
   };
   const onPasswordButtonClick = (buttonValue) => {

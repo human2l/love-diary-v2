@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/airtableProxy/:path*",
+      "destination": "/api/airtableProxy"
+    }
+  ]
+}

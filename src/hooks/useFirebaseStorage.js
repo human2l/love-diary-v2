@@ -1,6 +1,6 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useState } from "react";
-import { storage } from "../services/firebase/firebaseConfig";
+import { initFirebase } from "../services/firebase/firebaseConfig";
 
 const useFirebaseStorage = () => {
   const [fileMetadata, setFileMetadata] = useState(null);
@@ -28,6 +28,7 @@ const useFirebaseStorage = () => {
       if (file.size > 5 * 1024 * 1024) {
          throw new Error("File too big, select something smaller than 5MB");
       }
+      const storage = await initFirebase();
       const timestamp = new Date().getTime();
       // Sanitize filename: remove all non-alphanumeric chars except dots
       // This prevents issues with spaces or special characters, and ensures the URL matches what we expect

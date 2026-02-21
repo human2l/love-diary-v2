@@ -1,9 +1,9 @@
 import Airtable from "airtable";
 
 Airtable.configure({
-  endpointUrl: "https://api.airtable.com",
-  apiKey: process.env.REACT_APP_AIRTABLE_PERSONAL_ACCESS_TOKEN,
+  endpointUrl: "/api/airtableProxy",
+  apiKey: "dummy-token",
 });
-var base = Airtable.base(process.env.REACT_APP_AIRTABLE_BASE_NAME);
+var base = Airtable.base("dummy-base");
 
 export default base;

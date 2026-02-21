@@ -29,8 +29,8 @@ const getAllDiarys = async (coupleIds) => {
 };
 
 const getDiarysPaginated = async (coupleIds, offset = null) => {
-  const baseId = process.env.REACT_APP_AIRTABLE_BASE_NAME;
-  const token = process.env.REACT_APP_AIRTABLE_PERSONAL_ACCESS_TOKEN;
+  const baseId = "dummy-base";
+  const token = "dummy-token";
   const tableName = AIRTABLE_TABLES.DIARY;
 
   const filterFormula = `OR({${AIRTABLE_FIELDS.DIARY.AUTHOR_ID}}="${coupleIds[0]}",{${AIRTABLE_FIELDS.DIARY.AUTHOR_ID}}="${coupleIds[1]}")`;
@@ -46,7 +46,7 @@ const getDiarysPaginated = async (coupleIds, offset = null) => {
     params.set("offset", offset);
   }
 
-  const url = `https://api.airtable.com/v0/${baseId}/${tableName}?${params.toString()}`;
+  const url = `/api/airtableProxy/v0/${baseId}/${tableName}?${params.toString()}`;
 
   const response = await fetch(url, {
     headers: {
@@ -189,7 +189,7 @@ const getDiaryCountByUser = async (userId) => {
 };
 
 export {
-  addNewDiary, getAllDiarys, getDiaryCountByUser, getDiarysPaginated, updateDiary,
-  updateDiaryReply
+    addNewDiary, getAllDiarys, getDiaryCountByUser, getDiarysPaginated, updateDiary,
+    updateDiaryReply
 };
 
