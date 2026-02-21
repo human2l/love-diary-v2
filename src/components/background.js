@@ -1,7 +1,7 @@
 import useWindowSize from "../hooks/useWindowSize";
 
 const Background = ({ src }) => {
-  const windowSize = useWindowSize("fixed");
+  useWindowSize("fixed");
 
   return (
     <div
